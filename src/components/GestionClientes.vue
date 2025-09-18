@@ -35,18 +35,35 @@
       </div>
     </div>
 
-    <!-- Lista de Clientes -->
-    <div class="row mt-4">
-      <div class="col-12">
-        <h3>Lista de Clientes</h3>
-        <ul class="list-group">
-          <li v-for="(cliente, index) in clientes" :key="index" class="list-group-item d-flex justify-content-between align-items-center">
-            {{ cliente.nombre }} - {{ cliente.email }}
+   <!-- Lista de Clientes -->
+<div class="row mt-4">
+  <div class="col-12">
+    <h3>Lista de Clientes</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellidos</th>
+          <th scope="col">Email</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(cliente, index) in clientes" :key="index">
+          <th scope="row">{{ index + 1 }}</th>
+          <td>{{ cliente.nombre }}</td>
+          <td>{{ cliente.apellidos }}</td>
+          <td>{{ cliente.email }}</td>
+          <td>
             <button @click="eliminarCliente(index)" class="btn btn-danger btn-sm">Eliminar</button>
-          </li>
-        </ul>
-      </div>
-    </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
   </div>
 </template>
 
