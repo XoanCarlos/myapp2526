@@ -14,7 +14,7 @@ import FooTer from './components/FooTer.vue'
 import GestionClientes from './components/GestionClientes.vue'
 </script>
 
-<style>
+<style scoped>
 #app > nav,
 #app > footer {
   width: 100%;

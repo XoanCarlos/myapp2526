@@ -24,6 +24,9 @@
             <a class="nav-link" aria-current="page" href="#">Inicio</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="#">Clientes</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="#">Servicios</a>
           </li>
           <li class="nav-item">
