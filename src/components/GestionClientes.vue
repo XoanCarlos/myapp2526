@@ -21,9 +21,9 @@
 
   <!-- Nombre y Apellidos -->
   <div class="mb-4 d-flex gap-4">
-    <label for="nombre" class="form-label ms-2" style="width: 120px;">Nombre:</label>
+    <label for="nombre" class="form-label mb-0 ms-2" style="width: 120px;">Nombre:</label>
     <input type="text" id="nombre" v-model="nuevoCliente.nombre" class="form-control" required />
-    <label for="apellidos" class="form-label ms-2">Apellidos:</label>
+    <label for="apellidos" class="form-label mb-0 ms-2">Apellidos:</label>
     <input type="text" id="apellidos" v-model="nuevoCliente.apellidos" class="form-control" required />
   </div>
 
@@ -89,7 +89,7 @@
               <button
                 @click="eliminarCliente(index)"
                 class="btn btn-danger btn-sm">
-                Eliminar
+                <i class="bi bi-trash"></i>
               </button>
             </td>
           </tr>
