@@ -1,39 +1,54 @@
 <template>
   <div class="gestion-clientes">
-    <h2 class="text-center my-4">Gestión de Clientes</h2>
+    <h3 class="text-center my-2">Gestión de Clientes</h3>
 
     <!-- Formulario -->
 
-<form @submit.prevent="agregarCliente" class="mb-5">
-<div class="mb-4 d-flex align-items-center gap-1">
-  <!-- DNI -->
+<form @submit.prevent="agregarCliente" class="mb-2">
+<!-- DNI con validación visual -->
+<div class="mb-4 d-flex align-items-center gap-1" style="width: 100%;">
   <label for="dni" class="me-4 mb-0 ms-2" style="width: 60px;">DNI:</label>
-  <input type="text" id="dni" v-model="nuevoCliente.dni" class="form-control me-3" style="max-width: 180px;" required />
+  
+  <div style="position: relative; max-width: 180px; width: 100%;">
+    <input
+      type="text"  id="dni"  v-model="nuevoCliente.dni" @blur="validarDni"
+      class="form-control me-3"
+      :class="{ 'is-invalid': !dniValido }"
+      required
+    />
+    <div v-if="!dniValido" class="invalid-feedback">
+      DNI o NIE inválido.
+    </div>
+  </div>
 
-  <!-- Espacio vacío (50% de la fila) -->
   <div class="flex-grow-1"></div>
 
-  <!-- Fecha de Alta -->
-  <label for="fechaAlta" class="me-6 mb-0" style="width: 150px;">Fecha de Alta:</label>
-  <input type="date" id="fechaAlta" v-model="nuevoCliente.fechaAlta" class="form-control" style="max-width: 180px;" />
+  <label for="fechaAlta" class="me-6 mb-0 text-center" style="width: 150px;">Fecha de Alta:</label>
+  <input
+    type="date"
+    id="fechaAlta"
+    v-model="nuevoCliente.fechaAlta"
+    class="form-control"
+    style="max-width: 180px;"
+  />
 </div>
 
 
   <!-- Nombre y Apellidos -->
   <div class="mb-4 d-flex gap-4">
     <label for="nombre" class="form-label mb-0 ms-2" style="width: 120px;">Nombre:</label>
-    <input type="text" id="nombre" v-model="nuevoCliente.nombre" class="form-control" required />
+    <input type="text" id="nombre" v-model="nuevoCliente.nombre" class="form-control" @blur="capitalizarNombre" required />
     <label for="apellidos" class="form-label mb-0 ms-2">Apellidos:</label>
-    <input type="text" id="apellidos" v-model="nuevoCliente.apellidos" class="form-control" required />
+    <input type="text" id="apellidos" v-model="nuevoCliente.apellidos" class="form-control" @blur="capitalizarApellidos" required />
   </div>
 
   <!-- Email y Móvil -->
   <div class="mb-4 d-flex align-items-center">
-    <label for="email" class="form-label ms-2 mb-0" style="width: 122px;">Email:</label>
-    <input type="email" id="email" v-model="nuevoCliente.email" class="form-control w-50" required />
+    <label for="email" class="form-label ms-2 mb-2" style="width: 122px;">Email:</label>
+    <input type="email" id="email" v-model="nuevoCliente.email" class="form-control w-50" @blur="validarEmail" :class="{ 'is-invalid': !emailValido }" required />
     <div class="w-50"></div>
     <label for="movil" class="me-2 ms-2 mb-0" style="width: 100px;">Móvil:</label>
-    <input type="tel" id="movil" v-model="nuevoCliente.movil" class="form-control w-25" />
+    <input type="tel" id="movil" v-model="nuevoCliente.movil" @blur="validarMovil" class="form-control w-25 text-center" :class="{ 'is-invalid': !movilValido }" />
   </div>
 
   <!-- Dirección, Provincia y Municipio -->
@@ -53,9 +68,9 @@
   </div>
 
   <!-- Histórico -->
-  <div class="d-flex justify-content-end mb-3">
+  <div class="d-flex justify-content-end mb-2">
     <input type="checkbox" id="historico" v-model="nuevoCliente.historico" class="form-check-input" />
-    <label for="historico" class="form-check-label">Histórico</label>
+    <label for="historico" class="form-check-label ms-3 mb-0">Histórico</label>
   </div>
 
   <!-- Botón centrado -->
@@ -66,7 +81,7 @@
 </form>
     <!-- Lista de Clientes -->
     <div class="table-responsive">
-      <h3>Lista de Clientes</h3>
+      <h4 class="text-center w-100">Listado Clientes</h4>
       <table class="table table-bordered table-striped w-100">
         <thead class="table-primary">
           <tr >
@@ -137,6 +152,94 @@ const agregarCliente = () => {
 const eliminarCliente = (index) => {
   clientes.value.splice(index, 1);
 };
+
+// scripts auxiliares
+
+// Estado de validez del DNI/NIE si la estructura de datos es más compleja se usa reactive
+const dniValido = ref(true);  // Por defecto es válido y no muestra error al iniciar
+
+// Función para validar DNI y NIE
+const validarDniNie = (valor) => {
+  const letras = 'TRWAGMYFPDXBNJZSQVHLCKE';
+  const dniRegex = /^[0-9]{8}[A-Z]$/;
+  const nieRegex = /^[XYZ][0-9]{7}[A-Z]$/;
+
+  valor = valor.toUpperCase();
+
+  if (dniRegex.test(valor)) {
+      const numero = parseInt(valor.slice(0, 8), 10);
+      const letra = valor.charAt(8);
+      return letra === letras[numero % 23];  //sale con true si es válido
+    } else if (nieRegex.test(valor)) {
+      const nie = valor.replace('X', '0').replace('Y', '1').replace('Z', '2');
+      const numero = parseInt(nie.slice(0, 8), 10);
+      const letra = valor.charAt(8);
+      return letra === letras[numero % 23];  //sale con true si es válido
+    }
+  return false; 
+};
+
+// Validar al salir del campo
+const validarDni = () => {
+  const dni = nuevoCliente.value.dni.trim().toUpperCase();
+  dniValido.value = validarDniNie(dni);
+};
+
+// capitalizar nombre y apellidos
+const capitalizarTexto = (texto) => {
+  return texto
+    .toLowerCase()
+    .split(' ')
+    .map(palabra => {
+      if (palabra.length === 0) return '';
+      return palabra.charAt(0).toLocaleUpperCase() + palabra.slice(1);  //toLocaleUpperCase para ñ y tildes
+    })
+    .join(' ');
+};
+
+
+// Al salir del input (nombre o apellidos)
+const capitalizarNombre = () => {
+  nuevoCliente.value.nombre = capitalizarTexto(nuevoCliente.value.nombre);
+};
+
+const capitalizarApellidos = () => {
+  nuevoCliente.value.apellidos = capitalizarTexto(nuevoCliente.value.apellidos);
+};
+
+// control móvil
+
+
+const movilValido = ref(true);
+const movilRegex = /^[67]\d{8}$/;
+
+const validarMovil = () => {
+  const movil = nuevoCliente.value.movil.trim();
+
+  if (movil === '') {
+    movilValido.value = true; // Vacío = válido (opcional)
+    return true;
+  }
+
+  if (movil.charAt(0) === '6' || movil.charAt(0) === '7') {
+    movilValido.value = movilRegex.test(movil);
+    return movilValido.value;
+  } else {
+    movilValido.value = false;
+    return false;
+  }
+};
+
+// control email 
+
+const emailValido = ref(true);
+const validarEmail = () => {
+  const email = nuevoCliente.value.email.trim();
+  // Expresión simple para email válido
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  emailValido.value = regex.test(email);
+};
+
 </script>
 
 <style scoped>
@@ -145,8 +248,15 @@ const eliminarCliente = (index) => {
   max-width: none;
   
 }
-
 .form-control {
   width: 100%;
+}
+
+.is-invalid {
+  border-color: #f28b82 !important;
+  background-color: #ffe6e6;
+}
+.invalid-feedback {
+  display: block;
 }
 </style>
