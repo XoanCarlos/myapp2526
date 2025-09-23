@@ -1,13 +1,16 @@
 <template>
-  <div class="gestion-clientes">
+ <div
+  class="gestion-clientes mx-auto mt-4 p-4 pb-5 border rounded-3 shadow-sm"
+  style="min-height: calc(100vh - 140px);">
+
     <h3 class="text-center my-2">Gestión de Clientes</h3>
 
     <!-- Formulario -->
 
-<form @submit.prevent="agregarCliente" class="mb-2">
+<form @submit.prevent="agregarCliente" class="mb-4">
 <!-- DNI con validación visual -->
-<div class="mb-4 d-flex align-items-center gap-1" style="width: 100%;">
-  <label for="dni" class="me-4 mb-0 ms-2" style="width: 60px;">DNI:</label>
+<div class="mb-3 d-flex align-items-center gap-1" >
+  <label for="dni" class="form-label ms-2 mb-2" style="width: 80px;">DNI:</label>
   
   <div style="position: relative; max-width: 180px; width: 100%;">
     <input
@@ -23,7 +26,7 @@
 
   <div class="flex-grow-1"></div>
 
-  <label for="fechaAlta" class="me-6 mb-0 text-center" style="width: 150px;">Fecha de Alta:</label>
+  <label for="fechaAlta" class="form-label ms-2 mb-2" style="width: 120px;">Fecha de Alta:</label>
   <input
     type="date"
     id="fechaAlta"
@@ -35,25 +38,25 @@
 
 
   <!-- Nombre y Apellidos -->
-  <div class="mb-4 d-flex gap-4">
-    <label for="nombre" class="form-label mb-0 ms-2" style="width: 120px;">Nombre:</label>
+  <div class="mb-3 d-flex gap-4">
+    <label for="nombre" class="form-label ms-2 mb-2" style="width: 120px;">Nombre:</label>
     <input type="text" id="nombre" v-model="nuevoCliente.nombre" class="form-control" @blur="capitalizarNombre" required />
-    <label for="apellidos" class="form-label mb-0 ms-2">Apellidos:</label>
+    <label for="apellidos" class="form-label ms-2 mb-2">Apellidos:</label>
     <input type="text" id="apellidos" v-model="nuevoCliente.apellidos" class="form-control" @blur="capitalizarApellidos" required />
   </div>
 
   <!-- Email y Móvil -->
-  <div class="mb-4 d-flex align-items-center">
-    <label for="email" class="form-label ms-2 mb-2" style="width: 122px;">Email:</label>
+  <div class="mb-3 d-flex align-items-center">
+    <label for="email" class="form-label ms-2 mb-2" style="width: 125px;">Email:</label>
     <input type="email" id="email" v-model="nuevoCliente.email" class="form-control w-50" @blur="validarEmail" :class="{ 'is-invalid': !emailValido }" required />
     <div class="w-50"></div>
-    <label for="movil" class="me-2 ms-2 mb-0" style="width: 100px;">Móvil:</label>
+    <label for="movil" class="form-label me-2 ms-2 mb-0" style="width: 100px;">Móvil:</label>
     <input type="tel" id="movil" v-model="nuevoCliente.movil" @blur="validarMovil" class="form-control w-25 text-center" :class="{ 'is-invalid': !movilValido }" />
   </div>
 
   <!-- Dirección, Provincia y Municipio -->
-  <div class="mb-4 d-flex align-items-center gap-2">
-    <label for="direccion" class="me-2 ms-2 mb-0">Dirección:</label>
+  <div class="mb-3 d-flex align-items-center gap-2">
+    <label for="direccion" class="form-label me-2 ms-2 mb-0">Dirección:</label>
     <input type="text" id="direccion" v-model="nuevoCliente.direccion" class="form-control w-50" />
     <label for="provincia" class="form-label ms-2 mb-0">Provincia:</label>
     <select id="provincia" v-model="nuevoCliente.provincia" class="form-select w-25" @change="filtrarMunicipios">
@@ -153,7 +156,11 @@ const eliminarCliente = (index) => {
   clientes.value.splice(index, 1);
 };
 
-// scripts auxiliares
+// Provincias y municipios
+const provincias = ref(['Madrid', 'Barcelona', 'Valencia']);
+
+
+// SCRIPTS AUXILIARES
 
 // Estado de validez del DNI/NIE si la estructura de datos es más compleja se usa reactive
 const dniValido = ref(true);  // Por defecto es válido y no muestra error al iniciar
@@ -243,14 +250,6 @@ const validarEmail = () => {
 </script>
 
 <style scoped>
-.gestion-clientes {
-  width: 95%;
-  max-width: none;
-  
-}
-.form-control {
-  width: 100%;
-}
 
 .is-invalid {
   border-color: #f28b82 !important;
