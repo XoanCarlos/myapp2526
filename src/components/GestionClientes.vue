@@ -8,7 +8,7 @@
 <div class="mb-3 row align-items-center">
   <!-- Columna DNI -->
   <div class="col-md-4 d-flex align-items-center">
-    <label for="dni" class="form-label me-2 mb-0">DNI:  </label>
+    <label for="dni" class="form-label  mb-0 w-25">DNI:  </label>
     <div class="flex-grow-1">
       <input
         type="text"
@@ -39,25 +39,27 @@
 
 <!-- Nombre y Apellidos -->
 <div class="mb-3 row g-3 align-items-center">
-  <div class="col-md-3 d-flex align-items-center">
-    <label for="nombre" class="form-label me-2 mb-0 text-nowrap">Nombre:</label>
+  <!-- Nombre -->
+  <div class="col-md-5 d-flex align-items-center">
+    <label for="nombre" class="form-label  mb-0 text-nowrap w-25">Nombre:</label>
     <input
       type="text"
       id="nombre"
       v-model="nuevoCliente.nombre"
-      class="form-control w-100"
+      class="form-control flex-grow-1"
       @blur="capitalizarNombre"
       required
     />
   </div>
 
-  <div class="col-md-5 d-flex align-items-center">
-    <label for="apellidos" class="form-label me-2 mb-0 text-nowrap">Apellidos:</label>
+  <!-- Apellidos -->
+  <div class="col-md-6 d-flex align-items-center ms-auto">
+    <label for="apellidos" class="form-label me-4 mb-0 text-nowrap">Apellidos:</label>
     <input
       type="text"
       id="apellidos"
       v-model="nuevoCliente.apellidos"
-      class="form-control w-100"
+      class="form-control flex-grow-1"
       @blur="capitalizarApellidos"
       required
     />
@@ -66,53 +68,81 @@
 
 <!-- Email y Móvil -->
 <div class="mb-3 row g-3 align-items-center">
+  <!-- Email -->
   <div class="col-md-5 d-flex align-items-center">
-    <label for="email" class="form-label me-2 mb-0 text-nowrap">Email:</label>
+    <label for="email" class="form-label mb-0 text-nowrap w-25">Email:</label>
     <input
       type="email"
       id="email"
       v-model="nuevoCliente.email"
-      class="form-control w-75"
+      class="form-control flex-grow-1"
       @blur="validarEmail"
       :class="{ 'is-invalid': !emailValido }"
       required
     />
   </div>
 
-  <div class="col-md-3 ms-auto d-flex align-items-center justify-content-end">
-    <label for="movil" class="form-label me-2 mb-0 text-nowrap">Móvil:</label>
+  <!-- Móvil -->
+  <div class="col-md-3 d-flex align-items-center">
+    <label for="movil" class="form-label me-4 ms-5 mb-0 text-nowrap ">Móvil:</label>
     <input
       type="tel"
       id="movil"
       v-model="nuevoCliente.movil"
       @blur="validarMovil"
-      class="form-control w-50 text-center"
+      class="form-control flex-grow-1 text-center"
       :class="{ 'is-invalid': !movilValido }"
     />
   </div>
 </div>
 
 
-  <!-- Dirección, Provincia y Municipio -->
-  <div class="mb-3 d-flex align-items-center gap-2">
-    <label for="direccion" class="form-label me-2 ms-2 mb-0">Dirección:</label>
-    <input type="text" id="direccion" v-model="nuevoCliente.direccion" class="form-control w-50" />
-    <label for="provincia" class="form-label ms-2 mb-0">Provincia:</label>
-    <select id="provincia" v-model="nuevoCliente.provincia" class="form-select w-25" @change="filtrarMunicipios">
+
+ <!-- Dirección, Provincia y Municipio -->
+<div class="mb-3 row g-3 align-items-center">
+  <!-- Dirección -->
+  <div class="col-md-5 d-flex align-items-center">
+    <label for="direccion" class="form-label mb-0 w-25 text-nowrap">Dirección:</label>
+    <input
+      type="text"
+      id="direccion"
+      v-model="nuevoCliente.direccion"
+      class="form-control flex-grow-1"
+    />
+  </div>
+
+  <!-- Provincia -->
+  <div class="col-md-3 d-flex align-items-center">
+    <label for="provincia" class="form-label me-2 ms-5 mb-0 text-nowrap">Provincia:</label>
+    <select
+      id="provincia"
+      v-model="nuevoCliente.provincia"
+      class="form-select flex-grow-1 w-25"
+      @change="filtrarMunicipios"
+    >
       <option disabled value="">Seleccione provincia</option>
       <option v-for="prov in provincias" :key="prov" :value="prov">{{ prov }}</option>
     </select>
-    <label for="municipio" class="form-label ms-2 mb-0">Municipio:</label>
-    <select id="municipio" v-model="nuevoCliente.municipio" class="form-select w-25">
+  </div>
+
+  <!-- Municipio -->
+  <div class="col-md-3 d-flex align-items-center">
+    <label for="municipio" class="form-label me-2 ms-4 mb-0 text-nowrap">Municipio:</label>
+    <select
+      id="municipio"
+      v-model="nuevoCliente.municipio"
+      class="form-select flex-grow-1 w-auto"
+    >
       <option disabled value="">Seleccione municipio</option>
       <option v-for="mun in municipiosFiltrados" :key="mun" :value="mun">{{ mun }}</option>
     </select>
   </div>
+</div>
 
   <!-- Histórico -->
   <div class="d-flex justify-content-end mb-2">
     <input type="checkbox" id="historico" v-model="nuevoCliente.historico" class="form-check-input" />
-    <label for="historico" class="form-check-label ms-3 mb-0">Histórico</label>
+    <label for="historico" class="form-check-label ms-3 me-5 mb-0">Histórico</label>
   </div>
 
   <!-- Botón centrado -->
