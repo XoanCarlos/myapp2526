@@ -50,7 +50,6 @@
 </script>
 
 <style>
-
 .navbar-dark .nav-link {
   color: rgba(255,255,255,0.9); /* blanco suave */
 }
@@ -59,5 +58,4 @@
 .navbar-dark .nav-link:focus {
   color: #fff; /* blanco intenso al pasar el ratón */
 }
-
 </style>

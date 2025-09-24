@@ -1,58 +1,97 @@
 <template>
  <div
-  class="gestion-clientes mx-auto mt-4 p-4 pb-5 border rounded-3 shadow-sm"
-  style="min-height: calc(100vh - 140px);">
-
+  class="gestion-clientes mx-auto mt-4 p-4 pb-5 border rounded-3 shadow-sm min-vh-75 bg-light">
     <h3 class="text-center my-2">Gestión de Clientes</h3>
-
     <!-- Formulario -->
-
 <form @submit.prevent="agregarCliente" class="mb-4">
 <!-- DNI con validación visual -->
-<div class="mb-3 d-flex align-items-center gap-1" >
-  <label for="dni" class="form-label ms-2 mb-2" style="width: 80px;">DNI:</label>
-  
-  <div style="position: relative; max-width: 180px; width: 100%;">
-    <input
-      type="text"  id="dni"  v-model="nuevoCliente.dni" @blur="validarDni"
-      class="form-control me-3"
-      :class="{ 'is-invalid': !dniValido }"
-      required
-    />
-    <div v-if="!dniValido" class="invalid-feedback">
-      DNI o NIE inválido.
+<div class="mb-3 row align-items-center">
+  <!-- Columna DNI -->
+  <div class="col-md-4 d-flex align-items-center">
+    <label for="dni" class="form-label me-2 mb-0">DNI:  </label>
+    <div class="flex-grow-1">
+      <input
+        type="text"
+        id="dni"
+        v-model="nuevoCliente.dni"
+        @blur="validarDni"
+        class="form-control w-auto"
+        :class="{ 'is-invalid': !dniValido }"
+        required
+      />
+      <div v-if="!dniValido" class="invalid-feedback">
+        DNI o NIE inválido.
+      </div>
     </div>
   </div>
 
-  <div class="flex-grow-1"></div>
-
-  <label for="fechaAlta" class="form-label ms-2 mb-2" style="width: 120px;">Fecha de Alta:</label>
-  <input
-    type="date"
-    id="fechaAlta"
-    v-model="nuevoCliente.fechaAlta"
-    class="form-control"
-    style="max-width: 180px;"
-  />
+  <!-- Columna Fecha de Alta a la derecha -->
+  <div class="col-md-4 ms-auto d-flex align-items-center justify-content-end">
+    <label for="fechaAlta" class="form-label me-2 mb-0 text-nowrap">Fecha de Alta:</label>
+    <input
+      type="date"
+      id="fechaAlta"
+      v-model="nuevoCliente.fechaAlta"
+      class="form-control w-auto"
+    />
+  </div>
 </div>
 
-
-  <!-- Nombre y Apellidos -->
-  <div class="mb-3 d-flex gap-4">
-    <label for="nombre" class="form-label ms-2 mb-2" style="width: 120px;">Nombre:</label>
-    <input type="text" id="nombre" v-model="nuevoCliente.nombre" class="form-control" @blur="capitalizarNombre" required />
-    <label for="apellidos" class="form-label ms-2 mb-2">Apellidos:</label>
-    <input type="text" id="apellidos" v-model="nuevoCliente.apellidos" class="form-control" @blur="capitalizarApellidos" required />
+<!-- Nombre y Apellidos -->
+<div class="mb-3 row g-3 align-items-center">
+  <div class="col-md-3 d-flex align-items-center">
+    <label for="nombre" class="form-label me-2 mb-0 text-nowrap">Nombre:</label>
+    <input
+      type="text"
+      id="nombre"
+      v-model="nuevoCliente.nombre"
+      class="form-control w-100"
+      @blur="capitalizarNombre"
+      required
+    />
   </div>
 
-  <!-- Email y Móvil -->
-  <div class="mb-3 d-flex align-items-center">
-    <label for="email" class="form-label ms-2 mb-2" style="width: 125px;">Email:</label>
-    <input type="email" id="email" v-model="nuevoCliente.email" class="form-control w-50" @blur="validarEmail" :class="{ 'is-invalid': !emailValido }" required />
-    <div class="w-50"></div>
-    <label for="movil" class="form-label me-2 ms-2 mb-0" style="width: 100px;">Móvil:</label>
-    <input type="tel" id="movil" v-model="nuevoCliente.movil" @blur="validarMovil" class="form-control w-25 text-center" :class="{ 'is-invalid': !movilValido }" />
+  <div class="col-md-5 d-flex align-items-center">
+    <label for="apellidos" class="form-label me-2 mb-0 text-nowrap">Apellidos:</label>
+    <input
+      type="text"
+      id="apellidos"
+      v-model="nuevoCliente.apellidos"
+      class="form-control w-100"
+      @blur="capitalizarApellidos"
+      required
+    />
   </div>
+</div>
+
+<!-- Email y Móvil -->
+<div class="mb-3 row g-3 align-items-center">
+  <div class="col-md-5 d-flex align-items-center">
+    <label for="email" class="form-label me-2 mb-0 text-nowrap">Email:</label>
+    <input
+      type="email"
+      id="email"
+      v-model="nuevoCliente.email"
+      class="form-control w-75"
+      @blur="validarEmail"
+      :class="{ 'is-invalid': !emailValido }"
+      required
+    />
+  </div>
+
+  <div class="col-md-3 ms-auto d-flex align-items-center justify-content-end">
+    <label for="movil" class="form-label me-2 mb-0 text-nowrap">Móvil:</label>
+    <input
+      type="tel"
+      id="movil"
+      v-model="nuevoCliente.movil"
+      @blur="validarMovil"
+      class="form-control w-50 text-center"
+      :class="{ 'is-invalid': !movilValido }"
+    />
+  </div>
+</div>
+
 
   <!-- Dirección, Provincia y Municipio -->
   <div class="mb-3 d-flex align-items-center gap-2">
@@ -120,6 +159,8 @@
 <script setup>
 import { ref } from 'vue';
 
+// SCRIPTS CRUD
+
 const nuevoCliente = ref({
   dni: '',
   nombre: '',
@@ -134,6 +175,7 @@ const nuevoCliente = ref({
 });
 
 const clientes = ref([]);
+
 
 const agregarCliente = () => {
   clientes.value.push({ ...nuevoCliente.value });
@@ -157,7 +199,7 @@ const eliminarCliente = (index) => {
 };
 
 // Provincias y municipios
-const provincias = ref(['Madrid', 'Barcelona', 'Valencia']);
+//const provincias = ref(['Madrid', 'Barcelona', 'Valencia']);
 
 
 // SCRIPTS AUXILIARES
@@ -218,6 +260,7 @@ const capitalizarApellidos = () => {
 
 
 const movilValido = ref(true);
+
 const movilRegex = /^[67]\d{8}$/;
 
 const validarMovil = () => {
