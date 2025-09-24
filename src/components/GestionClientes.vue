@@ -1,6 +1,6 @@
 <template>
  <div
-  class="gestion-clientes mx-auto mt-4 p-4 pb-5 border rounded-3 shadow-sm min-vh-75 bg-light">
+  class="mx-auto mt-2 p-4 pb-5 border rounded-3 shadow-sm min-vh-75 bg-light">
     <h3 class="text-center my-2">Gestión de Clientes</h3>
     <!-- Formulario -->
 <form @submit.prevent="agregarCliente" class="mb-4">
@@ -8,7 +8,7 @@
 <div class="mb-3 row align-items-center">
   <!-- Columna DNI -->
   <div class="col-md-4 d-flex align-items-center">
-    <label for="dni" class="form-label  mb-0 w-25">DNI:  </label>
+    <label for="dni" class="form-label mb-0 w-25">DNI:  </label>
     <div class="flex-grow-1">
       <input
         type="text"
