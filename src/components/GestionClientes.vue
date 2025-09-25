@@ -1,6 +1,6 @@
 <template>
  <div
-  class="mx-auto mt-2 p-4 pb-5 border rounded-3 shadow-sm min-vh-75 bg-light">
+  class="mx-auto mt-2 p-4 pb-5 border rounded-2 shadow-sm min-vh-75 bg-light">
     <h3 class="text-center my-2">Gestión de Clientes</h3>
     <!-- Formulario -->
 <form @submit.prevent="agregarCliente" class="mb-4">
@@ -26,8 +26,8 @@
   </div>
 
   <!-- Columna Fecha de Alta a la derecha -->
-  <div class="col-md-4 ms-auto d-flex align-items-center justify-content-end">
-    <label for="fechaAlta" class="form-label me-2 mb-0 text-nowrap">Fecha de Alta:</label>
+  <div class="col-md-4 ms-auto d-flex align-items-center">
+    <label for="fechaAlta" class="form-label ms-5 mb-0 text-nowrap me-2">Fecha de Alta:</label>
     <input
       type="date"
       id="fechaAlta"
@@ -53,7 +53,7 @@
   </div>
 
   <!-- Apellidos -->
-  <div class="col-md-6 d-flex align-items-center ms-auto">
+  <div class="col-md-6 d-flex align-items-center ms-5">
     <label for="apellidos" class="form-label me-4 mb-0 text-nowrap">Apellidos:</label>
     <input
       type="text"
@@ -83,8 +83,8 @@
   </div>
 
   <!-- Móvil -->
-  <div class="col-md-3 d-flex align-items-center">
-    <label for="movil" class="form-label me-4 ms-5 mb-0 text-nowrap ">Móvil:</label>
+  <div class="col-md-3 d-flex align-items-center ms-5">
+    <label for="movil" class="form-label me-5 mb-0 text-nowrap ">Móvil:</label>
     <input
       type="tel"
       id="movil"
@@ -112,8 +112,8 @@
   </div>
 
   <!-- Provincia -->
-  <div class="col-md-3 d-flex align-items-center">
-    <label for="provincia" class="form-label me-2 ms-5 mb-0 text-nowrap">Provincia:</label>
+  <div class="col-md-3 d-flex align-items-center ms-5">
+    <label for="provincia" class="form-label me-4 mb-0 text-nowrap">Provincia:</label>
     <select
       id="provincia"
       v-model="nuevoCliente.provincia"
@@ -140,7 +140,7 @@
 </div>
 
   <!-- Histórico -->
-  <div class="d-flex justify-content-end mb-2">
+  <div class="d-flex justify-content-end mt-4 me-5">
     <input type="checkbox" id="historico" v-model="nuevoCliente.historico" class="form-check-input" />
     <label for="historico" class="form-check-label ms-3 me-5 mb-0">Histórico</label>
   </div>
@@ -175,8 +175,13 @@
             <td class="align-middle text-center">
               <button
                 @click="eliminarCliente(index)"
-                class="btn btn-danger btn-sm">
+                class="btn btn-danger btn-sm me-2">
                 <i class="bi bi-trash"></i>
+              </button>
+              <button
+                @click="editCliente(index)"
+                class="btn btn-warning btn-sm ms-2">
+                <i class="bi bi-pencil"></i>
               </button>
             </td>
           </tr>
@@ -204,9 +209,10 @@ const nuevoCliente = ref({
   historico: false
 });
 
+// Lista de clientes
 const clientes = ref([]);
 
-
+// funcion para agregar cliente
 const agregarCliente = () => {
   clientes.value.push({ ...nuevoCliente.value });
   // Reiniciar el formulario
@@ -260,8 +266,10 @@ const validarDniNie = (valor) => {
 
 // Validar al salir del campo
 const validarDni = () => {
-  const dni = nuevoCliente.value.dni.trim().toUpperCase();
-  dniValido.value = validarDniNie(dni);
+  nuevoCliente.value.dni = nuevoCliente.value.dni.trim().toUpperCase();
+  dniValido.value = validarDniNie(nuevoCliente.value.dni);
+   // Actualiza el estado de validez
+  
 };
 
 // capitalizar nombre y apellidos
