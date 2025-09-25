@@ -121,7 +121,9 @@
       @change="filtrarMunicipios"
     >
       <option disabled value="">Seleccione provincia</option>
-      <option v-for="prov in provincias" :key="prov" :value="prov">{{ prov }}</option>
+       <option v-for="prov in provincias" :key="prov.id" :value="prov.nm" >{{ prov.nm }}</option>
+      <!-- nm es el nombre de la provincia -->
+  >
     </select>
   </div>
 
@@ -192,6 +194,8 @@
 </template>
 
 <script setup>
+import provinciasData from '@/data/provmuni.json';
+
 import { ref } from 'vue';
 
 // SCRIPTS CRUD
@@ -212,10 +216,19 @@ const nuevoCliente = ref({
 // Lista de clientes
 const clientes = ref([]);
 
-// funcion para agregar cliente
+// Funcion para agregar cliente
 const agregarCliente = () => {
-  clientes.value.push({ ...nuevoCliente.value });
-  // Reiniciar el formulario
+  if (editando.value && clienteEditandoIndex.value !== null) {
+    // Actualizar cliente existente recordad nuevoCliente es el v-model del formulario
+    clientes.value[clienteEditandoIndex.value] = { ...nuevoCliente.value }; 
+    editando.value = false;
+    clienteEditandoIndex.value = null;
+  } else {
+    // Agregar nuevo cliente
+    clientes.value.push({ ...nuevoCliente.value });
+  }
+
+  // Reiniciar formulario
   nuevoCliente.value = {
     dni: '',
     nombre: '',
@@ -228,14 +241,32 @@ const agregarCliente = () => {
     fechaAlta: '',
     historico: false
   };
+
+  // Reset validaciones
+  dniValido.value = true;
+  emailValido.value = true;
+  movilValido.value = true;
 };
+
+// Función para eliminar cliente 
 
 const eliminarCliente = (index) => {
   clientes.value.splice(index, 1);
 };
 
-// Provincias y municipios
-//const provincias = ref(['Madrid', 'Barcelona', 'Valencia']);
+// Función editar cliente
+
+const editando = ref(false);           // Indica si estás en modo edición
+const clienteEditandoIndex = ref(null); // Guarda el índice del cliente a editar
+
+const editCliente = (index) => {
+  const cliente = clientes.value[index];
+  // Cargamos los datos en el formulario
+  nuevoCliente.value = { ...cliente };
+  // Guardamos el índice y marcamos modo edición
+  clienteEditandoIndex.value = index;
+  editando.value = true;
+};
 
 
 // SCRIPTS AUXILIARES
@@ -294,9 +325,7 @@ const capitalizarApellidos = () => {
   nuevoCliente.value.apellidos = capitalizarTexto(nuevoCliente.value.apellidos);
 };
 
-// control móvil
-
-
+// Control móvil
 const movilValido = ref(true);
 
 const movilRegex = /^[67]\d{8}$/;
@@ -316,7 +345,9 @@ const validarMovil = () => {
     movilValido.value = false;
     return false;
   }
-};
+
+
+  };
 
 // control email 
 
@@ -326,6 +357,18 @@ const validarEmail = () => {
   // Expresión simple para email válido
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   emailValido.value = regex.test(email);
+};
+
+// Provincias y municipios
+
+const provincias = ref(provinciasData.provincias);
+ // ['Madrid', 'Barcelona', 'Valencia']
+//const municipiosFiltrados = ref([]);
+
+const filtrarMunicipios = () => {
+   const provinciaSeleccionada = nuevoCliente.value.provincia;
+   console.log('Provincia seleccionada:', provinciaSeleccionada);
+   //municipiosFiltrados.value = provinciasData[provinciaSeleccionada] || [];
 };
 
 </script>
