@@ -47,7 +47,7 @@
       id="nombre"
       v-model="nuevoCliente.nombre"
       class="form-control flex-grow-1"
-      @blur="capitalizarNombre"
+      @blur="capitalizarTexto('nombre')"
       required
     />
   </div>
@@ -60,7 +60,7 @@
       id="apellidos"
       v-model="nuevoCliente.apellidos"
       class="form-control flex-grow-1"
-      @blur="capitalizarApellidos"
+      @blur="capitalizarTexto('apellidos')"
       required
     />
   </div>
@@ -107,6 +107,7 @@
       type="text"
       id="direccion"
       v-model="nuevoCliente.direccion"
+      @blur="capitalizarTexto('direccion')"
       class="form-control flex-grow-1"
     />
   </div>
@@ -136,7 +137,7 @@
       class="form-select flex-grow-1 w-auto"
     >
       <option disabled value="">Seleccione municipio</option>
-      <option v-for="mun in municipiosFiltrados" :key="mun" :value="mun">{{ mun }}</option>
+      <option v-for="mun in municipiosFiltrados" :key="mun.id" :value="mun.nm">{{ mun.nm }}</option>
     </select>
   </div>
 </div>
@@ -194,7 +195,7 @@
 </template>
 
 <script setup>
-import provinciasData from '@/data/provmuni.json';
+import provmuniData from '@/data/provmuni.json';
 
 import { ref } from 'vue';
 
@@ -303,26 +304,17 @@ const validarDni = () => {
   
 };
 
-// capitalizar nombre y apellidos
-const capitalizarTexto = (texto) => {
-  return texto
+// Función única: capitaliza y asigna en el mismo paso
+const capitalizarTexto = (campo) => {
+  const texto = nuevoCliente.value[campo] ?? '';
+  nuevoCliente.value[campo] = texto
     .toLowerCase()
     .split(' ')
     .map(palabra => {
-      if (palabra.length === 0) return '';
-      return palabra.charAt(0).toLocaleUpperCase() + palabra.slice(1);  //toLocaleUpperCase para ñ y tildes
+      if (!palabra) return '';
+      return palabra.charAt(0).toLocaleUpperCase() + palabra.slice(1);
     })
     .join(' ');
-};
-
-
-// Al salir del input (nombre o apellidos)
-const capitalizarNombre = () => {
-  nuevoCliente.value.nombre = capitalizarTexto(nuevoCliente.value.nombre);
-};
-
-const capitalizarApellidos = () => {
-  nuevoCliente.value.apellidos = capitalizarTexto(nuevoCliente.value.apellidos);
 };
 
 // Control móvil
@@ -361,16 +353,32 @@ const validarEmail = () => {
 
 // Provincias y municipios
 
-const provincias = ref(provinciasData.provincias);
- // ['Madrid', 'Barcelona', 'Valencia']
-//const municipiosFiltrados = ref([]);
+const provincias = ref(provmuniData.provincias); // Array de provincias
+const municipios = ref(provmuniData.municipios); // Array de municipios para filtrarlos
+const municipiosFiltrados = ref([]);  // vacío pero contendrá los municipios filtrados
 
 const filtrarMunicipios = () => {
-   const provinciaSeleccionada = nuevoCliente.value.provincia;
-   console.log('Provincia seleccionada:', provinciaSeleccionada);
-   //municipiosFiltrados.value = provinciasData[provinciaSeleccionada] || [];
-};
+  // nombre de la provincia elegida en el <select>
+  const nombreProv = nuevoCliente.value.provincia;
 
+  // 1️⃣ buscar en provincias el objeto con ese nombre
+  const prov = provincias.value.find(p => p.nm === nombreProv);
+  if (!prov) {
+    municipiosFiltrados.value = [];
+    return;
+  }
+
+  // 2️⃣ los dos primeros dígitos del id de la provincia
+  const codigoProv = prov.id.slice(0, 2);
+
+  // 3️⃣ filtrar los municipios cuyo id empiece por esos dos dígitos
+  municipiosFiltrados.value = municipios.value.filter(
+    m => m.id.startsWith(codigoProv)
+  );
+
+  // 4️⃣ opcional: resetear el municipio si ya no corresponde
+  nuevoCliente.value.municipio = '';
+};
 </script>
 
 <style scoped>
