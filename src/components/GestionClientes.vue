@@ -1,7 +1,7 @@
 <template>
  <div
   class="mx-auto mt-2 p-4 pb-5 border rounded-2 shadow-sm min-vh-75 bg-light">
-    <h3 class="text-center my-2">Gestión de Clientes</h3>
+    <h3 class="text-center my-2 bg-primary-subtle">Gestión de Clientes</h3>
     <!-- Formulario -->
 <form @submit.prevent="agregarCliente" class="mb-4">
 <!-- DNI con validación visual -->
@@ -196,7 +196,6 @@
 
 <script setup>
 import provmuniData from '@/data/provmuni.json';
-
 import { ref } from 'vue';
 
 // SCRIPTS CRUD
@@ -319,7 +318,6 @@ const capitalizarTexto = (campo) => {
 
 // Control móvil
 const movilValido = ref(true);
-
 const movilRegex = /^[67]\d{8}$/;
 
 const validarMovil = () => {
@@ -337,8 +335,6 @@ const validarMovil = () => {
     movilValido.value = false;
     return false;
   }
-
-
   };
 
 // control email 
