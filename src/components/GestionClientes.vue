@@ -196,7 +196,9 @@
 
 <script setup>
 import provmuniData from '@/data/provmuni.json';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue'
+import { obtenerClientes } from '@/api/clientes.js'
+
 
 // SCRIPTS CRUD
 
@@ -213,11 +215,9 @@ const nuevoCliente = ref({
   historico: false
 });
 
-// Lista de clientes
-const clientes = ref([]);
 
 // Funcion para agregar cliente
-const agregarCliente = () => {
+/*const agregarCliente = () => {
   if (editando.value && clienteEditandoIndex.value !== null) {
     // Actualizar cliente existente recordad nuevoCliente es el v-model del formulario
     clientes.value[clienteEditandoIndex.value] = { ...nuevoCliente.value }; 
@@ -247,6 +247,17 @@ const agregarCliente = () => {
   emailValido.value = true;
   movilValido.value = true;
 };
+*/
+// Función cargar clientes desde clientes.json
+
+
+// listao clientes
+
+const clientes = ref([])
+
+onMounted(async () => {
+  clientes.value = await obtenerClientes()
+})
 
 // Función para eliminar cliente 
 
