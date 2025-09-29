@@ -341,9 +341,13 @@ const validarMovil = () => {
 
 const emailValido = ref(true);
 const validarEmail = () => {
+  if (email === '') {
+    emailValido.value = true; // Vacío = válido (opcional)
+    return true;
+  }
   const email = nuevoCliente.value.email.trim();
   // Expresión simple para email válido
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   emailValido.value = regex.test(email);
 };
 
