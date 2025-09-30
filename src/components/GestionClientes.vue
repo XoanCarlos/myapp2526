@@ -15,7 +15,7 @@
         id="dni"
         v-model="nuevoCliente.dni"
         @blur="validarDni"
-        class="form-control w-auto"
+        class="form-control w-auto w-25 text-center"
         :class="{ 'is-invalid': !dniValido }"
         required
       />
