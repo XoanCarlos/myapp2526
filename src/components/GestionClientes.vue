@@ -27,11 +27,11 @@
 
   <!-- Columna Fecha de Alta a la derecha -->
   <div class="col-md-4 ms-auto d-flex align-items-center">
-    <label for="fechaAlta" class="form-label ms-5 mb-0 text-nowrap me-2">Fecha de Alta:</label>
+    <label for="fecha_alta" class="form-label ms-5 mb-0 text-nowrap me-2">Fecha de Alta:</label>
     <input
       type="date"
-      id="fechaAlta"
-      v-model="nuevoCliente.fechaAlta"
+      id="fecha_alta"
+      v-model="nuevoCliente.fecha_alta"
       class="form-control w-auto"
     />
   </div>
@@ -199,7 +199,6 @@ import provmuniData from '@/data/provmuni.json';
 import { ref, onMounted } from 'vue'
 import { obtenerClientes } from '@/api/clientes.js'
 
-
 // SCRIPTS CRUD
 
 const nuevoCliente = ref({
@@ -211,7 +210,7 @@ const nuevoCliente = ref({
   direccion: '',
   provincia: '',
   municipio: '',
-  fechaAlta: '',
+  fecha_alta: '',
   historico: false
 });
 
@@ -372,22 +371,22 @@ const filtrarMunicipios = () => {
   // nombre de la provincia elegida en el <select>
   const nombreProv = nuevoCliente.value.provincia;
 
-  // 1️⃣ buscar en provincias el objeto con ese nombre
+  //  buscar en provincias el objeto con ese nombre
   const prov = provincias.value.find(p => p.nm === nombreProv);
   if (!prov) {
     municipiosFiltrados.value = [];
     return;
   }
 
-  // 2️⃣ los dos primeros dígitos del id de la provincia
+  //  los dos primeros dígitos del id de la provincia
   const codigoProv = prov.id.slice(0, 2);
 
-  // 3️⃣ filtrar los municipios cuyo id empiece por esos dos dígitos
+  // filtrar los municipios cuyo id empiece por esos dos dígitos
   municipiosFiltrados.value = municipios.value.filter(
     m => m.id.startsWith(codigoProv)
   );
 
-  // 4️⃣ opcional: resetear el municipio si ya no corresponde
+  //  opcional: resetear el municipio si ya no corresponde
   nuevoCliente.value.municipio = '';
 };
 </script>
