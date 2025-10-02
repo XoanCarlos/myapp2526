@@ -18,6 +18,7 @@
         class="form-control w-auto w-25 text-center"
         :class="{ 'is-invalid': !dniValido }"
         required
+        oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
       />
       <div v-if="!dniValido" class="invalid-feedback">
         DNI o NIE inválido.
@@ -33,6 +34,8 @@
       id="fecha_alta"
       v-model="nuevoCliente.fecha_alta"
       class="form-control w-auto"
+      required
+      oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
     />
   </div>
 </div>
@@ -49,6 +52,7 @@
       class="form-control flex-grow-1"
       @blur="capitalizarTexto('nombre')"
       required
+      oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
     />
   </div>
 
@@ -62,6 +66,7 @@
       class="form-control flex-grow-1"
       @blur="capitalizarTexto('apellidos')"
       required
+      oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
     />
   </div>
 </div>
@@ -79,6 +84,7 @@
       @blur="validarEmail"
       :class="{ 'is-invalid': !emailValido }"
       required
+      oninvalid="this.setCustomValidity('Por favor, rellene este campo con un email válido')"
     />
   </div>
 
@@ -92,11 +98,11 @@
       @blur="validarMovil"
       class="form-control flex-grow-1 text-center"
       :class="{ 'is-invalid': !movilValido }"
+      required
+      oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
     />
   </div>
 </div>
-
-
 
  <!-- Dirección, Provincia y Municipio -->
 <div class="mb-3 row g-3 align-items-center">
@@ -197,9 +203,10 @@
 <script setup>
 import provmuniData from '@/data/provmuni.json';
 import { ref, onMounted } from 'vue'
-import { obtenerClientes } from '@/api/clientes.js'
+import { getClientes, addCliente } from '@/api/clientes.js'
+import Swal from 'sweetalert2';
 
-// SCRIPTS CRUD
+///////////////////// SCRIPTS CRUD /////////////////////
 
 const nuevoCliente = ref({
   dni: '',
@@ -214,72 +221,95 @@ const nuevoCliente = ref({
   historico: false
 });
 
-
-// Funcion para agregar cliente
-/*const agregarCliente = () => {
-  if (editando.value && clienteEditandoIndex.value !== null) {
-    // Actualizar cliente existente recordad nuevoCliente es el v-model del formulario
-    clientes.value[clienteEditandoIndex.value] = { ...nuevoCliente.value }; 
-    editando.value = false;
-    clienteEditandoIndex.value = null;
-  } else {
-    // Agregar nuevo cliente
-    clientes.value.push({ ...nuevoCliente.value });
-  }
-
-  // Reiniciar formulario
-  nuevoCliente.value = {
-    dni: '',
-    nombre: '',
-    apellidos: '',
-    email: '',
-    movil: '',
-    direccion: '',
-    provincia: '',
-    municipio: '',
-    fechaAlta: '',
-    historico: false
-  };
-
-  // Reset validaciones
-  dniValido.value = true;
-  emailValido.value = true;
-  movilValido.value = true;
-};
-*/
-// Función cargar clientes desde clientes.json
-
-
-// listao clientes
+// Función Listar Clientes con get
 
 const clientes = ref([])
 
+// Cargar clientes al montar el componente 
 onMounted(async () => {
-  clientes.value = await obtenerClientes()
+  clientes.value = await getClientes()
+  Swal.fire({
+    icon: 'success',
+    title: "Listando Clientes...",
+    showConfirmButton: false,
+    timer: 1500
+    });
 })
 
-// Función para eliminar cliente 
+// Función Agregar Cliente con post
 
-const eliminarCliente = (index) => {
-  clientes.value.splice(index, 1);
+const agregarCliente = async () => {
+ 
+  // Validar duplicados en el array local (consultando JSON)
+  const duplicado = clientes.value.find(cliente =>
+    cliente.dni === nuevoCliente.value.dni ||
+    cliente.movil === nuevoCliente.value.movil ||
+    cliente.email === nuevoCliente.value.email
+  )
+  // Si hay duplicado, mostrar error y salir
+  if (duplicado) {
+    Swal.fire({
+      icon: 'error',
+      title: 'DNI, móvil o email duplicados',
+      showConfirmButton: false,
+      timer: 2000
+    });
+    return
+      }
+
+  // Pedir confirmación antes de agregar
+  const result = await Swal.fire({
+    title: '¿Desea grabar este cliente?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Grabar',
+    cancelButtonText: 'Cancelar'
+  });   
+  
+  // Si no confirma, salir
+  if (!result.isConfirmed) return;
+ 
+  // Si todo bien, agregar cliente
+  try {
+    const clienteAgregado = await addCliente(nuevoCliente.value);
+    clientes.value.push(clienteAgregado); // Añadir a la lista local
+    clientes.value = await getClientes(); // Refrescar la lista desde la "API"
+    Swal.fire({
+        icon: 'success',
+        title: 'Cliente agregado',
+        showConfirmButton: false,
+        timer: 1500
+    });
+    // Resetear el formulario
+    nuevoCliente.value = {
+      dni: '',
+      nombre: '',
+      apellidos: '',
+      email: '',
+      movil: '',
+      direccion: '',
+      provincia: '',
+      municipio: '',
+      fecha_alta: '',
+      historico: false
+    };
+    // Resetear validaciones
+    dniValido.value = true;
+    movilValido.value = true;
+    emailValido.value = true;
+  } catch (error) {
+    console.error('Error al agregar cliente:', error);
+    Swal.fire({
+        icon: 'error',
+        title: 'Error al agregar cliente',
+        text: 'Inténtelo de nuevo o contacte con el administrador.',
+        showConfirmButton: false,
+        timer: 1500
+    });
+  }
 };
 
-// Función editar cliente
-
-const editando = ref(false);           // Indica si estás en modo edición
-const clienteEditandoIndex = ref(null); // Guarda el índice del cliente a editar
-
-const editCliente = (index) => {
-  const cliente = clientes.value[index];
-  // Cargamos los datos en el formulario
-  nuevoCliente.value = { ...cliente };
-  // Guardamos el índice y marcamos modo edición
-  clienteEditandoIndex.value = index;
-  editando.value = true;
-};
-
-
-// SCRIPTS AUXILIARES
+/////////////// SCRIPTS AUXILIARES ////////////////
 
 // Estado de validez del DNI/NIE si la estructura de datos es más compleja se usa reactive
 const dniValido = ref(true);  // Por defecto es válido y no muestra error al iniciar
@@ -389,6 +419,9 @@ const filtrarMunicipios = () => {
   //  opcional: resetear el municipio si ya no corresponde
   nuevoCliente.value.municipio = '';
 };
+
+// Ventanas de alerta con SweetAlert2 
+
 </script>
 
 <style scoped>

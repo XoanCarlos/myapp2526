@@ -1,32 +1,18 @@
 import axios from 'axios'
-
-// URL base de la "API". Si usas json-server:
+//  librería de JavaScript que actúa como un cliente HTTP 
+// para realizar solicitudes entre el navegador y el servidor,
+// URL base de la "API". Si usas json-server local, asegúrate de la IP:
 const API_URL = 'http://localhost:3000/clientes'
 
-export const obtenerClientes = () => {
-  return axios.get(API_URL)
+// Función para obtener la lista de clientes desde la API
+
+export const getClientes = () => {
+  return axios.get(`${API_URL}?_sort=apellidos&_order=asc`)
               .then(res => res.data)
 }
 
-/*
-
-// Simula agregar un cliente
-export const agregarCliente = (cliente) => {
-  clientesData.push(cliente); // en un JSON real no se modifica, pero para testing sirve
-  return Promise.resolve(cliente);
+// Función para agregar cliente nuevo
+export const addCliente = (nuevoCliente) => {
+  return axios.post(API_URL, nuevoCliente)
+              .then(res => res.data)
 }
-
-// Simula actualizar un cliente
-export const actualizarCliente = (id, cliente) => {
-  const index = clientesData.findIndex(c => c.id === id);
-  if (index !== -1) clientesData[index] = { id, ...cliente };
-  return Promise.resolve(clientesData[index]);
-}
-
-// Simula eliminar un cliente
-export const eliminarCliente = (id) => {
-  const index = clientesData.findIndex(c => c.id === id);
-  if (index !== -1) clientesData.splice(index, 1);
-  return Promise.resolve();
-}
-*/
