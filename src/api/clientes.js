@@ -4,15 +4,27 @@ import axios from 'axios'
 // URL base de la "API". Si usas json-server local, asegúrate de la IP:
 const API_URL = 'http://localhost:3000/clientes'
 
-// Función para obtener la lista de clientes desde la API
+// Función para obtener la lista de clientes desde la API con historico true
 
 export const getClientes = () => {
-  return axios.get(`${API_URL}?_sort=apellidos&_order=asc`)
+  return axios.get(`${API_URL}?_sort=apellidos&_order=asc&historico=true`)
               .then(res => res.data)
 }
 
 // Función para agregar cliente nuevo
 export const addCliente = (nuevoCliente) => {
   return axios.post(API_URL, nuevoCliente)
+              .then(res => res.data)
+}
+
+// Función para eliminar un cliente por su id pasando histórico a false 
+export const deleteCliente = (id) => {
+  return axios.patch(`${API_URL}/${id}`, {historico: false})
+              .then(res => res.data)
+}
+
+// Función para actualizar un cliente por su id
+export const updateCliente = (id, clienteActualizado) => {
+  return axios.put(`${API_URL}/${id}`, clienteActualizado)
               .then(res => res.data)
 }

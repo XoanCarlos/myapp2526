@@ -183,12 +183,12 @@
             <td class="text-center">{{ cliente.municipio }}</td>
             <td class="align-middle text-center">
               <button
-                @click="eliminarCliente(index)"
+                @click="eliminarCliente(cliente.movil)"
                 class="btn btn-danger btn-sm me-2">
                 <i class="bi bi-trash"></i>
               </button>
               <button
-                @click="editCliente(index)"
+                @click="editarCliente(cliente.movil)"
                 class="btn btn-warning btn-sm ms-2">
                 <i class="bi bi-pencil"></i>
               </button>
@@ -203,7 +203,7 @@
 <script setup>
 import provmuniData from '@/data/provmuni.json';
 import { ref, onMounted } from 'vue'
-import { getClientes, addCliente } from '@/api/clientes.js'
+import { getClientes, addCliente, deleteCliente, updateCliente } from '@/api/clientes.js'
 import Swal from 'sweetalert2';
 
 ///////////////////// SCRIPTS CRUD /////////////////////
@@ -237,6 +237,9 @@ onMounted(async () => {
 })
 
 // Función Agregar Cliente con post
+
+const editando = ref(false);            // ¿Estamos en modo edición?
+const clienteEditandoId = ref(null);    // Guardamos el ID del cliente que se está editando
 
 const agregarCliente = async () => {
  
@@ -291,7 +294,7 @@ const agregarCliente = async () => {
       provincia: '',
       municipio: '',
       fecha_alta: '',
-      historico: false
+      historico: true
     };
     // Resetear validaciones
     dniValido.value = true;
@@ -307,6 +310,71 @@ const agregarCliente = async () => {
         timer: 1500
     });
   }
+};
+
+// Funcion Eliminar Cliente con patch (histórico a false)
+const eliminarCliente = async (movil) => {
+  // Refrescar lista desde la API
+  clientes.value = await getClientes();
+  // Buscar cliente completo (que incluye el ID)
+  const clienteAEliminar = clientes.value.find(cliente => cliente.movil === movil);
+
+  if (!clienteAEliminar) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Cliente no encontrado',
+      showConfirmButton: false,
+      timer: 1500
+    });
+    return;
+  }
+
+  // Pedir confirmación antes de eliminar
+  const result = await Swal.fire({
+    title: `¿Eliminar al cliente ${clienteAEliminar.nombre} ${clienteAEliminar.apellidos}?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar'
+  });
+
+
+  // Si no confirma, salir
+  if (!result.isConfirmed) return;
+
+  // Si confirma, eliminar cliente usando la API y movil como ID
+  await deleteCliente(clienteAEliminar.id);
+  // Refrescar la lista desde la "API"
+  clientes.value = await getClientes();
+
+  Swal.fire({
+    icon: 'success',
+    title: 'Cliente eliminado',
+    showConfirmButton: false,
+    timer: 1500
+  });
+};
+
+// Función Editar Cliente (carga datos en el formulario)
+const editarCliente = (movil) => {
+  const cliente = clientes.value.find(c => c.movil === movil);
+  if (!cliente) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Cliente no encontrado',
+      showConfirmButton: false,
+      timer: 1500
+    });
+    return;
+  }
+
+  // Copiar datos al formulario
+  nuevoCliente.value = { ...cliente }; // 🔁 Aquí cargas el formulario con los datos
+  editando.value = true;
+    // Actualiza municipios filtrados según la provincia seleccionada
+  filtrarMunicipios();
+  nuevoCliente.value.municipio = cliente.municipio;               // 🟢 Ahora estamos en modo edición
+  clienteEditandoId.value = cliente.id;
 };
 
 /////////////// SCRIPTS AUXILIARES ////////////////
