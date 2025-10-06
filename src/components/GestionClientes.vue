@@ -3,7 +3,7 @@
   class="mx-auto mt-2 p-4 pb-5 border rounded-2 shadow-sm min-vh-75 bg-light">
     <h3 class="text-center my-2 bg-primary-subtle">Gestión de Clientes</h3>
     <!-- Formulario -->
-<form @submit.prevent="agregarCliente" class="mb-4">
+<form @submit.prevent="guardarCliente" class="mb-4">
 <!-- DNI con validación visual -->
 <div class="mb-3 row align-items-center">
   <!-- Columna DNI -->
@@ -19,6 +19,7 @@
         :class="{ 'is-invalid': !dniValido }"
         required
         oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
+        oninput="this.setCustomValidity('')"
       />
       <div v-if="!dniValido" class="invalid-feedback">
         DNI o NIE inválido.
@@ -36,6 +37,7 @@
       class="form-control w-auto"
       required
       oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
+      oninput="this.setCustomValidity('')"
     />
   </div>
 </div>
@@ -53,6 +55,7 @@
       @blur="capitalizarTexto('nombre')"
       required
       oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
+      oninput="this.setCustomValidity('')"
     />
   </div>
 
@@ -67,6 +70,7 @@
       @blur="capitalizarTexto('apellidos')"
       required
       oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
+      oninput="this.setCustomValidity('')"
     />
   </div>
 </div>
@@ -85,6 +89,7 @@
       :class="{ 'is-invalid': !emailValido }"
       required
       oninvalid="this.setCustomValidity('Por favor, rellene este campo con un email válido')"
+      oninput="this.setCustomValidity('')"
     />
   </div>
 
@@ -100,6 +105,7 @@
       :class="{ 'is-invalid': !movilValido }"
       required
       oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
+      oninput="this.setCustomValidity('')"
     />
   </div>
 </div>
@@ -156,47 +162,55 @@
 
   <!-- Botón centrado -->
   <div class="text-center">
-    <button type="submit" class="btn btn-primary">Grabar</button>
+    <button type="submit" class="btn btn-primary border-0 shadow-none rounded-0">
+      {{ editando ? 'Modificar Cliente' : 'Guardar Cliente' }}
+    </button>
   </div>
 
 </form>
-    <!-- Lista de Clientes -->
     <div class="table-responsive">
-      <h4 class="text-center w-100">Listado Clientes</h4>
-      <table class="table table-bordered table-striped w-100">
-        <thead class="table-primary">
-          <tr >
-            <th class="text-center">ID</th>
-            <th class="text-center">Apellidos</th>
-            <th class="text-center">Nombre</th>
-            <th class="text-center">Móvil</th>
-            <th class="text-center">Municipio</th>
-            <th class="text-center">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(cliente, index) in clientes" :key="index" >
-            <th scope="row" class="text-center">{{ index + 1 }}</th>
-            <td >{{ cliente.apellidos }}</td>
-            <td >{{ cliente.nombre }}</td>
-            <td class="text-center">{{ cliente.movil }}</td>
-            <td class="text-center">{{ cliente.municipio }}</td>
-            <td class="align-middle text-center">
-              <button
-                @click="eliminarCliente(cliente.movil)"
-                class="btn btn-danger btn-sm me-2">
-                <i class="bi bi-trash"></i>
-              </button>
-              <button
-                @click="editarCliente(cliente.movil)"
-                class="btn btn-warning btn-sm ms-2">
-                <i class="bi bi-pencil"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <h4 class="text-center mb-3">Listado de Clientes</h4>
+  <table class="table table-bordered table-striped table-hover table-sm align-middle">
+    <thead class="table-primary">
+      <tr>
+        <th class="text-center" scope="col">ID</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Nombre</th>
+        <th class="text-center" scope="col">Móvil</th>
+        <th class="text-center" scope="col">Municipio</th>
+        <th class="text-center" scope="col" style="width: 150px;">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(cliente, index) in clientes" :key="cliente.id || index">
+        <th scope="row" class="text-center">{{ index + 1 }}</th>
+        <td>{{ cliente.apellidos }}</td>
+        <td>{{ cliente.nombre }}</td>
+        <td class="text-center">{{ cliente.movil }}</td>
+        <td class="text-center">{{ cliente.municipio }}</td>
+        <td class="text-center">
+          <button
+            @click="eliminarCliente(cliente.movil)"
+            class="btn btn-danger btn-sm me-4 border-0 shadow-none rounded-0"
+            title="Eliminar cliente"
+            aria-label="Eliminar cliente"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+          <button
+            @click="editarCliente(cliente.movil)"
+            class="btn btn-warning btn-sm border-0 shadow-none rounded-0"
+            title="Editar cliente"
+            aria-label="Editar cliente"
+          >
+            <i class="bi bi-pencil"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
   </div>
 </template>
 
@@ -221,6 +235,10 @@ const nuevoCliente = ref({
   historico: false
 });
 
+const editando = ref(false);
+const clienteEditandoId = ref(null);
+
+
 // Función Listar Clientes con get
 
 const clientes = ref([])
@@ -236,54 +254,62 @@ onMounted(async () => {
     });
 })
 
-// Función Agregar Cliente con post
+const guardarCliente = async () => {
+  // Validar duplicados solo si estás creando (no si editando)
+  if (!editando.value) {
+    const duplicado = clientes.value.find(cliente =>
+      cliente.dni === nuevoCliente.value.dni ||
+      cliente.movil === nuevoCliente.value.movil ||
+      cliente.email === nuevoCliente.value.email
+    );
+    if (duplicado) {
+      Swal.fire({
+        icon: 'error',
+        title: 'DNI, móvil o email duplicados',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return;
+    }
+  }
 
-const editando = ref(false);            // ¿Estamos en modo edición?
-const clienteEditandoId = ref(null);    // Guardamos el ID del cliente que se está editando
-
-const agregarCliente = async () => {
- 
-  // Validar duplicados en el array local (consultando JSON)
-  const duplicado = clientes.value.find(cliente =>
-    cliente.dni === nuevoCliente.value.dni ||
-    cliente.movil === nuevoCliente.value.movil ||
-    cliente.email === nuevoCliente.value.email
-  )
-  // Si hay duplicado, mostrar error y salir
-  if (duplicado) {
-    Swal.fire({
-      icon: 'error',
-      title: 'DNI, móvil o email duplicados',
-      showConfirmButton: false,
-      timer: 2000
-    });
-    return
-      }
-
-  // Pedir confirmación antes de agregar
+  // Confirmación antes de guardar
   const result = await Swal.fire({
-    title: '¿Desea grabar este cliente?',
+    title: editando.value ? '¿Desea modificar este cliente?' : '¿Desea grabar este cliente?',
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonText: 'Grabar',
+    confirmButtonText: editando.value ? 'Modificar' : 'Grabar',
     cancelButtonText: 'Cancelar'
-  });   
-  
-  // Si no confirma, salir
+  });
+
   if (!result.isConfirmed) return;
- 
-  // Si todo bien, agregar cliente
+
   try {
-    const clienteAgregado = await addCliente(nuevoCliente.value);
-    clientes.value.push(clienteAgregado); // Añadir a la lista local
-    clientes.value = await getClientes(); // Refrescar la lista desde la "API"
-    Swal.fire({
+    if (editando.value) {
+      // Modificar cliente (PUT)
+      const clienteActualizado = await updateCliente(clienteEditandoId.value, nuevoCliente.value);
+      // Actualiza el cliente en la lista local
+      const index = clientes.value.findIndex(c => c.id === clienteEditandoId.value);
+      if (index !== -1) clientes.value[index] = clienteActualizado;
+      Swal.fire({
+        icon: 'success',
+        title: 'Cliente modificado',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    } else {
+      // Agregar cliente (POST)
+      const clienteAgregado = await addCliente(nuevoCliente.value);
+      clientes.value.push(clienteAgregado);
+      Swal.fire({
         icon: 'success',
         title: 'Cliente agregado',
         showConfirmButton: false,
         timer: 1500
-    });
-    // Resetear el formulario
+      });
+    }
+
+    // Reset formulario y estado
     nuevoCliente.value = {
       dni: '',
       nombre: '',
@@ -296,21 +322,29 @@ const agregarCliente = async () => {
       fecha_alta: '',
       historico: true
     };
-    // Resetear validaciones
+    editando.value = false;
+    clienteEditandoId.value = null;
+
+    // Reset validaciones si tienes (dniValido, movilValido, etc)
     dniValido.value = true;
     movilValido.value = true;
     emailValido.value = true;
+
+    // Refrescar lista completa (opcional)
+    clientes.value = await getClientes();
+
   } catch (error) {
-    console.error('Error al agregar cliente:', error);
+    console.error('Error al guardar cliente:', error);
     Swal.fire({
-        icon: 'error',
-        title: 'Error al agregar cliente',
-        text: 'Inténtelo de nuevo o contacte con el administrador.',
-        showConfirmButton: false,
-        timer: 1500
+      icon: 'error',
+      title: 'Error al guardar cliente',
+      text: 'Inténtelo de nuevo o contacte con el administrador.',
+      showConfirmButton: false,
+      timer: 1500
     });
   }
 };
+
 
 // Funcion Eliminar Cliente con patch (histórico a false)
 const eliminarCliente = async (movil) => {
@@ -371,7 +405,9 @@ const editarCliente = (movil) => {
   // Copiar datos al formulario
   nuevoCliente.value = { ...cliente }; // 🔁 Aquí cargas el formulario con los datos
   editando.value = true;
-    // Actualiza municipios filtrados según la provincia seleccionada
+  // Formatear fecha para el input type="date"
+  nuevoCliente.value.fecha_alta = formatearFechaParaInput(cliente.fecha_alta);
+  // Actualiza municipios filtrados según la provincia seleccionada
   filtrarMunicipios();
   nuevoCliente.value.municipio = cliente.municipio;               // 🟢 Ahora estamos en modo edición
   clienteEditandoId.value = cliente.id;
@@ -488,7 +524,15 @@ const filtrarMunicipios = () => {
   nuevoCliente.value.municipio = '';
 };
 
-// Ventanas de alerta con SweetAlert2 
+// conversor fecha
+const formatearFechaParaInput = (fecha) => {
+  if (!fecha) return '';
+  const partes = fecha.split('/');
+  if (partes.length !== 3) return '';
+  // partes = [dd, mm, yyyy]
+  return `${partes[2]}-${partes[1].padStart(2, '0')}-${partes[0].padStart(2, '0')}`;
+}
+
 
 </script>
 

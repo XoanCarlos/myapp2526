@@ -197,8 +197,8 @@
     },
     {
       "dni": "Y1234567X",
-      "fecha_alta": "21/09/2023",
-      "nombre": "María",
+      "fecha_alta": "2023-09-21",
+      "nombre": "María Del Mar",
       "apellidos": "Gómez Rodríguez",
       "email": "maria.gomez@example.com",
       "movil": "645678901",
