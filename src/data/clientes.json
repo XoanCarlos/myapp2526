@@ -129,7 +129,7 @@
       "movil": "690123456",
       "direccion": "Calle Sánchez 80",
       "provincia": "Cádiz",
-      "municipio": "Chiclana",
+      "municipio": "Chiclana de la Frontera",
       "historico": false,
       "lopd": false,
       "password": "",
@@ -197,7 +197,7 @@
     },
     {
       "dni": "Y1234567X",
-      "fecha_alta": "2023-09-21",
+      "fecha_alta": "07/09/2025",
       "nombre": "María Del Mar",
       "apellidos": "Gómez Rodríguez",
       "email": "maria.gomez@example.com",
