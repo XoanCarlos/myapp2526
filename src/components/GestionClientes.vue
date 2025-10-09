@@ -29,7 +29,7 @@
 
   <!-- Columna Fecha de Alta a la derecha -->
   <div class="col-md-4 ms-auto d-flex align-items-center">
-    <label for="fecha_alta" class="form-label ms-5 mb-0 text-nowrap me-2">Fecha de Alta:</label>
+    <label for="fecha_alta" class="form-label ms-4 mb-0 text-nowrap me-2">Fecha de Alta:</label>
     <input
       type="date"
       id="fecha_alta"
@@ -60,7 +60,7 @@
   </div>
 
   <!-- Apellidos -->
-  <div class="col-md-6 d-flex align-items-center ms-5">
+  <div class="col-md-4 d-flex align-items-center ms-5">
     <label for="apellidos" class="form-label me-4 mb-0 text-nowrap">Apellidos:</label>
     <input
       type="text"
@@ -94,7 +94,7 @@
   </div>
 
   <!-- Móvil -->
-  <div class="col-md-3 d-flex align-items-center ms-5">
+  <div class="col-md-2 d-flex align-items-center ms-5">
     <label for="movil" class="form-label me-5 mb-0 text-nowrap ">Móvil:</label>
     <input
       type="tel"
@@ -125,7 +125,7 @@
   </div>
 
   <!-- Provincia -->
-  <div class="col-md-3 d-flex align-items-center ms-5">
+  <div class="col-md-2 d-flex align-items-center ms-5">
     <label for="provincia" class="form-label me-4 mb-0 text-nowrap">Provincia:</label>
     <select
       id="provincia"
@@ -141,7 +141,7 @@
   </div>
 
   <!-- Municipio -->
-  <div class="col-md-3 d-flex align-items-center">
+  <div class="col-md-2 d-flex align-items-center">
     <label for="municipio" class="form-label me-2 ms-4 mb-0 text-nowrap">Municipio:</label>
     <select
       id="municipio"
@@ -155,7 +155,7 @@
 </div>
 
   <!-- Histórico -->
-  <div class="d-flex justify-content-end mt-4 me-5">
+  <div class="d-flex justify-content-end mt-2 me-5">
     <input type="checkbox" id="historico" v-model="nuevoCliente.historico" class="form-check-input" />
     <label for="historico" class="form-check-label ms-3 me-5 mb-0">Histórico</label>
   </div>
