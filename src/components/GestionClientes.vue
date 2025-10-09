@@ -156,7 +156,11 @@
 
   <!-- Histórico -->
   <div class="d-flex justify-content-end mt-2 me-6">
-    <input type="checkbox" id="historico" v-model="nuevoCliente.historico" class="form-check-input" />
+    <input  type="checkbox"
+      id="historico"
+      v-model="mostrarHistorico"
+      class="form-check-input"
+      @change="cargarClientes" />
     <label for="historico" class="form-check-label ms-3 me-5 mb-0">Histórico</label>
   </div>
 
@@ -220,7 +224,7 @@ import { ref, onMounted } from 'vue'
 import { getClientes, addCliente, deleteCliente, updateCliente } from '@/api/clientes.js'
 import Swal from 'sweetalert2';
 
-///////////////////// SCRIPTS CRUD /////////////////////
+///////////////////// SCRIPTS CRUD ////////////////////////
 
 const nuevoCliente = ref({
   dni: '',
@@ -238,21 +242,27 @@ const nuevoCliente = ref({
 const editando = ref(false);
 const clienteEditandoId = ref(null);
 
-
+const mostrarHistorico = ref(false)
 // Función Listar Clientes con get
 
 const clientes = ref([])
 
 // Cargar clientes al montar el componente 
 onMounted(async () => {
-  clientes.value = await getClientes()
+  cargarClientes()
+})
+
+const cargarClientes = () => {
+  getClientes(mostrarHistorico.value).then(data => {
+    clientes.value = data
+  })
   Swal.fire({
     icon: 'success',
     title: "Listando Clientes...",
     showConfirmButton: false,
     timer: 1500
     });
-})
+}
 
 const guardarCliente = async () => {
   // Validar duplicados solo si estás creando (no si editando)
