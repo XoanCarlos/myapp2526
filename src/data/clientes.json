@@ -2,7 +2,7 @@
   "clientes": [
     {
       "dni": "73289465B",
-      "fecha_alta": "14/02/2022",
+      "fecha_alta": "2022-02-14",
       "nombre": "Laura",
       "apellidos": "López Sánchez",
       "email": "laura.lopez@example.com",
@@ -17,11 +17,11 @@
     },
     {
       "dni": "X3456789G",
-      "fecha_alta": "05/07/2023",
+      "fecha_alta": "2023-07-05",
       "nombre": "José",
       "apellidos": "Martín Pérez",
       "email": "jose.martin@example.com",
-      "movil": "678901234",
+      "movil": "678901222",
       "direccion": "Calle Fernández 95",
       "provincia": "Barcelona",
       "municipio": "Badalona",
@@ -32,7 +32,7 @@
     },
     {
       "dni": "45678912S",
-      "fecha_alta": "20/11/2021",
+      "fecha_alta": "2021-11-20",
       "nombre": "Ana",
       "apellidos": "García Gómez",
       "email": "ana.garcia@example.com",
@@ -47,7 +47,7 @@
     },
     {
       "dni": "78912345N",
-      "fecha_alta": "08/03/2024",
+      "fecha_alta": "2024-03-08",
       "nombre": "Antonio",
       "apellidos": "Pérez López",
       "email": "antonio.perez@example.com",
@@ -62,7 +62,7 @@
     },
     {
       "dni": "90123456A",
-      "fecha_alta": "27/06/2022",
+      "fecha_alta": "2022-06-27",
       "nombre": "María",
       "apellidos": "Fernández Martín",
       "email": "maria.fernandez@example.com",
@@ -77,7 +77,7 @@
     },
     {
       "dni": "Z2345678M",
-      "fecha_alta": "15/04/2023",
+      "fecha_alta": "2023-04-15",
       "nombre": "Javier",
       "apellidos": "Sánchez García",
       "email": "javier.sanchez@example.com",
@@ -92,7 +92,7 @@
     },
     {
       "dni": "34567891H",
-      "fecha_alta": "09/09/2021",
+      "fecha_alta": "2021-09-09",
       "nombre": "Carmen",
       "apellidos": "Rodríguez Martínez",
       "email": "carmen.rodriguez@example.com",
@@ -107,7 +107,7 @@
     },
     {
       "dni": "56789123F",
-      "fecha_alta": "11/01/2024",
+      "fecha_alta": "2024-01-11",
       "nombre": "Luis",
       "apellidos": "Martínez Fernández",
       "email": "luis.martinez@example.com",
@@ -122,7 +122,7 @@
     },
     {
       "dni": "23456789D",
-      "fecha_alta": "22/05/2022",
+      "fecha_alta": "2022-05-22",
       "nombre": "Isabel",
       "apellidos": "Gómez López",
       "email": "isabel.gomez@example.com",
@@ -137,7 +137,7 @@
     },
     {
       "dni": "67891234H",
-      "fecha_alta": "03/08/2023",
+      "fecha_alta": "2023-08-03",
       "nombre": "Carlos",
       "apellidos": "Martín García",
       "email": "carlos.martin@example.com",
@@ -152,7 +152,7 @@
     },
     {
       "dni": "78945612K",
-      "fecha_alta": "29/12/2021",
+      "fecha_alta": "2021-12-29",
       "nombre": "Ana",
       "apellidos": "López Fernández",
       "email": "ana.lopez@example.com",
@@ -167,7 +167,7 @@
     },
     {
       "dni": "X9876543K",
-      "fecha_alta": "17/03/2024",
+      "fecha_alta": "2024-03-17",
       "nombre": "Javier",
       "apellidos": "Sánchez Gómez",
       "email": "javier.sanchez@example.com",
@@ -182,7 +182,7 @@
     },
     {
       "dni": "34561278Y",
-      "fecha_alta": "05/06/2022",
+      "fecha_alta": "2022-06-05",
       "nombre": "Luis",
       "apellidos": "Pérez Martínez",
       "email": "luis.perez@example.com",
@@ -197,7 +197,7 @@
     },
     {
       "dni": "Y1234567X",
-      "fecha_alta": "07/09/2025",
+      "fecha_alta": "2025-09-07",
       "nombre": "María Del Mar",
       "apellidos": "Gómez Rodríguez",
       "email": "maria.gomez@example.com",
@@ -212,7 +212,7 @@
     },
     {
       "dni": "56712389R",
-      "fecha_alta": "12/11/2021",
+      "fecha_alta": "2021-11-12",
       "nombre": "Carlos",
       "apellidos": "Martín Sánchez",
       "email": "carlos.martin@example.com",
@@ -227,7 +227,7 @@
     },
     {
       "dni": "X4567891E",
-      "fecha_alta": "14/01/2022",
+      "fecha_alta": "2022-01-14",
       "nombre": "Ana",
       "apellidos": "Fernández López",
       "email": "ana.fernandez@example.com",
@@ -242,7 +242,7 @@
     },
     {
       "dni": "Y2345678Z",
-      "fecha_alta": "09/03/2023",
+      "fecha_alta": "2023-03-09",
       "nombre": "Carlos",
       "apellidos": "Martínez Sánchez",
       "email": "carlos.martinez@example.com",
@@ -257,7 +257,7 @@
     },
     {
       "dni": "Z9876543A",
-      "fecha_alta": "22/07/2021",
+      "fecha_alta": "2021-07-22",
       "nombre": "José",
       "apellidos": "Pérez Gómez",
       "email": "jose.perez@example.com",
@@ -272,7 +272,7 @@
     },
     {
       "dni": "12345678Z",
-      "fecha_alta": "30/09/2022",
+      "fecha_alta": "2022-09-30",
       "nombre": "Laura",
       "apellidos": "Gómez Fernández",
       "email": "laura.gomez@example.com",
@@ -287,7 +287,7 @@
     },
     {
       "dni": "87654321X",
-      "fecha_alta": "17/12/2023",
+      "fecha_alta": "2023-12-17",
       "nombre": "Luis",
       "apellidos": "López Martín",
       "email": "luis.lopez@example.com",
@@ -302,7 +302,7 @@
     },
     {
       "dni": "X3456789G",
-      "fecha_alta": "05/05/2024",
+      "fecha_alta": "2024-05-05",
       "nombre": "Isabel",
       "apellidos": "Martín Pérez",
       "email": "isabel.martin@example.com",
@@ -325,7 +325,7 @@
       "direccion": "Avda. De Galicia, 101",
       "provincia": "Cuenca",
       "municipio": "Alconchel de la Estrella",
-      "fecha_alta": "02/10/2025",
+      "fecha_alta": "2025-10-02",
       "historico": false
     },
     {
@@ -338,7 +338,7 @@
       "direccion": "Avenida Del Puente, 80",
       "provincia": "Pontevedra",
       "municipio": "Vigo",
-      "fecha_alta": "10/02/2025",
+      "fecha_alta": "2025-02-10",
       "historico": false,
       "email": "asdf@asdf.ok"
     },
@@ -352,7 +352,7 @@
       "direccion": "Avenida Del Puerto, 1",
       "provincia": "Guadalajara",
       "municipio": "Driebes",
-      "fecha_alta": "03/10/2025",
+      "fecha_alta": "2025-10-03",
       "historico": false
     },
     {
@@ -365,7 +365,7 @@
       "direccion": "Calle Principal, 12",
       "provincia": "Girona",
       "municipio": "Arbúcies",
-      "fecha_alta": "03/10/2025",
+      "fecha_alta": "2025-10-03",
       "historico": true
     },
     {
@@ -378,7 +378,20 @@
       "direccion": "Calle Rúa, 14 4ºa",
       "provincia": "Huelva",
       "municipio": "Alájar",
-      "fecha_alta": "10/10/2025",
+      "fecha_alta": "2025-10-09",
+      "historico": true
+    },
+    {
+      "id": "68a1",
+      "dni": "94016002Y",
+      "nombre": "Amancio",
+      "apellidos": "Ara Sol",
+      "email": "sol@mail.com",
+      "movil": "652145786",
+      "direccion": "Calle Sol, 25",
+      "provincia": "Huelva",
+      "municipio": "Cerro de Andévalo, El",
+      "fecha_alta": "2025-10-08",
       "historico": true
     }
   ]

@@ -1,7 +1,7 @@
 <template>
  <div
   class="mx-auto mt-2 p-4 pb-5 border rounded-2 shadow-sm min-vh-75 bg-light">
-    <h3 class="text-center my-2 bg-primary-subtle">Gestión de Clientes</h3>
+    <h4 class="text-center my-3 bg-primary-subtle">Registro de Clientes</h4>
     <!-- Formulario -->
 <form @submit.prevent="guardarCliente" class="mb-4">
 <!-- DNI con validación visual -->
@@ -158,7 +158,7 @@
   <div class="d-flex justify-content-end mt-2 me-6">
     <input  type="checkbox"
       id="historico"
-      v-model="nuevoCliente.historico"
+      v-model="mostrarHistorico"
       class="form-check-input"
       @change="cargarClientes" />
     <label for="historico" class="form-check-label ms-3 me-5 mb-0">Histórico</label>
@@ -169,6 +169,8 @@
     <button type="submit" class="btn btn-primary border-0 shadow-none rounded-0">
       {{ editando ? 'Modificar Cliente' : 'Guardar Cliente' }}
     </button>
+    <!-- Botón que solo aparece cuando histórico está marcado -->
+  
   </div>
 
 </form>
@@ -192,10 +194,10 @@
         <td>{{ cliente.nombre }}</td>
         <td class="text-center">{{ cliente.movil }}</td>
         <td class="text-center">{{ cliente.municipio }}</td>
-        <td class="text-center">
+        <td class="text-start">
           <button
             @click="eliminarCliente(cliente.movil)"
-            class="btn btn-danger btn-sm me-4 border-0 shadow-none rounded-0"
+            class="btn btn-danger btn-sm border-0 ms-4 me-2 shadow-none rounded-0"
             title="Eliminar cliente"
             aria-label="Eliminar cliente"
           >
@@ -203,11 +205,19 @@
           </button>
           <button
             @click="editarCliente(cliente.movil)"
-            class="btn btn-warning btn-sm border-0 shadow-none rounded-0"
+            class="btn btn-warning btn-sm border-0 dow-none rounded-0"
             title="Editar cliente"
             aria-label="Editar cliente"
           >
             <i class="bi bi-pencil"></i>
+          </button>
+          <button
+            v-if="cliente.historico === false"
+            @click="toggleHistoricoCliente(cliente)"
+            class="btn btn-secondary btn-sm ms-2 border-0 shadow-none rounded-0"
+            title="Activar cliente"
+          >
+            <i class="bi bi-toggle-off"></i>
           </button>
         </td>
       </tr>
@@ -236,13 +246,13 @@ const nuevoCliente = ref({
   provincia: '',
   municipio: '',
   fecha_alta: '',
-  historico: false
+  historico: true
 });
 
-const editando = ref(false);
+const editando = ref(true);
 const clienteEditandoId = ref(null);
 
-const mostrarHistorico = ref(false)
+const mostrarHistorico = ref(false); // Estado del checkbox
 // Función Listar Clientes con get
 
 const clientes = ref([])
@@ -295,13 +305,14 @@ const guardarCliente = async () => {
   });
 
   if (!result.isConfirmed) return;
-
+  //  cliente.fecha_alta = formatearFechaParaInput(cliente.fecha_alta);
   try {
     if (editando.value) {
       // Validar campos
-      clienteActualizado.value.fecha_alta = formatearFechaParaInput(nuevoCliente.fecha_alta);
-      // Modificar cliente (PUT)
+      // Modificar cliente (PUT)+
+     
       const clienteActualizado = await updateCliente(clienteEditandoId.value, nuevoCliente.value);
+      
       // Actualiza el cliente en la lista local
       const index = clientes.value.findIndex(c => c.id === clienteEditandoId.value);
       if (index !== -1) clientes.value[index] = clienteActualizado;
@@ -313,7 +324,7 @@ const guardarCliente = async () => {
       });
     } else {
       // Agregar cliente (POST)
-      nuevoCliente.value.fecha_alta = formatearFechaParaInput(nuevoCliente.fecha_alta);
+    
       const clienteAgregado = await addCliente(nuevoCliente.value);
       clientes.value.push(clienteAgregado);
       Swal.fire({
@@ -407,6 +418,7 @@ const eliminarCliente = async (movil) => {
 // Función Editar Cliente (carga datos en el formulario)
 const editarCliente = (movil) => {
   const cliente = clientes.value.find(c => c.movil === movil);
+ 
   if (!cliente) {
     Swal.fire({
       icon: 'error',
@@ -419,9 +431,10 @@ const editarCliente = (movil) => {
 
   // Copiar datos al formulario
   nuevoCliente.value = { ...cliente }; // 🔁 Aquí cargas el formulario con los datos
+  nuevoCliente.value.fecha_alta = formatearFechaParaInput(cliente.fecha_alta);  
   editando.value = true;
   // Formatear fecha para el input type="date"
-
+  console.log('Cliente a editar:', cliente.fecha_alta);
   // Actualiza municipios filtrados según la provincia seleccionada
   filtrarMunicipios();
   nuevoCliente.value.municipio = cliente.municipio;               // 🟢 Ahora estamos en modo edición
@@ -539,13 +552,22 @@ const filtrarMunicipios = () => {
   nuevoCliente.value.municipio = '';
 };
 
-// conversor fecha
-const formatearFechaParaInput = (fecha) => {
+function formatearFechaParaInput(fecha) {
   if (!fecha) return '';
-  const partes = fecha.split('/');
-  if (partes.length !== 3) return '';
-  // partes = [dd, mm, yyyy]
-  return `${partes[2]}-${partes[1].padStart(2, '0')}-${partes[0].padStart(2, '0')}`;
+
+  // Detecta formato dd/mm/yyyy
+  if (fecha.includes('/')) {
+    const [dd, mm, yyyy] = fecha.split('/');
+    return `${yyyy}-${mm.padStart(2, '0')}-${dd.padStart(2, '0')}`;
+  }
+
+  // Detecta formato yyyy-mm-dd
+  if (fecha.includes('-')) {
+    const partes = fecha.split('-');
+    if (partes.length === 3) return fecha; // ya formato ISO
+  }
+
+  return '';
 }
 
 

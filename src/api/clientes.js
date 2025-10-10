@@ -6,13 +6,17 @@ const API_URL = 'http://localhost:3000/clientes'
 
 // Función para obtener la lista de clientes desde la API con historico true
 
-export const getClientes = (mostrarHistorico = false) => {
+export const getClientes = (mostrarHistorico) => {
   let url = `${API_URL}?_sort=apellidos&_order=asc`;
 
   if (!mostrarHistorico) {
-    // Solo clientes con histórico = false
+    // Solo clientes con histórico = true
     url += `&historico=true`;
   }
+  else {
+    // Todos los clientes, sin filtrar por histórico
+    url += ``;
+  } 
 
   return axios.get(url).then(res => res.data);
 };
