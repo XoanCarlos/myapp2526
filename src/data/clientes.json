@@ -160,7 +160,7 @@
       "direccion": "Calle García 33",
       "provincia": "Madrid",
       "municipio": "Getafe",
-      "historico": false,
+      "historico": true,
       "lopd": true,
       "password": "",
       "id": "1b52"
@@ -325,7 +325,7 @@
       "direccion": "Avda. De Galicia, 101",
       "provincia": "Cuenca",
       "municipio": "Alconchel de la Estrella",
-      "fecha_alta": "2025-10-02",
+      "fecha_alta": "02/10/2025",
       "historico": false
     },
     {
@@ -335,11 +335,12 @@
       "apellidos": "Alonso Gil",
       "eemail": "gil@gil.com",
       "movil": "654654654",
-      "direccion": "",
-      "provincia": "",
-      "municipio": "",
-      "fecha_alta": "2025-10-02",
-      "historico": false
+      "direccion": "Avenida Del Puente, 80",
+      "provincia": "Pontevedra",
+      "municipio": "Vigo",
+      "fecha_alta": "10/02/2025",
+      "historico": false,
+      "email": "asdf@asdf.ok"
     },
     {
       "id": "c9ee",
@@ -351,7 +352,7 @@
       "direccion": "Avenida Del Puerto, 1",
       "provincia": "Guadalajara",
       "municipio": "Driebes",
-      "fecha_alta": "2025-10-03",
+      "fecha_alta": "03/10/2025",
       "historico": false
     },
     {
@@ -364,7 +365,20 @@
       "direccion": "Calle Principal, 12",
       "provincia": "Girona",
       "municipio": "Arbúcies",
-      "fecha_alta": "2025-10-03",
+      "fecha_alta": "03/10/2025",
+      "historico": true
+    },
+    {
+      "id": "a1b9",
+      "dni": "X4841619G",
+      "nombre": "Marta",
+      "apellidos": "Abril López",
+      "email": "marta.a@gmail.com",
+      "movil": "631546975",
+      "direccion": "Calle Rúa, 14 4ºa",
+      "provincia": "Huelva",
+      "municipio": "Alájar",
+      "fecha_alta": "10/10/2025",
       "historico": true
     }
   ]

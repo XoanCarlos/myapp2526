@@ -158,7 +158,7 @@
   <div class="d-flex justify-content-end mt-2 me-6">
     <input  type="checkbox"
       id="historico"
-      v-model="mostrarHistorico"
+      v-model="nuevoCliente.historico"
       class="form-check-input"
       @change="cargarClientes" />
     <label for="historico" class="form-check-label ms-3 me-5 mb-0">Histórico</label>
@@ -247,7 +247,7 @@ const mostrarHistorico = ref(false)
 
 const clientes = ref([])
 
-// Cargar clientes al montar el componente 
+// Zona Cargar clientes Al Montar el componente 
 onMounted(async () => {
   cargarClientes()
 })
@@ -266,6 +266,7 @@ const cargarClientes = () => {
 
 const guardarCliente = async () => {
   // Validar duplicados solo si estás creando (no si editando)
+
   if (!editando.value) {
     const duplicado = clientes.value.find(cliente =>
       cliente.dni === nuevoCliente.value.dni ||
@@ -282,6 +283,7 @@ const guardarCliente = async () => {
       return;
     }
   }
+  
 
   // Confirmación antes de guardar
   const result = await Swal.fire({
@@ -296,6 +298,8 @@ const guardarCliente = async () => {
 
   try {
     if (editando.value) {
+      // Validar campos
+      clienteActualizado.value.fecha_alta = formatearFechaParaInput(nuevoCliente.fecha_alta);
       // Modificar cliente (PUT)
       const clienteActualizado = await updateCliente(clienteEditandoId.value, nuevoCliente.value);
       // Actualiza el cliente en la lista local
@@ -309,6 +313,7 @@ const guardarCliente = async () => {
       });
     } else {
       // Agregar cliente (POST)
+      nuevoCliente.value.fecha_alta = formatearFechaParaInput(nuevoCliente.fecha_alta);
       const clienteAgregado = await addCliente(nuevoCliente.value);
       clientes.value.push(clienteAgregado);
       Swal.fire({
@@ -416,7 +421,7 @@ const editarCliente = (movil) => {
   nuevoCliente.value = { ...cliente }; // 🔁 Aquí cargas el formulario con los datos
   editando.value = true;
   // Formatear fecha para el input type="date"
-  nuevoCliente.value.fecha_alta = formatearFechaParaInput(cliente.fecha_alta);
+
   // Actualiza municipios filtrados según la provincia seleccionada
   filtrarMunicipios();
   nuevoCliente.value.municipio = cliente.municipio;               // 🟢 Ahora estamos en modo edición

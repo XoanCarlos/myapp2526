@@ -11,7 +11,7 @@ export const getClientes = (mostrarHistorico = false) => {
 
   if (!mostrarHistorico) {
     // Solo clientes con histórico = false
-    url += `&historico=false`;
+    url += `&historico=true`;
   }
 
   return axios.get(url).then(res => res.data);
