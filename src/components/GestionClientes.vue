@@ -213,11 +213,11 @@
           </button>
           <button
             v-if="cliente.historico === false"
-            @click="toggleHistoricoCliente(cliente)"
+            @click="activarCliente(cliente)"
             class="btn btn-secondary btn-sm ms-2 border-0 shadow-none rounded-0"
             title="Activar cliente"
           >
-            <i class="bi bi-toggle-off"></i>
+            <i class="bi bi-person-check"></i>
           </button>
         </td>
       </tr>
@@ -249,7 +249,7 @@ const nuevoCliente = ref({
   historico: true
 });
 
-const editando = ref(true);
+const editando = ref(false);
 const clienteEditandoId = ref(null);
 
 const mostrarHistorico = ref(false); // Estado del checkbox
@@ -294,7 +294,6 @@ const guardarCliente = async () => {
     }
   }
   
-
   // Confirmación antes de guardar
   const result = await Swal.fire({
     title: editando.value ? '¿Desea modificar este cliente?' : '¿Desea grabar este cliente?',
@@ -439,6 +438,52 @@ const editarCliente = (movil) => {
   filtrarMunicipios();
   nuevoCliente.value.municipio = cliente.municipio;               // 🟢 Ahora estamos en modo edición
   clienteEditandoId.value = cliente.id;
+};
+
+// Función para activar cliente (poner historico en true)
+const activarCliente = async (cliente) => {
+  const confirmacion = await Swal.fire({
+    title: `¿Activar cliente ${cliente.nombre} ${cliente.apellidos}?`,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Activar',
+    cancelButtonText: 'Cancelar'
+  });
+
+  if (!confirmacion.isConfirmed) return;
+
+  try {
+    // Crear una copia del cliente con historico en true
+    const clienteActivado = { ...cliente, historico: true };
+
+    // Llamar a la API para actualizar
+    const actualizado = await updateCliente(cliente.id, clienteActivado);
+
+    // Actualizar la lista local (opcional, también puedes volver a cargar todo)
+    const index = clientes.value.findIndex(c => c.id === cliente.id);
+    if (index !== -1) {
+      clientes.value[index] = actualizado;
+    }
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Cliente reactivado',
+      showConfirmButton: false,
+      timer: 1500
+    });
+
+    // Recargar lista actualizada
+    await cargarClientes();
+
+  } catch (error) {
+    console.error('Error al reactivar cliente:', error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error al activar cliente',
+      text: 'Por favor, intenta de nuevo.',
+      timer: 1500
+    });
+  }
 };
 
 /////////////// SCRIPTS AUXILIARES ////////////////
