@@ -205,7 +205,7 @@
           </button>
           <button
             @click="editarCliente(cliente.movil)"
-            class="btn btn-warning btn-sm border-0 dow-none rounded-0"
+            class="btn btn-warning btn-sm border-0 rounded-0"
             title="Editar cliente"
             aria-label="Editar cliente"
           >
@@ -217,7 +217,7 @@
             class="btn btn-secondary btn-sm ms-2 border-0 shadow-none rounded-0"
             title="Activar cliente"
           >
-            <i class="bi bi-person-check"></i>
+            <i class="bi bi-unlock-fill"></i>
           </button>
         </td>
       </tr>
@@ -249,13 +249,14 @@ const nuevoCliente = ref({
   historico: true
 });
 
-const editando = ref(false);
+const editando = ref(false);  // Estado de edición para el formulario para usar el mismo botón
 const clienteEditandoId = ref(null);
 
-const mostrarHistorico = ref(false); // Estado del checkbox
-// Función Listar Clientes con get
+const mostrarHistorico = ref(false); // Control Estado del checkbox
 
-const clientes = ref([])
+const clientes = ref([])   // Array de clientes cargados desde la "API"
+
+
 
 // Zona Cargar clientes Al Montar el componente 
 onMounted(async () => {
@@ -347,6 +348,7 @@ const guardarCliente = async () => {
       fecha_alta: '',
       historico: true
     };
+
     editando.value = false;
     clienteEditandoId.value = null;
 
@@ -413,6 +415,7 @@ const eliminarCliente = async (movil) => {
     timer: 1500
   });
 };
+
 
 // Función Editar Cliente (carga datos en el formulario)
 const editarCliente = (movil) => {

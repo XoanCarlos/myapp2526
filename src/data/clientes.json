@@ -321,12 +321,13 @@
       "nombre": "Sonia",
       "apellidos": "Abalos Martínez",
       "eemail": "sonia@gmil.com",
-      "movil": "654789465",
+      "movil": "654789400",
       "direccion": "Avda. De Galicia, 101",
       "provincia": "Cuenca",
       "municipio": "Alconchel de la Estrella",
       "fecha_alta": "2025-10-02",
-      "historico": true
+      "historico": true,
+      "email": "sonia@tucorreo.com"
     },
     {
       "id": "9afd",
@@ -379,7 +380,7 @@
       "provincia": "Huelva",
       "municipio": "Alájar",
       "fecha_alta": "2025-10-09",
-      "historico": false
+      "historico": true
     },
     {
       "id": "68a1",
@@ -404,6 +405,19 @@
       "direccion": "Calle Luna, 34",
       "provincia": "Tarragona",
       "municipio": "Calafell",
+      "fecha_alta": "2025-10-14",
+      "historico": true
+    },
+    {
+      "id": "479b",
+      "dni": "Y5585586G",
+      "nombre": "Julio José",
+      "apellidos": "Zamora Díez",
+      "email": "jose@tucorreo.com",
+      "movil": "789145362",
+      "direccion": "Calle El Puerto, 23",
+      "provincia": "Girona",
+      "municipio": "Agullana",
       "fecha_alta": "2025-10-14",
       "historico": true
     }
