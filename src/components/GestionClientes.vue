@@ -213,7 +213,7 @@
 <script setup>
 import provmuniData from '@/data/provmuni.json';
 import { ref, onMounted } from 'vue'
-import { getClientes, addCliente, deleteCliente, updateCliente } from '@/api/clientes.js'
+import { getClientes, addCliente, deleteCliente, updateCliente, getClientePorDni } from '@/api/clientes.js'
 import Swal from 'sweetalert2';
 
 ///////////////////// SCRIPTS CRUD ////////////////////////
@@ -470,6 +470,60 @@ const activarCliente = async (cliente) => {
     });
   }
 };
+
+const buscarClientePorDNI = async (dni) => {
+  if (!dni || dni.trim() === '') {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Debe introducir un DNI antes de buscar.',
+      timer: 1500,
+      showConfirmButton: false
+    });
+    return;
+  }
+
+  try {
+    const cliente = await getClientePorDni(dni.trim().toUpperCase());
+
+    if (!cliente) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Cliente no encontrado',
+        text: 'No existe ningún cliente con ese DNI.',
+        timer: 1500,
+        showConfirmButton: false
+      });
+      return;
+    }
+
+    // ✅ Cargar los datos en el formulario
+    nuevoCliente.value = { ...cliente };
+    nuevoCliente.value.fecha_alta = formatearFechaParaInput(cliente.fecha_alta);
+
+    // Actualiza lista de municipios si cambia la provincia
+    filtrarMunicipios();
+    //opcional
+    editando.value = true;
+    clienteEditandoId.value = cliente.id;
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Cliente encontrado y cargado',
+      timer: 1500,
+      showConfirmButton: false
+    });
+  } catch (error) {
+    console.error('Error buscando cliente por DNI:', error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error al buscar cliente',
+      text: 'Verifique la conexión o contacte con el administrador.',
+      timer: 2000,
+      showConfirmButton: false
+    });
+  }
+};
+
 
 /////////////// SCRIPTS AUXILIARES ////////////////
 

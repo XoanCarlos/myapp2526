@@ -38,3 +38,16 @@ export const updateCliente = (id, clienteActualizado) => {
   return axios.put(`${API_URL}/${id}`, clienteActualizado)
               .then(res => res.data)
 }
+
+// 🔹 Buscar cliente por DNI
+export const getClientePorDni = async (dni) => {
+  try {
+    // Si tu API permite filtrar por DNI (ej. JSON-Server), puedes hacer:
+    const response = await axios.get(`${API_URL}?dni=${dni}`);
+    // Si devuelve un array, retornamos el primer resultado o null si no hay ninguno
+    return response.data.length > 0 ? response.data[0] : null;
+  } catch (error) {
+    console.error('Error buscando cliente por DNI:', error);
+    throw error;
+  }
+};
