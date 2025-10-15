@@ -1,236 +1,206 @@
 <template>
- <div
-  class="mx-auto mt-2 p-4 pb-5 border rounded-2 shadow-sm min-vh-75 bg-light">
-    <h4 class="text-center my-3 bg-primary-subtle">Registro de Clientes</h4>
-    <!-- Formulario -->
-<form @submit.prevent="guardarCliente" class="mb-4">
-<!-- DNI con validación visual -->
-<div class="mb-3 row align-items-center">
-  <!-- Columna DNI -->
-  <div class="col-md-4 d-flex align-items-center">
-    <label for="dni" class="form-label mb-0 w-25">DNI:  </label>
-    <div class="flex-grow-1 d-flex align-items-center">
-      <input
-        type="text"
-        id="dni"
-        v-model="nuevoCliente.dni"
-        @blur="validarDni"
-        class="form-control w-auto w-25 text-center ms-2"
-        :class="{ 'is-invalid': !dniValido }"
-        required
-        oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
-        oninput="this.setCustomValidity('')"
-      />
-      <button type="button" class="btn btn btn-primary ms-3 border-0 shadow-none rounded-0" 
-      @click="buscarClientePorDNI(nuevoCliente.dni)">
-        <i class="bi bi-search"></i>
-      </button>
+  <div class="container my-3 p-3 border rounded-2 shadow-sm bg-light">
+    <h4 class="text-center my-3 bg-primary-subtle py-2">Registro de Clientes</h4>
 
-      <div v-if="!dniValido" class="invalid-feedback">
-        DNI o NIE inválido.
+    <form @submit.prevent="guardarCliente" class="mb-4">
+      <!-- DNI y Fecha de Alta -->
+      <div class="row g-3 align-items-center">
+        <div class="col-12 col-md-3 d-flex align-items-center">
+          <label for="dni" class="form-label mb-0 me-3 text-nowrap align-middle">DNI:</label>
+          <div class="flex-grow-1 d-flex align-items-center">
+            <input
+              type="text"
+              id="dni"
+              v-model="nuevoCliente.dni"
+              @blur="validarDni"
+              class="form-control ms-4 text-center"
+              :class="{ 'is-invalid': !dniValido }"
+              required
+            />
+            <button
+              type="button"
+              class="btn btn-primary ms-2 d-flex align-items-center justify-content-end"
+              @click="buscarClientePorDNI(nuevoCliente.dni)"
+            >
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+          <div v-if="!dniValido" class="invalid-feedback d-block">
+            DNI o NIE inválido.
+          </div>
+        </div>
+
+        <div class="col-12 col-md-3 d-flex align-items-center justify-content-end">
+          <label for="fecha_alta" class="form-label mb-0 me-2 ms-6 text-nowrap align-middle">Fecha de Alta:</label>
+          <input
+            type="date"
+            id="fecha_alta"
+            v-model="nuevoCliente.fecha_alta"
+            class="form-control"
+            required
+          />
+        </div>
       </div>
-      
+
+      <!-- Nombre y Apellidos -->
+      <div class="row g-3 align-items-center mt-2">
+        <div class="col-12 col-md-6 d-flex align-items-center">
+          <label for="nombre" class="form-label mb-0 me-2 text-nowrap align-middle">Nombre:</label>
+          <input
+            type="text"
+            id="nombre"
+            v-model="nuevoCliente.nombre"
+            class="form-control"
+            @blur="capitalizarTexto('nombre')"
+            required
+          />
+        </div>
+
+        <div class="col-12 col-md-6 d-flex align-items-center">
+          <label for="apellidos" class="form-label mb-0 me-2 text-nowrap align-middle">Apellidos:</label>
+          <input
+            type="text"
+            id="apellidos"
+            v-model="nuevoCliente.apellidos"
+            class="form-control"
+            @blur="capitalizarTexto('apellidos')"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Email y Móvil -->
+      <div class="row g-3 align-items-center mt-2">
+        <div class="col-12 col-md-3 d-flex align-items-center">
+          <label for="email" class="form-label mb-0 me-2 text-nowrap align-middle">Email:</label>
+          <input
+            type="email"
+            id="email"
+            v-model="nuevoCliente.email"
+            class="form-control ms-3 text-center"
+            @blur="validarEmail"
+            :class="{ 'is-invalid': !emailValido }"
+            required
+          />
+        </div>
+
+        <div class="col-12 col-md-3 d-flex align-items-center">
+          <label for="movil" class="form-label mb-0 me-2 text-nowrap align-middle">Móvil:</label>
+          <input
+            type="tel"
+            id="movil"
+            v-model="nuevoCliente.movil"
+            class="form-control text-center"
+            @blur="validarMovil"
+            :class="{ 'is-invalid': !movilValido }"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Dirección, Provincia y Municipio -->
+      <div class="row g-3 align-items-center mt-2">
+        <div class="col-12 col-md-6 d-flex align-items-center">
+          <label for="direccion" class="form-label mb-0 me-2 text-nowrap align-middle">Dirección:</label>
+          <input
+            type="text"
+            id="direccion"
+            v-model="nuevoCliente.direccion"
+            class="form-control"
+            @blur="capitalizarTexto('direccion')"
+          />
+        </div>
+
+        <div class="col-12 col-md-3 d-flex align-items-center">
+          <label for="provincia" class="form-label mb-0 me-2 text-nowrap align-middle">Provincia:</label>
+          <select
+            id="provincia"
+            v-model="nuevoCliente.provincia"
+            class="form-select"
+            @change="filtrarMunicipios"
+          >
+            <option disabled value="">Seleccione provincia</option>
+            <option v-for="prov in provincias" :key="prov.id" :value="prov.nm">
+              {{ prov.nm }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-12 col-md-3 d-flex align-items-center">
+          <label for="municipio" class="form-label mb-0 me-2 text-nowrap align-middle">Municipio:</label>
+          <select
+            id="municipio"
+            v-model="nuevoCliente.municipio"
+            class="form-select"
+          >
+            <option disabled value="">Seleccione municipio</option>
+            <option v-for="mun in municipiosFiltrados" :key="mun.id" :value="mun.nm">
+              {{ mun.nm }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Histórico -->
+      <div class="form-check form-switch mt-3">
+        <input
+          type="checkbox"
+          id="historico"
+          v-model="mostrarHistorico"
+          class="form-check-input"
+          @change="cargarClientes"
+        />
+        <label for="historico" class="form-check-label ms-2">Histórico</label>
+      </div>
+
+      <!-- Botón centrado -->
+      <div class="text-center mt-3">
+        <button type="submit" class="btn btn-primary px-4">
+          {{ editando ? 'Modificar Cliente' : 'Guardar Cliente' }}
+        </button>
+      </div>
+    </form>
+
+    <!-- Tabla de clientes -->
+    <div class="table-responsive mt-4">
+      <h4 class="text-center mb-3">Listado de Clientes</h4>
+      <table class="table table-bordered table-striped table-hover align-middle">
+        <thead class="table-primary text-center">
+          <tr>
+            <th>ID</th>
+            <th>Apellidos</th>
+            <th>Nombre</th>
+            <th>Móvil</th>
+            <th>Municipio</th>
+            <th style="width: 150px;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(cliente, index) in clientes" :key="cliente.id || index">
+            <th scope="row" class="text-center">{{ index + 1 }}</th>
+            <td>{{ cliente.apellidos }}</td>
+            <td>{{ cliente.nombre }}</td>
+            <td class="text-center">{{ cliente.movil }}</td>
+            <td class="text-center">{{ cliente.municipio }}</td>
+            <td class="text-start">
+              <button class="btn btn-danger btn-sm ms-3 me-2" @click="eliminarCliente(cliente.movil)">
+                <i class="bi bi-trash"></i>
+              </button>
+              <button class="btn btn-warning btn-sm" @click="editarCliente(cliente.movil)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button
+                v-if="cliente.historico === false"
+                class="btn btn-secondary btn-sm ms-2"
+                @click="activarCliente(cliente)"
+              >
+                <i class="bi bi-unlock-fill"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>
-
-  <!-- Columna Fecha de Alta a la derecha -->
-  <div class="col-md-7 ms-auto d-flex align-items-center">
-    <label for="fecha_alta" class="form-label me-2 mb-0 text-nowrap">Fecha de Alta:</label>
-    <input
-      type="date"
-      id="fecha_alta"
-      v-model="nuevoCliente.fecha_alta"
-      class="form-control w-auto"
-      required
-      oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
-      oninput="this.setCustomValidity('')"
-    />
-  </div>
-</div>
-
-<!-- Nombre y Apellidos -->
-<div class="mb-3 row g-3 align-items-center">
-  <!-- Nombre -->
-  <div class="col-md-5 d-flex align-items-center">
-    <label for="nombre" class="form-label  mb-0 text-nowrap w-25">Nombre:</label>
-    <input
-      type="text"
-      id="nombre"
-      v-model="nuevoCliente.nombre"
-      class="form-control flex-grow-1"
-      @blur="capitalizarTexto('nombre')"
-      required
-      oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
-      oninput="this.setCustomValidity('')"
-    />
-  </div>
-
-  <!-- Apellidos -->
-  <div class="col-md-5 d-flex align-items-center ms-3">
-    <label for="apellidos" class="form-label me-4 mb-0 text-nowrap">Apellidos:</label>
-    <input
-      type="text"
-      id="apellidos"
-      v-model="nuevoCliente.apellidos"
-      class="form-control flex-grow-1"
-      @blur="capitalizarTexto('apellidos')"
-      required
-      oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
-      oninput="this.setCustomValidity('')"
-    />
-  </div>
-</div>
-
-<!-- Email y Móvil -->
-<div class="mb-3 row g-3 align-items-center">
-  <!-- Email -->
-  <div class="col-md-5 d-flex align-items-center">
-    <label for="email" class="form-label mb-0 text-nowrap w-25">Email:</label>
-    <input
-      type="email"
-      id="email"
-      v-model="nuevoCliente.email"
-      class="form-control flex-grow-1"
-      @blur="validarEmail"
-      :class="{ 'is-invalid': !emailValido }"
-      required
-      oninvalid="this.setCustomValidity('Por favor, rellene este campo con un email válido')"
-      oninput="this.setCustomValidity('')"
-    />
-  </div>
-
-  <!-- Móvil -->
-  <div class="col-md-3 d-flex align-items-center ms-3">
-    <label for="movil" class="form-label me-5 mb-0 text-nowrap ">Móvil:</label>
-    <input
-      type="tel"
-      id="movil"
-      v-model="nuevoCliente.movil"
-      @blur="validarMovil"
-      class="form-control flex-grow-1 text-center"
-      :class="{ 'is-invalid': !movilValido }"
-      required
-      oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
-      oninput="this.setCustomValidity('')"
-    />
-  </div>
-</div>
-
- <!-- Dirección, Provincia y Municipio -->
-<div class="mb-3 row g-3 align-items-center">
-  <!-- Dirección -->
-  <div class="col-md-5 d-flex align-items-center">
-    <label for="direccion" class="form-label mb-0 w-25 text-nowrap">Dirección:</label>
-    <input
-      type="text"
-      id="direccion"
-      v-model="nuevoCliente.direccion"
-      @blur="capitalizarTexto('direccion')"
-      class="form-control flex-grow-1"
-    />
-  </div>
-
-  <!-- Provincia -->
-  <div class="col-md-3 d-flex align-items-center ms-1">
-    <label for="provincia" class="form-label me-2 mb-0 text-nowrap">Provincia:</label>
-    <select
-      id="provincia"
-      v-model="nuevoCliente.provincia"
-      class="form-select flex-grow-1 w-25"
-      @change="filtrarMunicipios"
-    >
-      <option disabled value="">Seleccione provincia</option>
-       <option v-for="prov in provincias" :key="prov.id" :value="prov.nm" >{{ prov.nm }}</option>
-      <!-- nm es el nombre de la provincia -->
-  >
-    </select>
-  </div>
-
-  <!-- Municipio -->
-  <div class="col-md-3 d-flex align-items-center">
-    <label for="municipio" class="form-label me-2 ms-1 mb-0 text-nowrap">Municipio:</label>
-    <select
-      id="municipio"
-      v-model="nuevoCliente.municipio"
-      class="form-select flex-grow-1 w-auto"
-    >
-      <option disabled value="">Seleccione municipio</option>
-      <option v-for="mun in municipiosFiltrados" :key="mun.id" :value="mun.nm">{{ mun.nm }}</option>
-    </select>
-  </div>
-</div>
-
-  <!-- Histórico -->
-  <div class="d-flex justify-content-end mt-2 me-4">
-    <input  type="checkbox"
-      id="historico"
-      v-model="mostrarHistorico"
-      class="form-check-input"
-      @change="cargarClientes" />
-    <label for="historico" class="form-check-label ms-3 me-5 mb-0">Histórico</label>
-  </div>
-
-  <!-- Botón centrado -->
-  <div class="text-center">
-    <button type="submit" class="btn btn-primary border-0 shadow-none rounded-0">
-      {{ editando ? 'Modificar Cliente' : 'Guardar Cliente' }}
-    </button>
-    <!-- Botón que solo aparece cuando histórico está marcado -->
-  
-  </div>
-
-</form>
-    <div class="table-responsive">
-  <h4 class="text-center mb-3">Listado de Clientes</h4>
-  <table class="table table-bordered table-striped table-hover table-sm align-middle">
-    <thead class="table-primary">
-      <tr>
-        <th class="text-center" scope="col">ID</th>
-        <th scope="col">Apellidos</th>
-        <th scope="col">Nombre</th>
-        <th class="text-center" scope="col">Móvil</th>
-        <th class="text-center" scope="col">Municipio</th>
-        <th class="text-center" scope="col" style="width: 150px;">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(cliente, index) in clientes" :key="cliente.id || index">
-        <th scope="row" class="text-center">{{ index + 1 }}</th>
-        <td>{{ cliente.apellidos }}</td>
-        <td>{{ cliente.nombre }}</td>
-        <td class="text-center">{{ cliente.movil }}</td>
-        <td class="text-center">{{ cliente.municipio }}</td>
-        <td class="text-start">
-          <button
-            @click="eliminarCliente(cliente.movil)"
-            class="btn btn-danger btn-sm border-0 ms-4 me-2 shadow-none rounded-0"
-            title="Eliminar cliente"
-            aria-label="Eliminar cliente"
-          >
-            <i class="bi bi-trash"></i>
-          </button>
-          <button
-            @click="editarCliente(cliente.movil)"
-            class="btn btn-warning btn-sm border-0 rounded-0"
-            title="Editar cliente"
-            aria-label="Editar cliente"
-          >
-            <i class="bi bi-pencil"></i>
-          </button>
-          <button
-            v-if="cliente.historico === false"
-            @click="activarCliente(cliente)"
-            class="btn btn-secondary btn-sm ms-2 border-0 shadow-none rounded-0"
-            title="Activar cliente"
-          >
-            <i class="bi bi-unlock-fill"></i>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
   </div>
 </template>
 
