@@ -6,20 +6,20 @@
       <!-- DNI y Fecha de Alta -->
       <div class="row g-3 align-items-center">
         <div class="col-12 col-md-3 d-flex align-items-center">
-          <label for="dni" class="form-label mb-0 me-3 text-nowrap align-middle">DNI:</label>
-          <div class="flex-grow-1 d-flex align-items-center">
+          <label for="dni" class="form-label mb-0 me-4 text-nowrap align-middle">DNI:</label>
+          <div class="flex-grow-1 d-flex ms-4 align-items-center">
             <input
               type="text"
               id="dni"
               v-model="nuevoCliente.dni"
               @blur="validarDni"
-              class="form-control ms-4 text-center"
+              class="form-control text-center"
               :class="{ 'is-invalid': !dniValido }"
               required
             />
             <button
               type="button"
-              class="btn btn-primary ms-2 d-flex align-items-center justify-content-end"
+              class="btn btn-primary ms-3 d-flex align-items-center justify-content-center"
               @click="buscarClientePorDNI(nuevoCliente.dni)"
             >
               <i class="bi bi-search"></i>
@@ -30,34 +30,36 @@
           </div>
         </div>
 
-        <div class="col-12 col-md-3 d-flex align-items-center justify-content-end">
-          <label for="fecha_alta" class="form-label mb-0 me-2 ms-6 text-nowrap align-middle">Fecha de Alta:</label>
+        <!-- Fecha de Alta a la derecha -->
+        <div class="col-12 col-md-3 d-flex align-items-center ms-auto">
+          <label for="fecha_alta" class="form-label mb-0 me-2 text-nowrap align-middle">Fecha de Alta:</label>
           <input
             type="date"
             id="fecha_alta"
             v-model="nuevoCliente.fecha_alta"
-            class="form-control"
+            class="form-control text-center"
             required
           />
         </div>
       </div>
 
+
       <!-- Nombre y Apellidos -->
       <div class="row g-3 align-items-center mt-2">
         <div class="col-12 col-md-6 d-flex align-items-center">
-          <label for="nombre" class="form-label mb-0 me-2 text-nowrap align-middle">Nombre:</label>
+          <label for="nombre" class="form-label mb-0 me-2 text-nowrap align-middle">Nombre: </label>
           <input
             type="text"
             id="nombre"
             v-model="nuevoCliente.nombre"
-            class="form-control"
+            class="form-control ms-2"
             @blur="capitalizarTexto('nombre')"
             required
           />
         </div>
 
         <div class="col-12 col-md-6 d-flex align-items-center">
-          <label for="apellidos" class="form-label mb-0 me-2 text-nowrap align-middle">Apellidos:</label>
+          <label for="apellidos" class="form-label mb-0 me-2 text-nowrap align-middle">Apellidos: </label>
           <input
             type="text"
             id="apellidos"
@@ -71,13 +73,13 @@
 
       <!-- Email y Móvil -->
       <div class="row g-3 align-items-center mt-2">
-        <div class="col-12 col-md-3 d-flex align-items-center">
-          <label for="email" class="form-label mb-0 me-2 text-nowrap align-middle">Email:</label>
+        <div class="col-12 col-md-5 d-flex align-items-center">
+          <label for="email" class="form-label mb-0 me-3 text-nowrap align-middle">Email:</label>
           <input
             type="email"
             id="email"
             v-model="nuevoCliente.email"
-            class="form-control ms-3 text-center"
+            class="form-control ms-4 text-center"
             @blur="validarEmail"
             :class="{ 'is-invalid': !emailValido }"
             required
@@ -85,7 +87,7 @@
         </div>
 
         <div class="col-12 col-md-3 d-flex align-items-center">
-          <label for="movil" class="form-label mb-0 me-2 text-nowrap align-middle">Móvil:</label>
+          <label for="movil" class="form-label mb-0 ms-3 me-2 text-nowrap align-middle">Móvil:</label>
           <input
             type="tel"
             id="movil"
@@ -100,13 +102,13 @@
 
       <!-- Dirección, Provincia y Municipio -->
       <div class="row g-3 align-items-center mt-2">
-        <div class="col-12 col-md-6 d-flex align-items-center">
+        <div class="col-12 col-md-5 d-flex align-items-center">
           <label for="direccion" class="form-label mb-0 me-2 text-nowrap align-middle">Dirección:</label>
           <input
             type="text"
             id="direccion"
             v-model="nuevoCliente.direccion"
-            class="form-control"
+            class="form-control ms-2"
             @blur="capitalizarTexto('direccion')"
           />
         </div>
@@ -126,7 +128,7 @@
           </select>
         </div>
 
-        <div class="col-12 col-md-3 d-flex align-items-center">
+        <div class="col-12 col-md-4 d-flex align-items-center">
           <label for="municipio" class="form-label mb-0 me-2 text-nowrap align-middle">Municipio:</label>
           <select
             id="municipio"
@@ -141,25 +143,29 @@
         </div>
       </div>
 
-      <!-- Histórico -->
-      <div class="form-check form-switch mt-3">
-        <input
-          type="checkbox"
-          id="historico"
-          v-model="mostrarHistorico"
-          class="form-check-input"
-          @change="cargarClientes"
-        />
-        <label for="historico" class="form-check-label ms-2">Histórico</label>
-      </div>
+     <!-- Botón centrado y checkbox al final -->
+      <div class="d-flex align-items-center mt-3">
+        <!-- Espacio izquierdo para centrar el botón -->
+        <div class="flex-grow-1 d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary px-4">
+            {{ editando ? 'Modificar Cliente' : 'Guardar Cliente' }}
+          </button>
+        </div>
 
-      <!-- Botón centrado -->
-      <div class="text-center mt-3">
-        <button type="submit" class="btn btn-primary px-4">
-          {{ editando ? 'Modificar Cliente' : 'Guardar Cliente' }}
-        </button>
+        <!-- Checkbox al final -->
+        <div class="form-check form-switch ms-3">
+          <input
+            type="checkbox"
+            id="historico"
+            v-model="mostrarHistorico"
+            class="form-check-input"
+            @change="cargarClientes"
+          />
+          <label for="historico" class="form-check-label ms-2">Histórico</label>
+        </div>
       </div>
-    </form>
+   </form>
+
 
     <!-- Tabla de clientes -->
     <div class="table-responsive mt-4">
