@@ -70,7 +70,7 @@
       "direccion": "Calle Gómez 14",
       "provincia": "Málaga",
       "municipio": "Ronda",
-      "historico": false,
+      "historico": true,
       "lopd": false,
       "password": "",
       "id": "960a"
@@ -319,7 +319,7 @@
       "id": "971c",
       "dni": "00000000T",
       "nombre": "Sonia",
-      "apellidos": "Abalos Martínez",
+      "apellidos": "Abalde Martínez",
       "eemail": "sonia@gmil.com",
       "movil": "654789400",
       "direccion": "Avda. De Galicia, 101",

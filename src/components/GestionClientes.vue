@@ -9,27 +9,33 @@
   <!-- Columna DNI -->
   <div class="col-md-4 d-flex align-items-center">
     <label for="dni" class="form-label mb-0 w-25">DNI:  </label>
-    <div class="flex-grow-1">
+    <div class="flex-grow-1 d-flex align-items-center">
       <input
         type="text"
         id="dni"
         v-model="nuevoCliente.dni"
         @blur="validarDni"
-        class="form-control w-auto w-25 text-center"
+        class="form-control w-auto w-25 text-center ms-2"
         :class="{ 'is-invalid': !dniValido }"
         required
         oninvalid="this.setCustomValidity('Por favor, rellene este campo')"
         oninput="this.setCustomValidity('')"
       />
+      <button type="button" class="btn btn btn-primary ms-3 border-0 shadow-none rounded-0" 
+      @click="buscarClientePorDNI(nuevoCliente.dni)">
+        <i class="bi bi-search"></i>
+      </button>
+
       <div v-if="!dniValido" class="invalid-feedback">
         DNI o NIE inválido.
       </div>
+      
     </div>
   </div>
 
   <!-- Columna Fecha de Alta a la derecha -->
-  <div class="col-md-4 ms-auto d-flex align-items-center">
-    <label for="fecha_alta" class="form-label ms-2 mb-0 text-nowrap me-2">Fecha de Alta:</label>
+  <div class="col-md-7 ms-auto d-flex align-items-center">
+    <label for="fecha_alta" class="form-label me-2 mb-0 text-nowrap">Fecha de Alta:</label>
     <input
       type="date"
       id="fecha_alta"
@@ -155,7 +161,7 @@
 </div>
 
   <!-- Histórico -->
-  <div class="d-flex justify-content-end mt-2 me-6">
+  <div class="d-flex justify-content-end mt-2 me-4">
     <input  type="checkbox"
       id="historico"
       v-model="mostrarHistorico"
@@ -249,11 +255,11 @@ const nuevoCliente = ref({
   historico: true
 });
 
+
+// Declaraciones de estado o variables reactivas
 const editando = ref(false);  // Estado de edición para el formulario para usar el mismo botón
 const clienteEditandoId = ref(null);
-
 const mostrarHistorico = ref(false); // Control Estado del checkbox
-
 const clientes = ref([])   // Array de clientes cargados desde la "API"
 
 
@@ -305,7 +311,7 @@ const guardarCliente = async () => {
   });
 
   if (!result.isConfirmed) return;
-  //  cliente.fecha_alta = formatearFechaParaInput(cliente.fecha_alta);
+ 
   try {
     if (editando.value) {
       // Validar campos
@@ -617,7 +623,6 @@ function formatearFechaParaInput(fecha) {
 
   return '';
 }
-
 
 </script>
 
