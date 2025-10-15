@@ -1,6 +1,6 @@
 <template>
-  <div class="container my-3 p-3 border rounded-2 shadow-sm bg-light">
-    <h4 class="text-center my-3 bg-primary-subtle py-2">Registro de Clientes</h4>
+  <div class="container my-1 p-3 border rounded-1 shadow-sm bg-light">
+    <h4 class="text-center my-1 bg-primary-subtle py-1">Registro de Clientes</h4>
 
     <form @submit.prevent="guardarCliente" class="mb-4">
       <!-- DNI y Fecha de Alta -->
@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <!-- Fecha de Alta a la derecha -->
+        <!-- Fecha de Alta a la derecha  con ms-auto y d-flex-->
         <div class="col-12 col-md-3 d-flex align-items-center ms-auto">
           <label for="fecha_alta" class="form-label mb-0 me-2 text-nowrap align-middle">Fecha de Alta:</label>
           <input
