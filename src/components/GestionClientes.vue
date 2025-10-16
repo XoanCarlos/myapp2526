@@ -1,9 +1,9 @@
 <template>
-  <div class="container my-1 p-3 border rounded-1 shadow-sm bg-light">
+  <div class="container my-1 p-3 border rounded-0 shadow-sm bg-light">
     <h4 class="text-center my-1 bg-primary-subtle py-1">Registro de Clientes</h4>
 
     <form @submit.prevent="guardarCliente" class="mb-4">
-      <!-- DNI y Fecha de Alta -->
+      <!-- FILA DNI y Fecha de Alta -->
       <div class="row g-3 align-items-center">
         <div class="col-12 col-md-3 d-flex align-items-center">
           <label for="dni" class="form-label mb-0 me-4 text-nowrap align-middle">DNI:</label>
@@ -19,7 +19,7 @@
             />
             <button
               type="button"
-              class="btn btn-primary ms-3 d-flex align-items-center justify-content-center"
+              class="btn btn-primary ms-3 rounded-0 border shadow-none d-flex align-items-center justify-content-"
               @click="buscarClientePorDNI(nuevoCliente.dni)"
             >
               <i class="bi bi-search"></i>
@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <!-- Fecha de Alta a la derecha  con ms-auto y d-flex-->
+        <!--  Fecha de Alta a la derecha  con ms-auto y d-flex-->
         <div class="col-12 col-md-3 d-flex align-items-center ms-auto">
           <label for="fecha_alta" class="form-label mb-0 me-2 text-nowrap align-middle">Fecha de Alta:</label>
           <input
@@ -44,7 +44,7 @@
       </div>
 
 
-      <!-- Nombre y Apellidos -->
+      <!-- FILA Nombre y Apellidos -->
       <div class="row g-3 align-items-center mt-2">
         <div class="col-12 col-md-6 d-flex align-items-center">
           <label for="nombre" class="form-label mb-0 me-2 text-nowrap align-middle">Nombre: </label>
@@ -71,7 +71,7 @@
         </div>
       </div>
 
-      <!-- Email y Móvil -->
+      <!-- FILA Email y Móvil -->
       <div class="row g-3 align-items-center mt-2">
         <div class="col-12 col-md-5 d-flex align-items-center">
           <label for="email" class="form-label mb-0 me-3 text-nowrap align-middle">Email:</label>
@@ -100,7 +100,7 @@
         </div>
       </div>
 
-      <!-- Dirección, Provincia y Municipio -->
+      <!-- FILA Dirección, Provincia y Municipio -->
       <div class="row g-3 align-items-center mt-2">
         <div class="col-12 col-md-5 d-flex align-items-center">
           <label for="direccion" class="form-label mb-0 me-2 text-nowrap align-middle">Dirección:</label>
@@ -147,13 +147,13 @@
       <div class="d-flex align-items-center mt-3">
         <!-- Espacio izquierdo para centrar el botón -->
         <div class="flex-grow-1 d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary px-4">
+          <button type="submit" class="btn btn-primary px-3 rounded-0 border shadow-none">
             {{ editando ? 'Modificar Cliente' : 'Guardar Cliente' }}
           </button>
         </div>
 
         <!-- Checkbox al final -->
-        <div class="form-check form-switch ms-3">
+        <div class="form-check form-switch ms-2">
           <input
             type="checkbox"
             id="historico"
@@ -169,7 +169,7 @@
 
     <!-- Tabla de clientes -->
     <div class="table-responsive mt-4">
-      <h4 class="text-center mb-3">Listado de Clientes</h4>
+      <h5 class="text-center mb-3">Listado de Clientes</h5>
       <table class="table table-bordered table-striped table-hover align-middle">
         <thead class="table-primary text-center">
           <tr>
@@ -206,6 +206,16 @@
           </tr>
         </tbody>
       </table>
+      <!-- Navegación de página-->
+       <div class="d-flex justify-content-center my-3">
+        <button class="btn btn-outline-primary btn-sm me-2" disabled>
+          <i class="bi bi-chevron-left"></i> Anterior
+        </button>
+        <span class="mx-3 align-self-center">Página {{ currentPage  }}</span>
+        <button class="btn btn-outline-primary btn-sm" disabled>
+          Siguiente <i class="bi bi-chevron-right"></i>
+        </button>
+       </div>
     </div>
   </div>
 </template>
@@ -237,7 +247,9 @@ const editando = ref(false);  // Estado de edición para el formulario para usar
 const clienteEditandoId = ref(null);
 const mostrarHistorico = ref(false); // Control Estado del checkbox
 const clientes = ref([])   // Array de clientes cargados desde la "API"
-
+const numclientes = ref(0) // Número total de clientes (para paginación)
+const currentPage = ref(1); // Página actual (para paginación)
+const clientesPorPage = 10; // Número de clientes por página (para paginación
 
 
 // Zona Cargar clientes Al Montar el componente 
@@ -248,6 +260,8 @@ onMounted(async () => {
 const cargarClientes = () => {
   getClientes(mostrarHistorico.value).then(data => {
     clientes.value = data
+    numclientes.value = data.length  // Actualiza el número total de clientes
+    currentPage.value = 1; // Reiniciar a la primera página al cargar
   })
   Swal.fire({
     icon: 'success',
@@ -418,10 +432,10 @@ const editarCliente = (movil) => {
   nuevoCliente.value.fecha_alta = formatearFechaParaInput(cliente.fecha_alta);  
   editando.value = true;
   // Formatear fecha para el input type="date"
-  console.log('Cliente a editar:', cliente.fecha_alta);
+
   // Actualiza municipios filtrados según la provincia seleccionada
   filtrarMunicipios();
-  nuevoCliente.value.municipio = cliente.municipio;               // 🟢 Ahora estamos en modo edición
+  nuevoCliente.value.municipio = cliente.municipio;  // 🟢 Ahora estamos en modo edición
   clienteEditandoId.value = cliente.id;
 };
 
@@ -502,6 +516,7 @@ const buscarClientePorDNI = async (dni) => {
 
     // Actualiza lista de municipios si cambia la provincia
     filtrarMunicipios();
+    nuevoCliente.value.municipio = cliente.municipio;
     //opcional
     editando.value = true;
     clienteEditandoId.value = cliente.id;
@@ -523,7 +538,6 @@ const buscarClientePorDNI = async (dni) => {
     });
   }
 };
-
 
 /////////////// SCRIPTS AUXILIARES ////////////////
 
@@ -657,7 +671,6 @@ function formatearFechaParaInput(fecha) {
 </script>
 
 <style scoped>
-
 .is-invalid {
   border-color: #f28b82 !important;
   background-color: #ffe6e6;
