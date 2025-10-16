@@ -25,4 +25,6 @@ import GestionClientes from './components/GestionClientes.vue'
   flex-direction: column;
 }
 
+
+
 </style>

@@ -1,8 +1,8 @@
 <template>
-  <div class="container my-1 p-3 border rounded-0 shadow-sm bg-light">
-    <h4 class="text-center my-1 bg-primary-subtle py-1">Registro de Clientes</h4>
+  <div class="container my-1 mt-3 p-3 border rounded-0 shadow-sm bg-light">
+    <h5 class="text-center my-1 bg-primary-subtle py-2">Registro de Clientes</h5>
 
-    <form @submit.prevent="guardarCliente" class="mb-4">
+    <form @submit.prevent="guardarCliente" class="mb-4 mt-2">
       <!-- FILA DNI y Fecha de Alta -->
       <div class="row g-3 align-items-center">
         <div class="col-12 col-md-3 d-flex align-items-center">
@@ -45,7 +45,7 @@
 
 
       <!-- FILA Nombre y Apellidos -->
-      <div class="row g-3 align-items-center mt-2">
+      <div class="row g-2 align-items-center mt-2">
         <div class="col-12 col-md-6 d-flex align-items-center">
           <label for="nombre" class="form-label mb-0 me-2 text-nowrap align-middle">Nombre: </label>
           <input
@@ -72,7 +72,7 @@
       </div>
 
       <!-- FILA Email y Móvil -->
-      <div class="row g-3 align-items-center mt-2">
+      <div class="row g-2 align-items-center mt-2">
         <div class="col-12 col-md-5 d-flex align-items-center">
           <label for="email" class="form-label mb-0 me-3 text-nowrap align-middle">Email:</label>
           <input
@@ -101,7 +101,7 @@
       </div>
 
       <!-- FILA Dirección, Provincia y Municipio -->
-      <div class="row g-3 align-items-center mt-2">
+      <div class="row g-2 align-items-center mt-2">
         <div class="col-12 col-md-5 d-flex align-items-center">
           <label for="direccion" class="form-label mb-0 me-2 text-nowrap align-middle">Dirección:</label>
           <input
@@ -147,7 +147,7 @@
       <div class="d-flex align-items-center mt-3">
         <!-- Espacio izquierdo para centrar el botón -->
         <div class="flex-grow-1 d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary px-3 rounded-0 border shadow-none">
+          <button type="submit" class="btn btn-primary ms-5 px-3 btn-sm rounded-0 border shadow-none">
             {{ editando ? 'Modificar Cliente' : 'Guardar Cliente' }}
           </button>
         </div>
@@ -168,9 +168,9 @@
 
 
     <!-- Tabla de clientes -->
-    <div class="table-responsive mt-4">
-      <h5 class="text-center mb-3">Listado de Clientes</h5>
-      <table class="table table-bordered table-striped table-hover align-middle">
+    <div class="table-responsive mt-1">
+      <h5 class="text-center mb-1 me-5">Listado de Clientes</h5>
+      <table class="table table-bordered table-striped table-sm table-hover align-middle">
         <thead class="table-primary text-center">
           <tr>
             <th>ID</th>
@@ -182,8 +182,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(cliente, index) in clientes" :key="cliente.id || index">
-            <th scope="row" class="text-center">{{ index + 1 }}</th>
+          <tr v-for="(cliente, index) in clientesPaginados" :key="cliente.id || index">
+            <th scope="row" class="text-center">{{ (currentPage - 1) * clientesPorPage + index + 1 }}</th>
             <td>{{ cliente.apellidos }}</td>
             <td>{{ cliente.nombre }}</td>
             <td class="text-center">{{ cliente.movil }}</td>
@@ -208,12 +208,14 @@
       </table>
       <!-- Navegación de página-->
        <div class="d-flex justify-content-center my-3">
-        <button class="btn btn-outline-primary btn-sm me-2" disabled>
-          <i class="bi bi-chevron-left"></i> Anterior
+        <button class="btn btn-outline-primary btn-sm me-2 rounded-0 border-1 shadow-none" 
+        @click = "beforePagina" :disabled="currentPage <= 1">
+          <i class="bi bi-chevron-left "></i>
         </button>
-        <span class="mx-3 align-self-center">Página {{ currentPage  }}</span>
-        <button class="btn btn-outline-primary btn-sm" disabled>
-          Siguiente <i class="bi bi-chevron-right"></i>
+        <span class="mx-3 align-self-center text-muted">Página {{ currentPage  }}</span>
+        <button class="btn btn-outline-primary btn-sm rounded-0 border-1 shadow-none" 
+        @click="nextPagina" :disabled="currentPage >= totalPages">
+         <i class="bi bi-chevron-right "></i>
         </button>
        </div>
     </div>
@@ -222,7 +224,7 @@
 
 <script setup>
 import provmuniData from '@/data/provmuni.json';
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { getClientes, addCliente, deleteCliente, updateCliente, getClientePorDni } from '@/api/clientes.js'
 import Swal from 'sweetalert2';
 
@@ -246,16 +248,52 @@ const nuevoCliente = ref({
 const editando = ref(false);  // Estado de edición para el formulario para usar el mismo botón
 const clienteEditandoId = ref(null);
 const mostrarHistorico = ref(false); // Control Estado del checkbox
-const clientes = ref([])   // Array de clientes cargados desde la "API"
-const numclientes = ref(0) // Número total de clientes (para paginación)
-const currentPage = ref(1); // Página actual (para paginación)
-const clientesPorPage = 10; // Número de clientes por página (para paginación
+const clientes = ref([])   // Array de clientes cargados desde la API
+const numclientes = ref(0) // Número total de clientes para paginación
+const currentPage = ref(1); // Página actual para paginación
+const clientesPorPage = 10; // Número de clientes por página
 
 
 // Zona Cargar clientes Al Montar el componente 
 onMounted(async () => {
   cargarClientes()
+  currentPage.value = 1; // Iniciar en la primera página
 })
+
+// Métodos de paginación
+const beforePagina = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+};
+
+const nextPagina = () => {
+  const totalPages = Math.ceil(numclientes.value / clientesPorPage); 
+  //redondear hacia arriba para mostrar la última página aunque no esté completa
+  if (currentPage.value < totalPages) {
+    currentPage.value++;
+  }
+};
+
+// Propiedad computada para obtener los clientes en la página actual
+// computed crea una propiedad reactiva que se actualiza automáticamente
+// cuando cambian las dependencias (currentPage o clientes) 
+// es decir paso pagina o vuelvo atrás cargando los clientes de esa página
+// slice extrae una sección del array clientes
+// start es el índice inicial y end el índice final (no incluido)
+
+const clientesPaginados = computed(() => {
+  const start = (currentPage.value - 1) * clientesPorPage;
+  const end = start + clientesPorPage;
+  return clientes.value.slice(start, end);
+});
+
+
+// Propiedad computada para el número total de páginas
+const totalPages = computed(() => {
+  return Math.ceil(numclientes.value / clientesPorPage);
+});
+
 
 const cargarClientes = () => {
   getClientes(mostrarHistorico.value).then(data => {
