@@ -1,11 +1,10 @@
 <template>
   <nav class="navbar navbar-dark bg-primary sticky-top navbar-expand-lg">
-
     <div class="container-fluid">
       <!-- Marca o logo -->
-      <a class="navbar-brand" href="#">EmpresaTeis</a>
+      <a class="navbar-brand" href="/">Empresa Teis</a>
 
-      <!-- Botón de hamburguesa en pantallas pequeñas -->
+      <!-- Botón hamburguesa -->
       <button
         class="navbar-toggler"
         type="button"
@@ -18,26 +17,17 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <!-- Links de navegación -->
+      <!-- Enlaces centrados -->
       <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-        <ul class="navbar-nav d-flex justify-content-center w-80">
+        <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="#">Inicio</a>
+            <router-link to="/" class="nav-link">Inicio</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Clientes</a>
+            <router-link to="/clientes" class="nav-link">Clientes</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Servicios</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Productos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Blog</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contacto</a>
+            <router-link to="/#" class="nav-link">Noticias</router-link>
           </li>
         </ul>
       </div>
@@ -45,17 +35,17 @@
   </nav>
 </template>
 
+
 <script setup>
-// No necesita lógica
+// No necesitas nada aquí si no tienes lógica.
 </script>
 
 <style>
 .navbar-dark .nav-link {
-  color: rgba(255,255,255,0.9); /* blanco suave */
+  color: rgba(255, 255, 255, 0.9);
 }
-
 .navbar-dark .nav-link:hover,
 .navbar-dark .nav-link:focus {
-  color: #fff; /* blanco intenso al pasar el ratón */
+  color: #fff;
 }
 </style>
