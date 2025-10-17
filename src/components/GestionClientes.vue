@@ -1,5 +1,5 @@
 <template>
-  <div class="container my-1 mt-3 p-3 border rounded-0 shadow-sm bg-light">
+  <div class="container-fluid my-1 mt-3 p-3 border rounded-0 shadow-sm bg-light">
     <h5 class="text-center my-1 bg-primary-subtle py-2">Registro de Clientes</h5>
 
     <form @submit.prevent="guardarCliente" class="mb-4 mt-2">
@@ -148,7 +148,7 @@
         <!-- Espacio izquierdo para centrar el botón -->
         <div class="flex-grow-1 d-flex justify-content-center">
           <button type="submit" class="btn btn-primary ms-5 px-3 btn-sm rounded-0 border shadow-none">
-            {{ editando ? 'Modificar Cliente' : 'Guardar Cliente' }}
+            {{ editando ? 'Modificar' : 'Guardar' }}
           </button>
         </div>
 
@@ -288,11 +288,6 @@ const clientesPaginados = computed(() => {
   return clientes.value.slice(start, end);
 });
 
-
-// Propiedad computada para el número total de páginas
-const totalPages = computed(() => {
-  return Math.ceil(numclientes.value / clientesPorPage);
-});
 
 
 const cargarClientes = () => {
