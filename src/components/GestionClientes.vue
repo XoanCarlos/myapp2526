@@ -46,7 +46,7 @@
 
       <!-- FILA Nombre y Apellidos -->
       <div class="row g-2 align-items-center mt-2">
-        <div class="col-12 col-md-6 d-flex align-items-center">
+        <div class="col-12 col-md-4 d-flex align-items-center">
           <label for="nombre" class="form-label mb-0 me-1 text-nowrap align-middle">Nombre:</label>
           <input
             type="text"
