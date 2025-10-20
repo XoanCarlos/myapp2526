@@ -13,13 +13,13 @@
               id="dni"
               v-model="nuevoCliente.dni"
               @blur="validarDni"
-              class="form-control text-center"
+              class="form-control text-center rounded-0 ms-1 shadow-none border"
               :class="{ 'is-invalid': !dniValido }"
               required
             />
             <button
               type="button"
-              class="btn btn-primary ms-3 rounded-0 border shadow-none d-flex align-items-center justify-content-"
+              class="btn btn-primary ms-3 rounded-0 border shadow-none d-flex align-items-center justify-content-center me-4"
               @click="buscarClientePorDNI(nuevoCliente.dni)"
             >
               <i class="bi bi-search"></i>
@@ -31,13 +31,13 @@
         </div>
 
         <!--  Fecha de Alta a la derecha  con ms-auto y d-flex-->
-        <div class="col-12 col-md-3 d-flex align-items-center ms-auto">
-          <label for="fecha_alta" class="form-label mb-0 me-2 text-nowrap align-middle">Fecha de Alta:</label>
+        <div class="col-12 col-md-2 d-flex align-items-left-center mt-2 ms-5">
+          <label for="fecha_alta" class="form-label mt-3 me-2 text-nowrap align-middle">Fecha de Alta:</label>
           <input
             type="date"
             id="fecha_alta"
             v-model="nuevoCliente.fecha_alta"
-            class="form-control text-center"
+            class="form-control text-center rounded-0 shadow-none border ms-2 mt-2"
             required
           />
         </div>
@@ -47,24 +47,25 @@
       <!-- FILA Nombre y Apellidos -->
       <div class="row g-2 align-items-center mt-2">
         <div class="col-12 col-md-6 d-flex align-items-center">
-          <label for="nombre" class="form-label mb-0 me-2 text-nowrap align-middle">Nombre: </label>
+          <label for="nombre" class="form-label mb-0 me-1 text-nowrap align-middle">Nombre:</label>
           <input
             type="text"
             id="nombre"
             v-model="nuevoCliente.nombre"
-            class="form-control ms-2"
+            class="form-control ms-3 rounded-0 shadow-none border"
             @blur="capitalizarTexto('nombre')"
             required
           />
         </div>
+        
 
-        <div class="col-12 col-md-6 d-flex align-items-center">
+        <div class="col-12 col-md-5 ms-2 d-flex align-items-center">
           <label for="apellidos" class="form-label mb-0 me-2 text-nowrap align-middle">Apellidos: </label>
           <input
             type="text"
             id="apellidos"
             v-model="nuevoCliente.apellidos"
-            class="form-control"
+            class="form-control ms-2 rounded-0 shadow-none border"
             @blur="capitalizarTexto('apellidos')"
             required
           />
@@ -79,7 +80,7 @@
             type="email"
             id="email"
             v-model="nuevoCliente.email"
-            class="form-control ms-4 text-center"
+            class="form-control ms-4 text-center rounded-0 shadow-none border"
             @blur="validarEmail"
             :class="{ 'is-invalid': !emailValido }"
             required
@@ -92,7 +93,7 @@
             type="tel"
             id="movil"
             v-model="nuevoCliente.movil"
-            class="form-control text-center"
+            class="form-control text-center rounded-0 shadow-none border ms-2"
             @blur="validarMovil"
             :class="{ 'is-invalid': !movilValido }"
             required
@@ -103,12 +104,12 @@
       <!-- FILA Dirección, Provincia y Municipio -->
       <div class="row g-2 align-items-center mt-2">
         <div class="col-12 col-md-5 d-flex align-items-center">
-          <label for="direccion" class="form-label mb-0 me-2 text-nowrap align-middle">Dirección:</label>
+          <label for="direccion" class="form-label mb-0 me-1 text-nowrap align-middle">Dirección:</label>
           <input
             type="text"
             id="direccion"
             v-model="nuevoCliente.direccion"
-            class="form-control ms-2"
+            class="form-control ms-2 rounded-0 shadow-none border"
             @blur="capitalizarTexto('direccion')"
           />
         </div>
@@ -118,7 +119,7 @@
           <select
             id="provincia"
             v-model="nuevoCliente.provincia"
-            class="form-select"
+            class="form-select rounded-0 shadow-none border"
             @change="filtrarMunicipios"
           >
             <option disabled value="">Seleccione provincia</option>
@@ -133,7 +134,7 @@
           <select
             id="municipio"
             v-model="nuevoCliente.municipio"
-            class="form-select"
+            class="form-select rounded-0 shadow-none border"
           >
             <option disabled value="">Seleccione municipio</option>
             <option v-for="mun in municipiosFiltrados" :key="mun.id" :value="mun.nm">
