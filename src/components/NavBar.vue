@@ -29,6 +29,12 @@
           <li class="nav-item">
             <router-link to="/#" class="nav-link">Noticias</router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/#" class="nav-link">Modelos</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/#" class="nav-link">Contacto</router-link>
+          </li>
         </ul>
       </div>
     </div>

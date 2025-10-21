@@ -24,6 +24,4 @@ import FooTer from './components/FooTer.vue'
   flex-direction: column;
 }
 
-
-
 </style>

@@ -5,7 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
     {
-        path: '/',
+        path: '/',      // Ruta raíz o la que se carga al
         name: 'Inicio',
         component: PaginaInicio
     },

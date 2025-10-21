@@ -1,5 +1,5 @@
 <template>
-  <footer class="navbar navbar-dark bg-primary position-sticky top-0">
+  <footer class="navbar navbar-dark bg-primary position-sticky top-1">
     <div class="container">
       
       <ul class="list-inline mb-0 d-flex justify-content-center">
