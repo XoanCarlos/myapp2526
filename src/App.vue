@@ -2,7 +2,7 @@
   <!-- contenedor padre a 80% y centrado -->
   <div id="app">
     <NavBar />   <!-- Fijo arriba, pero dentro del 80% -->
-    <main class="flex-grow-1 overflow-auto">
+    <main class="flex-grow-1 overflow-auto py-4">
       <router-view />
     </main>
     <FooTer />  <!-- Fijo abajo, pero dentro del 80% -->
