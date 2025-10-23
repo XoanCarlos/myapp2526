@@ -74,7 +74,7 @@
                 : noticia.contenido.slice(0, Math.floor(noticia.contenido.length / 2)) + '...' }}
           </span>
           <a href="#" @click.prevent="toggleExpand(noticia.id)" class="float-end text-decoration-none">
-            {{ isExpanded[noticia.id] ? 'Mostrar menos...' : 'Mostrar más...' }}
+            {{ isExpanded[noticia.id] ? 'Mostrar menos...' : 'Seguir leyendo...' }}
           </a>
         </td>
       </tr>
