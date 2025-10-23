@@ -59,15 +59,47 @@
 
 <script setup>
 import { ref } from 'vue';
+import Swal from 'sweetalert2';
+import addNoticia from '@/api/noticias'; // Asegúrate de tener esta API configurada
 
 const nuevaNoticia = ref({
   titulo: '',
-  contenido: ''
+  contenido: '',
+  fecha: new Date().toISOString().split('T')[0], // Fecha actual en formato YYYY-MM-DD
 });
 
-const agregarNoticia = async () => {
-    try {
+const noticias = ref([]);
 
+const agregarNoticia = async () => {
+
+  try {
+      nuevaNoticia.titulo === nuevaNoticia.value.titulo ||
+      nuevaNoticia.contenido  === nuevaNoticia.value.contenido ||
+      nuevaNoticia.fecha ===  new Date().toISOString().split('T')[0]; 
+   
+  
+  // Confirmación antes de guardar
+  const result = await Swal.fire({
+    title: '¿Desea grabar este Noticia?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Grabar',
+    cancelButtonText: 'Cancelar'
+  });
+
+  if (!result.isConfirmed) return;
+
+  const nuevaNoticia = await addNoticia(nuevaNoticia.value);
+  noticias.value.push({ ...nuevaNoticia.value });
+  // Reiniciar el formulario
+  nuevaNoticia.value = {
+    titulo: '',
+    contenido: '',
+    fecha: new Date().toISOString().split('T')[0],
+  };
+
+  Swal.fire('Éxito', 'Noticia agregada correctamente', 'success');  
+  
   // Lógica para agregar la noticia usando la API
     console.log('Noticia agregada:', nuevaNoticia.value);
   } catch (error) {
