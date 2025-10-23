@@ -2,7 +2,7 @@
   <nav class="navbar navbar-dark bg-primary sticky-top navbar-expand-lg">
     <div class="container-fluid">
       <!-- Marca o logo -->
-      <a class="navbar-brand" href="/">Empresa Teis</a>
+      <a class="navbar-logo ms-3" href="/"><img src="../assets/logo.svg" alt="Logo" width="64px" height="32px"/></a>
 
       <!-- Botón hamburguesa -->
       <button
@@ -27,13 +27,13 @@
             <router-link to="/clientes" class="nav-link">Clientes</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/#" class="nav-link">Noticias</router-link>
+            <router-link to="/noticias" class="nav-link">Noticias</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/#" class="nav-link">Modelos</router-link>
+            <router-link to="#" class="nav-link">Modelos</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/#" class="nav-link">Contacto</router-link>
+            <router-link to="#" class="nav-link">Contacto</router-link>
           </li>
         </ul>
       </div>

@@ -14,7 +14,6 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-
 import imagen1 from '../assets/foto1.webp'
 import imagen2 from '../assets/foto2.webp'
 import imagen3 from '../assets/foto3.webp'

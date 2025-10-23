@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="255.99998"
+   height="127.99999"
+   viewBox="0 0 67.733328 33.866664"
+   version="1.1"
+   id="svg5"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2">
+    <linearGradient
+       id="linearGradient909">
+      <stop
+         style="stop-color:#ffccaa;stop-opacity:1;"
+         offset="0"
+         id="stop905" />
+      <stop
+         style="stop-color:#ffccaa;stop-opacity:0;"
+         offset="1"
+         id="stop907" />
+    </linearGradient>
+    <linearGradient
+       xlink:href="#linearGradient909"
+       id="linearGradient911"
+       x1="58.402054"
+       y1="139.02402"
+       x2="116.7911"
+       y2="103.3906"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       xlink:href="#linearGradient909"
+       id="linearGradient11222"
+       gradientUnits="userSpaceOnUse"
+       x1="58.402054"
+       y1="139.02402"
+       x2="116.7911"
+       y2="103.3906"
+       gradientTransform="matrix(0.94332489,0,0,0.76574133,-50.108856,-75.755773)" />
+    <linearGradient
+       xlink:href="#linearGradient909"
+       id="linearGradient11224"
+       gradientUnits="userSpaceOnUse"
+       x1="58.402054"
+       y1="139.02402"
+       x2="116.7911"
+       y2="103.3906"
+       gradientTransform="matrix(0.94332489,0,0,0.76574133,-50.108856,-75.755773)" />
+    <linearGradient
+       xlink:href="#linearGradient909"
+       id="linearGradient11226"
+       gradientUnits="userSpaceOnUse"
+       x1="58.402054"
+       y1="139.02402"
+       x2="116.7911"
+       y2="103.3906"
+       gradientTransform="matrix(0.94332489,0,0,0.76574133,-50.108856,-75.755773)" />
+    <linearGradient
+       xlink:href="#linearGradient909"
+       id="linearGradient11228"
+       gradientUnits="userSpaceOnUse"
+       x1="58.402054"
+       y1="139.02402"
+       x2="116.7911"
+       y2="103.3906"
+       gradientTransform="matrix(0.94332489,0,0,0.76574133,-50.108856,-75.755773)" />
+    <linearGradient
+       xlink:href="#linearGradient909"
+       id="linearGradient11230"
+       gradientUnits="userSpaceOnUse"
+       x1="58.402054"
+       y1="139.02402"
+       x2="116.7911"
+       y2="103.3906"
+       gradientTransform="matrix(0.94332489,0,0,0.76574133,-50.108856,-75.755773)" />
+    <linearGradient
+       xlink:href="#linearGradient909"
+       id="linearGradient11232"
+       gradientUnits="userSpaceOnUse"
+       x1="58.402054"
+       y1="139.02402"
+       x2="116.7911"
+       y2="103.3906"
+       gradientTransform="matrix(0.94332489,0,0,0.76574133,-50.108856,-75.755773)" />
+  </defs>
+  <g
+     id="layer1">
+    <g
+       id="g173"
+       style="fill:url(#linearGradient911);fill-opacity:1">
+      <path
+         id="path185"
+         style="fill:url(#linearGradient11222);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.849908;stroke-linejoin:round"
+         d="M 20.392582,19.125534 60.628443,8.3783407 V 30.448707 L 20.392582,33.17674 Z"
+         points="60.628443,8.3783407 60.628443,30.448707 20.392582,33.17674 20.392582,19.125534 " />
+      <path
+         id="path175"
+         style="fill:url(#linearGradient11224);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.849908;stroke-linejoin:round"
+         d="M 3.2183302,16.590885 V 32.533353 L 20.392582,33.17674 V 19.125534 Z"
+         points="3.2183302,32.533353 20.392582,33.17674 20.392582,19.125534 3.2183302,16.590885 " />
+      <path
+         id="path177"
+         style="fill:url(#linearGradient11226);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.849908;stroke-linejoin:round"
+         d="M 3.2183302,16.590885 40.62231,1.6047088 60.628443,8.3783407 20.392582,19.125534 Z"
+         points="40.62231,1.6047088 60.628443,8.3783407 20.392582,19.125534 3.2183302,16.590885 " />
+      <path
+         id="path183"
+         style="fill:url(#linearGradient11228);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.849908;stroke-linejoin:round"
+         d="M 3.2183302,32.533353 40.62231,28.729311 60.628443,30.448707 20.392582,33.17674 Z"
+         points="40.62231,28.729311 60.628443,30.448707 20.392582,33.17674 3.2183302,32.533353 " />
+      <path
+         id="path181"
+         style="fill:url(#linearGradient11230);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.849908;stroke-linejoin:round"
+         d="M 40.62231,1.6047088 V 28.729311 l 20.006133,1.719396 V 8.3783407 Z"
+         points="40.62231,28.729311 60.628443,30.448707 60.628443,8.3783407 40.62231,1.6047088 " />
+      <path
+         id="path179"
+         style="fill:url(#linearGradient11232);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.849908;stroke-linejoin:round"
+         d="M 3.2183302,16.590885 40.62231,1.6047088 V 28.729311 L 3.2183302,32.533353 Z"
+         points="40.62231,1.6047088 40.62231,28.729311 3.2183302,32.533353 3.2183302,16.590885 " />
+    </g>
+  </g>
+  <g
+     id="layer2">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.405px;font-family:'Noto Serif Kannada';-inkscape-font-specification:'Noto Serif Kannada';fill:#000000;fill-opacity:0.252566;stroke-width:0.401342"
+       x="28.918867"
+       y="37.049946"
+       id="text253"
+       transform="scale(1.3590472,0.73580962)"><tspan
+         id="tspan251"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.405px;font-family:'Noto Serif Kannada';-inkscape-font-specification:'Noto Serif Kannada';fill:#000000;fill-opacity:0.252566;stroke-width:0.401342"
+         x="28.918867"
+         y="37.049946">T</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.405px;font-family:'Noto Serif Kannada';-inkscape-font-specification:'Noto Serif Kannada';fill:#000000;fill-opacity:0.252566;stroke-width:0.401342"
+       x="14.798229"
+       y="32.77776"
+       id="text253-3"
+       transform="scale(1.3590472,0.73580962)"><tspan
+         id="tspan251-6"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.405px;font-family:'Noto Serif Kannada';-inkscape-font-specification:'Noto Serif Kannada';fill:#000000;fill-opacity:0.252566;stroke-width:0.401342"
+         x="14.798229"
+         y="32.77776">E</tspan></text>
+  </g>
+</svg>
