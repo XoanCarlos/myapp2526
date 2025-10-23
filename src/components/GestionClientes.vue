@@ -224,7 +224,7 @@
 </template>
 
 <script setup>
-import provmuniData from '@/data/provmuni.json';
+import provmuniData from '@/data/provmuni.json';  // Importar datos de provincias y municipios como no varían no hace falta que json-server los sirva
 import { ref, onMounted, computed } from 'vue'
 import { getClientes, addCliente, deleteCliente, updateCliente, getClientePorDni } from '@/api/clientes.js'
 import Swal from 'sweetalert2';

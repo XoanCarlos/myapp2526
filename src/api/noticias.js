@@ -12,3 +12,15 @@ export const addNoticia = async (nuevaNoticia) => {
     throw error // re-lanzamos el error para que quien llame pueda manejarlo
   }
 }
+
+export const getNoticias = async () => {
+  try {
+    let url = `${API_URL}?_sort=fecha&_order=desc`;
+
+    const response = await axios.get(url)
+    return response.data
+  } catch (error) {
+    console.error('Error al obtener las noticias:', error)
+    throw error 
+  }
+}
