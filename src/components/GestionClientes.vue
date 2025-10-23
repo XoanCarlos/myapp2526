@@ -80,7 +80,7 @@
             type="email"
             id="email"
             v-model="nuevoCliente.email"
-            class="form-control ms-4 text-center rounded-0 shadow-none border"
+            class="form-control ms-4 rounded-0 shadow-none border"
             @blur="validarEmail"
             :class="{ 'is-invalid': !emailValido }"
             required
