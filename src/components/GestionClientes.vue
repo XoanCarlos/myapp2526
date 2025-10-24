@@ -15,6 +15,7 @@
               @blur="validarDni"
               class="form-control text-center rounded-0 ms-1 shadow-none border"
               :class="{ 'is-invalid': !dniValido }"
+              :disabled ="cargando"
               required
             />
             <button
@@ -253,12 +254,14 @@ const clientes = ref([])   // Array de clientes cargados desde la API
 const numclientes = ref(0) // Número total de clientes para paginación
 const currentPage = ref(1); // Página actual para paginación
 const clientesPorPage = 10; // Número de clientes por página
+const cargando = ref(false); // Control de carga de datos
 
 
 // Zona Cargar clientes Al Montar el componente 
 onMounted(async () => {
   cargarClientes()
   currentPage.value = 1; // Iniciar en la primera página
+  cargando.value = false;
 })
 
 // Métodos de paginación
@@ -280,7 +283,7 @@ const nextPagina = () => {
 // computed crea una propiedad reactiva que se actualiza automáticamente
 // cuando cambian las dependencias (currentPage o clientes) 
 // es decir paso pagina o vuelvo atrás cargando los clientes de esa página
-// slice extrae una sección del array clientes
+// slice extrae una sección del array clientesfalse
 // start es el índice inicial y end el índice final (no incluido)
 
 const clientesPaginados = computed(() => {
@@ -290,20 +293,35 @@ const clientesPaginados = computed(() => {
 });
 
 
+const cargarClientes = async () => {
+  try {
+    cargando.value = true; // 🔒 Deshabilita antes de cargar
 
-const cargarClientes = () => {
-  getClientes(mostrarHistorico.value).then(data => {
-    clientes.value = data
-    numclientes.value = data.length  // Actualiza el número total de clientes
-    currentPage.value = 1; // Reiniciar a la primera página al cargar
-  })
-  Swal.fire({
-    icon: 'success',
-    title: "Listando Clientes...",
-    showConfirmButton: false,
-    timer: 1500
+    const data = await getClientes(mostrarHistorico.value);
+    clientes.value = data;
+    numclientes.value = data.length;
+    currentPage.value = 1;
+
+    Swal.fire({
+      icon: 'success',
+      title: "Listando Clientes...",
+      showConfirmButton: false,
+      timer: 1500
     });
-}
+
+  } catch (error) {
+    console.error('Error al cargar los clientes:', error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error al cargar los clientes',
+      text: 'Inténtelo de nuevo o contacte con el administrador.',
+      showConfirmButton: false,
+      timer: 2000
+    });
+  } finally {
+    cargando.value = false; // 🔓 Reactiva input al terminar SIEMPRE
+  }
+};
 
 const guardarCliente = async () => {
   // Validar duplicados solo si estás creando (no si editando)
@@ -450,6 +468,7 @@ const eliminarCliente = async (movil) => {
 // Función Editar Cliente (carga datos en el formulario)
 const editarCliente = (movil) => {
   const cliente = clientes.value.find(c => c.movil === movil);
+  cargando.value = true; // 🔒 Deshabilita mientras carga
  
   if (!cliente) {
     Swal.fire({

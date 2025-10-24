@@ -15,12 +15,23 @@ export const addNoticia = async (nuevaNoticia) => {
 
 export const getNoticias = async () => {
   try {
-    let url = `${API_URL}?_sort=fecha&_order=desc`;
+    let url = `${API_URL}?_sort=fecha`;
 
     const response = await axios.get(url)
     return response.data
   } catch (error) {
     console.error('Error al obtener las noticias:', error)
+    throw error 
+  }
+}
+
+// Función para eliminar un cliente por su id pasando histórico a false 
+export const deleteNoticia = (id) => {
+  try {
+    return axios.delete(`${API_URL}/${id}`)
+              .then(res => res.data)
+  } catch (error) {
+    console.error('Error al eliminar la noticia:', error)
     throw error 
   }
 }
