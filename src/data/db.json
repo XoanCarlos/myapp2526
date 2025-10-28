@@ -26,7 +26,7 @@
       "provincia": "Barcelona",
       "municipio": "Badalona",
       "historico": true,
-      "lopd": false,
+      "lopd": true,
       "password": "",
       "id": "a079"
     },
@@ -71,7 +71,7 @@
       "provincia": "Málaga",
       "municipio": "Ronda",
       "historico": true,
-      "lopd": false,
+      "lopd": true,
       "password": "",
       "id": "960a"
     },
@@ -86,7 +86,7 @@
       "provincia": "Zaragoza",
       "municipio": "Calatayud",
       "historico": true,
-      "lopd": false,
+      "lopd": true,
       "password": "",
       "id": "eda8"
     },
@@ -131,7 +131,7 @@
       "provincia": "Cádiz",
       "municipio": "Chiclana de la Frontera",
       "historico": false,
-      "lopd": false,
+      "lopd": true,
       "password": "",
       "id": "0f47"
     },
@@ -146,7 +146,7 @@
       "provincia": "Bizkaia",
       "municipio": "Getxo",
       "historico": true,
-      "lopd": false,
+      "lopd": true,
       "password": "",
       "id": "1955"
     },
@@ -221,7 +221,7 @@
       "provincia": "Málaga",
       "municipio": "Marbella",
       "historico": false,
-      "lopd": false,
+      "lopd": true,
       "password": "",
       "id": "b1f4"
     },
@@ -251,7 +251,7 @@
       "provincia": "Barcelona",
       "municipio": "Sabadell",
       "historico": true,
-      "lopd": false,
+      "lopd": true,
       "password": "",
       "id": "66fd"
     },
@@ -296,7 +296,7 @@
       "provincia": "Málaga",
       "municipio": "Antequera",
       "historico": false,
-      "lopd": false,
+      "lopd": true,
       "password": "",
       "id": "9115"
     },
@@ -311,7 +311,7 @@
       "provincia": "Zaragoza",
       "municipio": "Ejea de los Caballeros",
       "historico": true,
-      "lopd": false,
+      "lopd": true,
       "password": "",
       "id": "82f2"
     },
@@ -321,13 +321,14 @@
       "nombre": "Sonia",
       "apellidos": "Abalde Martínez",
       "eemail": "sonia@gmil.com",
-      "movil": "654789400",
+      "movil": "654789411",
       "direccion": "Avda. De Galicia, 101",
       "provincia": "Pontevedra",
       "municipio": "Vigo",
       "fecha_alta": "2025-10-02",
       "historico": false,
-      "email": "sonia@tucorreo.com"
+      "email": "sonia@tucorreo.com",
+      "lopd": true
     },
     {
       "id": "9afd",
@@ -341,7 +342,8 @@
       "municipio": "Vigo",
       "fecha_alta": "2025-02-10",
       "historico": false,
-      "email": "asdf@asdf.ok"
+      "email": "asdf@asdf.ok",
+      "lopd": true
     },
     {
       "id": "c9ee",
@@ -354,7 +356,9 @@
       "provincia": "Guadalajara",
       "municipio": "Driebes",
       "fecha_alta": "2025-10-03",
-      "historico": false
+      "historico": false,
+      "lopd": true,
+      "email": "asdf@asdf.ok"
     },
     {
       "id": "ec7e",
@@ -367,7 +371,9 @@
       "provincia": "Girona",
       "municipio": "Arbúcies",
       "fecha_alta": "2025-10-03",
-      "historico": true
+      "historico": true,
+      "email": "aliciatienecorreo@gmail.com",
+      "lopd": true
     },
     {
       "id": "a1b9",
@@ -380,7 +386,8 @@
       "provincia": "Huelva",
       "municipio": "Alájar",
       "fecha_alta": "2025-10-09",
-      "historico": true
+      "historico": true,
+      "lopd": true
     },
     {
       "id": "68a1",
@@ -393,7 +400,8 @@
       "provincia": "Huelva",
       "municipio": "Beas",
       "fecha_alta": "2025-10-08",
-      "historico": true
+      "historico": true,
+      "lopd": true
     },
     {
       "id": "b38d",
@@ -406,7 +414,8 @@
       "provincia": "Tarragona",
       "municipio": "Calafell",
       "fecha_alta": "2025-10-14",
-      "historico": true
+      "historico": true,
+      "lopd": true
     },
     {
       "id": "479b",
@@ -419,7 +428,22 @@
       "provincia": "Girona",
       "municipio": "Agullana",
       "fecha_alta": "2025-10-14",
-      "historico": true
+      "historico": true,
+      "lopd": true
+    },
+    {
+      "id": "11bc",
+      "dni": "12053159D",
+      "nombre": "Jesús María",
+      "apellidos": "Santiago López",
+      "email": "santiago@mail.com",
+      "movil": "654159854",
+      "direccion": "Calle Castilla, 23 2ºa",
+      "provincia": "Gipuzkoa",
+      "municipio": "Pasaia",
+      "fecha_alta": "2025-10-28",
+      "historico": true,
+      "lopd": true
     }
   ],
   "noticias": [
@@ -440,6 +464,12 @@
       "titulo": "La UE dando palos de ciego en el mundo del motor",
       "contenido": "A pesar del firme respaldo de países como España y Francia a la meta de 2035 para prohibir la venta de coches nuevos con motores de combustión interna en la Unión Europea, Alemania ha impulsado una revisión de esta normativa ante la presión de los fabricantes de automóviles. Esta directiva forma parte del Pact Verde Europeo y pretende acelerar el fin de los combustibles fósiles en el transporte.",
       "fecha": "2025-10-24"
+    },
+    {
+      "id": "c1ed",
+      "titulo": "Santana renace de sus cenizas",
+      "contenido": "Se trata de dos pick up, muy preparados para el campo y muy bien equipados. Uno es diésel, el otro un híbrido enchufable con 120 kms de autonomía. Los precios aún no se conocen y llegan en 2026.",
+      "fecha": "2025-10-28"
     }
   ]
 }

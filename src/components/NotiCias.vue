@@ -1,5 +1,5 @@
 <template>
-  <div class="container d-flex flex-column w-100">
+  <div class="container d-flex flex-column shadow-sm bg-light w-100">
     <!-- Título centrado -->
     <div class="text-center mb-2 mt-1 w-100">
       <h4 class="text-center my-1 bg-primary-subtle py-2">Noticias del Motor</h4>

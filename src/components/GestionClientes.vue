@@ -144,9 +144,15 @@
           </select>
         </div>
       </div>
-
+        <div class="d-flex align-items-center justify-content-center mt-2">
+            <input type="checkbox" id="lopd" v-model="nuevoCliente.lopd" class="form-check-input me-1"/>
+            <label id="lopd" class="d-flex align-items-center mb-0 ms-2">
+              Aceptar los términos y condiciones establecidos en
+              <router-link to="/avisolegal" target="_blank" class="ms-2 nav-link text-primary d-inline">Aviso Legal</router-link>
+            </label>
+        </div>
      <!-- Botón centrado y checkbox al final -->
-      <div class="d-flex align-items-center mt-3">
+      <div class="d-flex align-items-center mt-2">
         <!-- Espacio izquierdo para centrar el botón -->
         <div class="flex-grow-1 d-flex justify-content-center">
           <button type="submit" class="btn btn-primary ms-5 px-3 btn-sm rounded-0 border shadow-none">
@@ -242,7 +248,8 @@ const nuevoCliente = ref({
   provincia: '',
   municipio: '',
   fecha_alta: '',
-  historico: true
+  historico: true,
+  lopd: false
 });
 
 
@@ -324,8 +331,17 @@ const cargarClientes = async () => {
 };
 
 const guardarCliente = async () => {
-  // Validar duplicados solo si estás creando (no si editando)
 
+  if (!nuevoCliente.value.lopd) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Debe aceptar los términos y condiciones del Aviso Legal',
+      showConfirmButton: false,
+      timer: 3000
+    });
+    return;
+  }
+  // Validar duplicados solo si estás creando (no si editando)
   if (!editando.value) {
     const duplicado = clientes.value.find(cliente =>
       cliente.dni === nuevoCliente.value.dni ||
@@ -384,6 +400,7 @@ const guardarCliente = async () => {
     }
 
     // Reset formulario y estado
+    
     nuevoCliente.value = {
       dni: '',
       nombre: '',
@@ -394,9 +411,10 @@ const guardarCliente = async () => {
       provincia: '',
       municipio: '',
       fecha_alta: '',
-      historico: true
+      historico: true,
+      lopd: false
     };
-
+    mostrarHistorico.value = false;
     editando.value = false;
     clienteEditandoId.value = null;
 
