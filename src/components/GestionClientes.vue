@@ -259,7 +259,8 @@ const nuevoCliente = ref({
   municipio: '',
   fecha_alta: '',
   historico: true,
-  lopd: false
+  lopd: false,
+  user: "user"
 });
 
 
@@ -422,7 +423,7 @@ const guardarCliente = async () => {
       municipio: '',
       fecha_alta: '',
       historico: true,
-      lopd: false
+      lopd: false,
     };
     mostrarHistorico.value = false;
     editando.value = false;
