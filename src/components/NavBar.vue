@@ -2,7 +2,7 @@
   <nav class="navbar navbar-dark bg-primary sticky-top navbar-expand-lg">
     <div class="container-fluid">
       <!-- Marca o logo -->
-      <a class="navbar-logo ms-3" href="/"><img src="../assets/logo.svg" alt="Logo" width="64px" height="32px"/></a>
+      <a class="navbar-logo ms-5" href="/"><img src="../assets/logo.svg" alt="Logo" width="48px" height="28px"/></a>
 
       <!-- Botón hamburguesa -->
       <button
@@ -18,8 +18,8 @@
       </button>
 
       <!-- Enlaces centrados -->
-      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-        <ul class="navbar-nav">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
           <li class="nav-item">
             <router-link to="/" class="nav-link">Inicio</router-link>
           </li>
@@ -32,10 +32,18 @@
           <li class="nav-item">
             <router-link to="#" class="nav-link">Modelos</router-link>
           </li>
+           <li class="nav-item">
+            <router-link to="#" class="nav-link">Ventas</router-link>
+          </li>
           <li class="nav-item">
             <router-link to="#" class="nav-link">Contacto</router-link>
           </li>
-        </ul>
+          </ul>
+          <ul class="navbar-nav ms-end">
+           <li class="nav-item">
+            <router-link to="#" class="nav-link justify-content-end"><i class="bi bi-person fs-4 me-5"></i></router-link>
+          </li>
+          </ul>
       </div>
     </div>
   </nav>

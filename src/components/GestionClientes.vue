@@ -1,9 +1,9 @@
 <template>
-  <div class="container-fluid my-1 mt-3 p-3 border rounded-0 shadow-sm bg-light">
-    <h5 class="text-center my-1 bg-primary-subtle py-2">Registro de Clientes</h5>
+  <div class="container-fluid my-1 mt-2 p-2 border rounded-0 shadow-sm bg-light">
+    <h5 class="text-center bg-primary-subtle py-1"><i class="bi bi-person me-2"></i>Registro de Clientes</h5>
 
-    <form @submit.prevent="guardarCliente" class="mb-4 mt-2">
-      <!-- FILA DNI y Fecha de Alta -->
+    <form @submit.prevent="guardarCliente" class="mb-3 mt-2">
+      <!-- FILA DNI y Fecha de Alta y boton recargar-->
       <div class="row g-3 align-items-center">
         <div class="col-12 col-md-3 d-flex align-items-center">
           <label for="dni" class="form-label mb-0 me-4 text-nowrap align-middle">DNI:</label>
@@ -37,14 +37,22 @@
           <input
             type="date"
             id="fecha_alta"
+            placeholder="dd/mm/yyyy"
             v-model="nuevoCliente.fecha_alta"
             class="form-control text-center rounded-0 shadow-none border ms-2 mt-2"
             required
           />
         </div>
+           <!--  Botón recargar -->
+        <div class="col d-flex justify-content-end mt-3 me-5">
+          <button
+            type="button"
+            class="btn btn-light ms-3 rounded-0 border-primary shadow-none d-flex align-items-end justify-content-end"
+            @click="recargaForm"
+            title="Limpiar Formulario"><i class="bi bi-arrow-clockwise"></i></button>
+        
+        </div>
       </div>
-
-
       <!-- FILA Nombre y Apellidos -->
       <div class="row g-2 align-items-center mt-2">
         <div class="col-12 col-md-4 d-flex align-items-center">
@@ -151,17 +159,18 @@
               <router-link to="/avisolegal" target="_blank" class="ms-2 nav-link text-primary d-inline">Aviso Legal</router-link>
             </label>
         </div>
+
      <!-- Botón centrado y checkbox al final -->
       <div class="d-flex align-items-center mt-2">
         <!-- Espacio izquierdo para centrar el botón -->
         <div class="flex-grow-1 d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary ms-5 px-3 btn-sm rounded-0 border shadow-none">
+          <button type="submit" class="btn btn-primary ms-5 px-4 btn-sm rounded-0 border shadow-none">
             {{ editando ? 'Modificar' : 'Guardar' }}
           </button>
         </div>
 
         <!-- Checkbox al final -->
-        <div class="form-check form-switch ms-2">
+        <div class="form-check form-switch">
           <input
             type="checkbox"
             id="historico"
@@ -169,15 +178,16 @@
             class="form-check-input"
             @change="cargarClientes"
           />
-          <label for="historico" class="form-check-label ms-2">Histórico</label>
+          <label for="historico" class="form-check-label">Histórico</label>
         </div>
       </div>
    </form>
+   <hr class="border border-1 border-secondary rounded">
 
 
     <!-- Tabla de clientes -->
     <div class="table-responsive mt-1">
-      <h5 class="text-center mb-1 me-5">Listado de Clientes</h5>
+      <h6 class="text-center mb-1  bg-secondary text-white">Listado de Clientes</h6>
       <table class="table table-bordered table-striped table-sm table-hover align-middle">
         <thead class="table-primary text-center">
           <tr>
@@ -738,6 +748,29 @@ function formatearFechaParaInput(fecha) {
 
   return '';
 }
+
+function recargaForm() {
+  nuevoCliente.value = {
+      dni: '',
+      nombre: '',
+      apellidos: '',
+      email: '',
+      movil: '',
+      direccion: '',
+      provincia: '',
+      municipio: '',
+      fecha_alta: '',
+      historico: true,
+      lopd: false
+  };
+  dniValido.value = true;            // resetea validación dni
+  movilValido.value = true;          // resetea validación móvil
+  emailValido.value = true;          // resetea validación email
+  cargando.value = false;   // 🔓 Reactiva input del dni
+  municipiosFiltrados.value = [];   // vacía lista municipios
+  editando.value = false;           // pone el botón en modo guardar     
+  clienteEditandoId.value = null;    // limpia id de edición
+} 
 
 </script>
 
