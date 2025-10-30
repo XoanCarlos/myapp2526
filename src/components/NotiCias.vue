@@ -135,8 +135,8 @@ const agregarNoticia = async () => {
 
     // Enviar noticia al backend
     const noticiaGuardada = await addNoticia(nuevaNoticia.value)
-    noticias.value.push(noticiaGuardada)
-
+    //noticias.value.push(noticiaGuardada)
+    cargarNoticias()
     // Reiniciar formulario
     nuevaNoticia.value = {
       titulo: '',
