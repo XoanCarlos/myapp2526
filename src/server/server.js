@@ -12,14 +12,11 @@ app.use(cors());
 app.use(express.json());
 
 // Verificar variable
-console.log("MONGODB_URI =", process.env.MONGODB_URI);
+//console.log("MONGODB_URI =", process.env.MONGODB_URI);
 
 /// Conexión a MongoDB 
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log("Connected to MongoDB"))
+mongoose.connect(process.env.MONGODB_URI)
+.then(() => console.log("Connected to MongoDB a la base de datos BBDD"))
 .catch((err) => console.error("Could not connect to MongoDB:", err));
 
 
