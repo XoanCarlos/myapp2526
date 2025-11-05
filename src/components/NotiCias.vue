@@ -52,40 +52,39 @@
         </div>
       </div>
     </form>
-  <!-- Tabla sin bordes -->
-  <table class="table table-borderless mt-3">
-    <tbody>
-      <template v-for="noticia in noticias" :key="noticia.id">  <!-- Template dentro de otro template-->
-        <!-- Fila 1: título y fecha -->
+    <!-- Tabla sin bordes -->
+    <table class="table table-borderless mt-3">
+      <tbody>
+        <template v-for="noticia in noticias" :key="noticia.id">  <!-- Template dentro de otro template-->
+          <!-- Fila 1: título y fecha -->
+          <tr>
+            <td>
+              <div class="d-flex justify-content-between">
+                <strong class="text-primary">{{ noticia.titulo }}</strong>
+                <small class="text-muted text-secondary">{{ noticia.fecha }}</small>
+              </div>
+            </td>
+        </tr>
+        <!-- Fila 2: contenido con "mostrar más/menos" -->
         <tr>
           <td>
-            <div class="d-flex justify-content-between">
-              <strong class="text-primary">{{ noticia.titulo }}</strong>
-              <small class="text-muted text-secondary">{{ noticia.fecha }}</small>
-            </div>
+            <span>
+              {{ isExpanded[noticia.id] 
+                  ? noticia.contenido : noticia.contenido.slice(0, 200) + '...' }}
+            </span>
+            <a href="#" @click.prevent="toggleExpand(noticia.id)" class="float-end text-decoration-none">
+              {{ isExpanded[noticia.id] ? 'Mostrar menos...' : 'Seguir leyendo...' }}
+            </a>
+            <button class="btn btn-outline-primary p-0 m-0 align-baseline float-end border-0 me-2" @click="borraNoticia(noticia.id)">
+              <i class="bi bi-trash"></i>
+            </button>
           </td>
-      </tr>
-      <!-- Fila 2: contenido con "mostrar más/menos" -->
-      <tr>
-        <td>
-          <span>
-            {{ isExpanded[noticia.id] 
-                ? noticia.contenido : noticia.contenido.slice(0, 200) + '...' }}
-          </span>
-          <a href="#" @click.prevent="toggleExpand(noticia.id)" class="float-end text-decoration-none">
-            {{ isExpanded[noticia.id] ? 'Mostrar menos...' : 'Seguir leyendo...' }}
-          </a>
-          <button class="btn btn-outline-primary p-0 m-0 align-baseline float-end border-0 me-2" @click="borraNoticia(noticia.id)">
-            <i class="bi bi-trash"></i>
-          </button>
-        </td>
-      </tr>
-      <!-- Fila 3: espacio en blanco -->
-      <tr><td>&nbsp;</td></tr>
-    </template>
-  </tbody>
-</table>
-
+        </tr>
+        <!-- Fila 3: espacio en blanco -->
+        <tr><td>&nbsp;</td></tr>
+      </template>
+    </tbody>
+  </table>
   </div>
 </template>
 
@@ -135,7 +134,8 @@ const agregarNoticia = async () => {
 
     // Enviar noticia al backend
     const noticiaGuardada = await addNoticia(nuevaNoticia.value)
-    noticias.value.push(noticiaGuardada)
+    // noticias.value.push(noticiaGuardada)
+    cargarNoticias() // Recargar noticias para mantener el orden
 
     // Reiniciar formulario
     nuevaNoticia.value = {

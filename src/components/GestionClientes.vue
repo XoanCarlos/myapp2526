@@ -32,7 +32,7 @@
         </div>
 
         <!--  Fecha de Alta a la derecha  con ms-auto y d-flex-->
-        <div class="col-12 col-md-2 d-flex align-items-left-center mt-2 ms-5">
+        <div class="col-12 col-md-2 d-flex align-items-left-center mt-2 ms-5 me-5">
           <label for="fecha_alta" class="form-label mt-3 me-2 text-nowrap align-middle">Fecha de Alta:</label>
           <input
             type="date"
@@ -43,7 +43,25 @@
             required
           />
         </div>
-           <!--  Botón recargar -->
+        <div class ="col d-flex justify-content-end mt-3 ms-5 me-5">
+          <!--  Tipo de Cliente  -->
+        <label class="form-label mb-0 ms-5 text-nowrap align-middle">Tipo de Cliente:</label>
+        <input
+            type="radio"
+            id="tipocliente-particular"
+            v-model ="nuevoCliente.tipocliente"
+            class="form-check-input ms-2 border shadow-none d-flex align-items-end justify-content-end"
+            value="particular"  
+º          />  <label  class="ms-2">Particular</label>
+          <input
+            type="radio"
+            id="tipocliente-empresa"
+            v-model ="nuevoCliente.tipocliente"
+            class="form-check-input ms-3 border shadow-none d-flex align-items-end justify-content-end"
+            value="empresa"
+          />  <label class="ms-2">Empresa</label>
+
+        </div>           <!--  Botón recargar -->
         <div class="col d-flex justify-content-end mt-3 me-5">
           <button
             type="button"
@@ -52,6 +70,7 @@
             title="Limpiar Formulario"><i class="bi bi-arrow-clockwise"></i></button>
         
         </div>
+    
       </div>
       <!-- FILA Nombre y Apellidos -->
       <div class="row g-2 align-items-center mt-2">
@@ -154,7 +173,7 @@
       </div>
         <div class="d-flex align-items-center justify-content-center mt-2">
             <input type="checkbox" id="lopd" v-model="nuevoCliente.lopd" class="form-check-input me-1"/>
-            <label id="lopd" class="d-flex align-items-center mb-0 ms-2">
+            <label id="lopd" class="d-flex align-items-center ms-2">
               Aceptar los términos y condiciones establecidos en
               <router-link to="/avisolegal" target="_blank" class="ms-2 nav-link text-primary d-inline">Aviso Legal</router-link>
             </label>
@@ -260,6 +279,7 @@ const nuevoCliente = ref({
   fecha_alta: '',
   historico: true,
   lopd: false,
+  tipocliente: "",
   user: "user"
 });
 
@@ -422,6 +442,7 @@ const guardarCliente = async () => {
       provincia: '',
       municipio: '',
       fecha_alta: '',
+      tipocliente: '',
       historico: true,
       lopd: false,
     };
@@ -492,7 +513,6 @@ const eliminarCliente = async (movil) => {
     timer: 1500
   });
 };
-
 
 // Función Editar Cliente (carga datos en el formulario)
 const editarCliente = (movil) => {

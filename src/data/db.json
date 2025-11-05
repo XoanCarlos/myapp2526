@@ -208,7 +208,8 @@
       "historico": true,
       "lopd": true,
       "password": "",
-      "id": "ba17"
+      "id": "ba17",
+      "tipocliente": "particular"
     },
     {
       "dni": "56712389R",
@@ -327,7 +328,8 @@
       "fecha_alta": "2025-10-02",
       "historico": false,
       "email": "sonia@tucorreo.com",
-      "lopd": true
+      "lopd": true,
+      "tipocliente": "empresa"
     },
     {
       "id": "9afd",
@@ -341,7 +343,8 @@
       "fecha_alta": "2025-02-10",
       "historico": false,
       "email": "asdf@asdf.ok",
-      "lopd": true
+      "lopd": true,
+      "tipocliente": "particular"
     },
     {
       "id": "c9ee",
@@ -383,7 +386,8 @@
       "municipio": "Alájar",
       "fecha_alta": "2025-10-09",
       "historico": true,
-      "lopd": true
+      "lopd": true,
+      "tipocliente": "empresa"
     },
     {
       "id": "68a1",
@@ -397,7 +401,8 @@
       "municipio": "Beas",
       "fecha_alta": "2025-10-08",
       "historico": true,
-      "lopd": true
+      "lopd": true,
+      "tipocliente": "particular"
     },
     {
       "id": "b38d",
@@ -411,7 +416,8 @@
       "municipio": "Calafell",
       "fecha_alta": "2025-10-14",
       "historico": true,
-      "lopd": true
+      "lopd": true,
+      "tipocliente": "empresa"
     },
     {
       "id": "479b",
