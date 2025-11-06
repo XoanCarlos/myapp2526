@@ -4,6 +4,7 @@ import GestionClientes from '../components/GestionClientes.vue'
 import NotiCias from '../components/NotiCias.vue'
 import AvisoLegal from '../components/AvisoLegal.vue'
 import PoliciaPrivacidad from '../components/PoliticaPrivacidad.vue'
+import ModeLos from '../components/ModeLos.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 
@@ -32,6 +33,11 @@ const routes = [
         path: '/politicaprivacidad',
         name: 'PoliticaPrivacidad',
         component: PoliciaPrivacidad
+    },
+    {
+        path: '/modelos',
+        name: 'ModeLos',
+        component: ModeLos
     },
     {
         path: '/:pathMatch(.*)*',

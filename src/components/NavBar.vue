@@ -2,7 +2,8 @@
   <nav class="navbar navbar-dark bg-primary sticky-top navbar-expand-lg">
     <div class="container-fluid">
       <!-- Marca o logo -->
-      <a class="navbar-logo ms-5" href="/"><img src="../assets/logo.svg" alt="Logo" width="48px" height="28px"/></a>
+      <a class="navbar-logo ms-5" href="/"><img src="../assets/logo.svg" alt="Logo" width="36px" height="24
+        px"/></a>
 
       <!-- Botón hamburguesa -->
       <button
@@ -30,7 +31,7 @@
             <router-link to="/noticias" class="nav-link">Noticias</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="#" class="nav-link">Modelos</router-link>
+            <router-link to="/modelos" class="nav-link">Modelos</router-link>
           </li>
            <li class="nav-item">
             <router-link to="#" class="nav-link">Ventas</router-link>

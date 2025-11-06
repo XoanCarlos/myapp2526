@@ -1,12 +1,12 @@
 <template>
-  <div class="container d-flex flex-column shadow-sm bg-light w-100">
+  <div class="container d-flex flex-column shadow-sm w-100">
     <!-- Título centrado -->
     <div class="text-center mb-2 mt-1 w-100">
-      <h4 class="text-center my-1 bg-primary-subtle py-2">Noticias del Motor</h4>
+      <h6 class="text-center my-1 bg-primary-subtle py-1"><i class="bi bi-newspaper me-2"></i>  Noticias del Motor</h6>
     </div>
-    <form @submit.prevent="agregarNoticia" class="w-100">
+    <form @submit.prevent="agregarNoticia" class="shadow-sm bg-light  w-100">
       <!-- Fila 1: Título -->
-      <div class="row g-2 align-items-center mb-1">
+      <div class="row g-2 align-items-center mb-1 mt-2 ms-2 me-2">
         <div class="col-auto d-flex align-items-center">
           <label for="titulo" class="text-primary fw-bold form-label mb-0">Título:</label>
         </div>
@@ -23,14 +23,14 @@
       </div>
 
       <!-- Fila 2: Label Descripción -->
-      <div class="row g-3 align-items-start mb-1 mt-3">
+      <div class="row g-3 align-items-start mb-1 mt-3 ms-2 me-2">
         <div class="col-md-12 text-md-start">
           <label for="contenido" class="text-primary fw-bold form-label mb-0">Contenido:</label>
         </div>
       </div>
 
       <!-- Fila 3: Textarea -->
-      <div class="row g-3 mb-2 align-items-start">
+      <div class="row g-3 mb-2 align-items-start ms-2 me-2">
         <div class="col-md-12">
           <textarea
             id="contenido"
@@ -46,14 +46,14 @@
       <!-- Fila 4: Botón -->
       <div class="row g-3 mt-2">
         <div class="col text-center">
-          <button type="submit" class="btn btn-primary btn-sm px-4 rounded-0">
-            Agregar Noticia
+          <button type="submit" class="btn btn-primary btn-sm mb-2 px-4 rounded-0">
+            Publicar
           </button>
         </div>
       </div>
     </form>
     <!-- Tabla sin bordes -->
-    <table class="table table-borderless mt-3">
+    <table class="table table-borderless mt-3 table-striped">
       <tbody>
         <template v-for="noticia in noticias" :key="noticia.id">  <!-- Template dentro de otro template-->
           <!-- Fila 1: título y fecha -->
@@ -80,8 +80,7 @@
             </button>
           </td>
         </tr>
-        <!-- Fila 3: espacio en blanco -->
-        <tr><td>&nbsp;</td></tr>
+       
       </template>
     </tbody>
   </table>

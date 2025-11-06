@@ -1,8 +1,8 @@
 <template>
-  <div class="container-fluid my-1 mt-2 p-2 border rounded-0 shadow-sm bg-light">
+  <div class="container-fluid my-1 p-2 border rounded-0 shadow-sm bg-light">
     <h5 class="text-center bg-primary-subtle py-1"><i class="bi bi-person me-2"></i>Registro de Clientes</h5>
 
-    <form @submit.prevent="guardarCliente" class="mb-3 mt-2">
+    <form @submit.prevent="guardarCliente" class="mb-2 mt-1 .form-control-sm">
       <!-- FILA DNI y Fecha de Alta y boton recargar-->
       <div class="row g-3 align-items-center">
         <div class="col-12 col-md-3 d-flex align-items-center">
@@ -43,14 +43,14 @@
             required
           />
         </div>
-        <div class ="col d-flex justify-content-end mt-3 ms-5 me-5">
+        <div class ="col d-flex justify-content-center mt-3 ms-5 me-5 border align-middle">
           <!--  Tipo de Cliente  -->
         <label class="form-label mb-0 ms-5 text-nowrap align-middle">Tipo de Cliente:</label>
         <input
             type="radio"
             id="tipocliente-particular"
             v-model ="nuevoCliente.tipocliente"
-            class="form-check-input ms-2 border shadow-none d-flex align-items-end justify-content-end"
+            class="form-check-input ms-3 border shadow-none d-flex align-items-end justify-content-end"
             value="particular"  
 º          />  <label  class="ms-2">Particular</label>
           <input
@@ -59,7 +59,7 @@
             v-model ="nuevoCliente.tipocliente"
             class="form-check-input ms-3 border shadow-none d-flex align-items-end justify-content-end"
             value="empresa"
-          />  <label class="ms-2">Empresa</label>
+          />  <label class="ms-2 me-5">Empresa</label>
 
         </div>           <!--  Botón recargar -->
         <div class="col d-flex justify-content-end mt-3 me-5">
@@ -87,7 +87,7 @@
         </div>
         
 
-        <div class="col-12 col-md-5 ms-2 d-flex align-items-center">
+        <div class="col-12 col-md-5 ms-5 d-flex align-items-center">
           <label for="apellidos" class="form-label mb-0 me-2 text-nowrap align-middle">Apellidos: </label>
           <input
             type="text"
