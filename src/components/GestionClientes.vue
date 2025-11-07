@@ -445,6 +445,7 @@ const guardarCliente = async () => {
       tipocliente: '',
       historico: true,
       lopd: false,
+      tipo: "user"
     };
     mostrarHistorico.value = false;
     editando.value = false;

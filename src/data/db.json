@@ -13,6 +13,7 @@
       "historico": false,
       "lopd": true,
       "password": "",
+      "tipo": "user",
       "id": "7169"
     },
     {
@@ -28,6 +29,7 @@
       "historico": true,
       "lopd": true,
       "password": "",
+      "tipo": "user",
       "id": "a079"
     },
     {
@@ -43,7 +45,8 @@
       "historico": false,
       "lopd": true,
       "password": "",
-      "id": "56df"
+      "id": "56df",
+      "tipo": "user"
     },
     {
       "dni": "78912345N",
@@ -58,7 +61,8 @@
       "historico": true,
       "lopd": true,
       "password": "",
-      "id": "c356"
+      "id": "c356",
+      "tipo": "user"
     },
     {
       "dni": "90123456A",
@@ -73,7 +77,8 @@
       "historico": true,
       "lopd": true,
       "password": "",
-      "id": "960a"
+      "id": "960a",
+      "tipo": "user"
     },
     {
       "dni": "Z2345678M",
@@ -88,7 +93,8 @@
       "historico": true,
       "lopd": true,
       "password": "",
-      "id": "eda8"
+      "id": "eda8",
+      "tipo": "user"
     },
     {
       "dni": "34567891H",
@@ -103,7 +109,8 @@
       "historico": false,
       "lopd": true,
       "password": "",
-      "id": "39b2"
+      "id": "39b2",
+      "tipo": "user"
     },
     {
       "dni": "56789123F",
@@ -118,7 +125,8 @@
       "historico": true,
       "lopd": true,
       "password": "",
-      "id": "d6a9"
+      "id": "d6a9",
+      "tipo": "user"
     },
     {
       "dni": "23456789D",
@@ -133,7 +141,8 @@
       "historico": false,
       "lopd": true,
       "password": "",
-      "id": "0f47"
+      "id": "0f47",
+      "tipo": "user"
     },
     {
       "dni": "67891234H",
@@ -148,7 +157,8 @@
       "historico": true,
       "lopd": true,
       "password": "",
-      "id": "1955"
+      "id": "1955",
+      "tipo": "user"
     },
     {
       "dni": "78945612K",
@@ -163,7 +173,8 @@
       "historico": true,
       "lopd": true,
       "password": "",
-      "id": "1b52"
+      "id": "1b52",
+      "tipo": "user"
     },
     {
       "dni": "X9876543K",
@@ -178,7 +189,8 @@
       "historico": true,
       "lopd": false,
       "password": "",
-      "id": "58cf"
+      "id": "58cf",
+      "tipo": "user"
     },
     {
       "dni": "34561278Y",
@@ -193,7 +205,8 @@
       "historico": false,
       "lopd": true,
       "password": "",
-      "id": "e406"
+      "id": "e406",
+      "tipo": "user"
     },
     {
       "dni": "Y1234567X",
@@ -209,7 +222,9 @@
       "lopd": true,
       "password": "",
       "id": "ba17",
-      "tipocliente": "particular"
+      "tipocliente": "particular",
+      "tipo": "user"
+      
     },
     {
       "dni": "56712389R",
@@ -224,7 +239,9 @@
       "historico": false,
       "lopd": true,
       "password": "",
-      "id": "b1f4"
+      "id": "b1f4",
+      "tipo": "user",
+      "tipocliente": "particular"
     },
     {
       "dni": "X4567891E",
@@ -239,7 +256,9 @@
       "historico": false,
       "lopd": true,
       "password": "",
-      "id": "76d6"
+      "id": "76d6",
+      "tipo": "user",
+      "tipocliente": "empresa"
     },
     {
       "dni": "Y2345678Z",
@@ -254,7 +273,9 @@
       "historico": true,
       "lopd": true,
       "password": "",
-      "id": "66fd"
+      "id": "66fd",
+      "tipo": "user",
+      "tipocliente": "empresa"
     },
     {
       "dni": "Z9876543A",
@@ -269,7 +290,9 @@
       "historico": false,
       "lopd": true,
       "password": "",
-      "id": "4d3e"
+      "id": "4d3e",
+      "tipo": "user",
+      "tipocliente": "particular"
     },
     {
       "dni": "12345678Z",
@@ -284,7 +307,8 @@
       "historico": false,
       "lopd": true,
       "password": "",
-      "id": "bacd"
+      "id": "bacd",
+      "tipo": "user"
     },
     {
       "dni": "87654321X",
@@ -299,7 +323,8 @@
       "historico": false,
       "lopd": true,
       "password": "",
-      "id": "9115"
+      "id": "9115",
+      "tipo": "user"
     },
     {
       "dni": "X3456789G",
@@ -314,7 +339,8 @@
       "historico": true,
       "lopd": true,
       "password": "",
-      "id": "82f2"
+      "id": "82f2",
+      "tipo": "user"
     },
     {
       "id": "971c",
@@ -329,7 +355,8 @@
       "historico": false,
       "email": "sonia@tucorreo.com",
       "lopd": true,
-      "tipocliente": "empresa"
+      "tipocliente": "empresa",
+      "tipo": "user"
     },
     {
       "id": "9afd",
@@ -344,7 +371,8 @@
       "historico": false,
       "email": "asdf@asdf.ok",
       "lopd": true,
-      "tipocliente": "particular"
+      "tipocliente": "particular",
+      "tipo": "user"
     },
     {
       "id": "c9ee",
@@ -358,7 +386,9 @@
       "fecha_alta": "2025-10-03",
       "historico": false,
       "lopd": true,
-      "email": "asdf@asdf.ok"
+      "email": "asdf@asdf.ok",
+      "tipocliente": "particular",
+      "tipo": "user"
     },
     {
       "id": "ec7e",
@@ -372,7 +402,9 @@
       "fecha_alta": "2025-10-03",
       "historico": true,
       "email": "aliciatienecorreo@gmail.com",
-      "lopd": true
+      "lopd": true,
+      "tipocliente": "particular",
+      "tipo": "user"
     },
     {
       "id": "a1b9",
@@ -387,7 +419,8 @@
       "fecha_alta": "2025-10-09",
       "historico": true,
       "lopd": true,
-      "tipocliente": "empresa"
+      "tipocliente": "empresa",
+      "tipo": "user"
     },
     {
       "id": "68a1",
@@ -402,7 +435,8 @@
       "fecha_alta": "2025-10-08",
       "historico": true,
       "lopd": true,
-      "tipocliente": "particular"
+      "tipocliente": "particular",
+      "tipo": "user"
     },
     {
       "id": "b38d",
@@ -417,7 +451,8 @@
       "fecha_alta": "2025-10-14",
       "historico": true,
       "lopd": true,
-      "tipocliente": "empresa"
+      "tipocliente": "empresa",
+      "tipo": "user"
     },
     {
       "id": "479b",
@@ -431,7 +466,9 @@
       "municipio": "Agullana",
       "fecha_alta": "2025-10-14",
       "historico": true,
-      "lopd": true
+      "lopd": true, 
+      "tipocliente": "particular",
+      "tipo": "user"
     },
     {
       "id": "11bc",
@@ -445,7 +482,9 @@
       "municipio": "Pasaia",
       "fecha_alta": "2025-10-28",
       "historico": true,
-      "lopd": true
+      "lopd": true,
+      "tipocliente": "empresa",
+      "tipo": "user"
     }
   ],
   "noticias": [
