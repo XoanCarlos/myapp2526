@@ -1,12 +1,12 @@
 <template>
-  <div class="container-fluid my-1 p-2 border rounded-0 shadow-sm bg-light">
-    <h5 class="text-center bg-primary-subtle py-1"><i class="bi bi-car-front me-2"></i>Registro de Vehículos </h5>
+  <div class="container-fluid my-3 p-2 border rounded-0 shadow-sm bg-light">
+    <h5 class="text-center bg-primary-subtle  ms-1 py-1"><i class="bi bi-car-front me-2"></i>Registro de Vehículos </h5>
 
-    <form @submit.prevent="guardarVehiculo" class="mb-2 mt-1">
+    <form @submit.prevent="guardarVehiculo" class="mb-2 mt-1 ms-1">
       <!-- FILA: Tipo, Marca, Modelo -->
       <div class="row g-3 align-items-center mt-1">
-        <div class="col-12 col-md-4 d-flex align-items-center">
-          <label class="form-label mb-0 me-3 text-nowrap">Tipo:</label>
+        <div class="col-12 col-md-3 d-flex align-items-center">
+          <label class="form-label mb-0 me-2 text-nowrap">Tipo:</label>
           <div class="d-flex align-items-center">
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" id="tipo-coche" value="coche" v-model="vehiculo.tipo">
@@ -22,45 +22,50 @@
             </div>
           </div>
         </div>
+         <div class="col-12 col-md-2 d-flex align-items-center">
+          <label for="color" class="form-label mb-0 me-2 text-nowrap ms-2">Matricula:</label>
+          <input type="text" id="color" v-model="vehiculo.matricula" class="form-control rounded-0 shadow-none border">
+        </div>
 
-        <div class="col-12 col-md-4 d-flex align-items-center">
-          <label for="marca" class="form-label mb-0 me-3 text-nowrap">Marca:</label>
+        <div class="col-12 col-md-2 d-flex align-items-center ms-2">
+          <label for="marca" class="form-label mb-0 me-2 text-nowrap">Marca:</label>
           <input type="text" id="marca" v-model="vehiculo.marca" class="form-control rounded-0 shadow-none border" required>
         </div>
 
-        <div class="col-12 col-md-4 d-flex align-items-center">
-          <label for="modelo" class="form-label mb-0 me-3 text-nowrap">Modelo:</label>
+        <div class="col-12 col-md-2 d-flex align-items-center">
+          <label for="modelo" class="form-label mb-0 me-2 text-nowrap">Modelo:</label>
           <input type="text" id="modelo" v-model="vehiculo.modelo" class="form-control rounded-0 shadow-none border" required>
+        </div>
+        <div class="col-12 col-md-1 d-flex align-items-center">
+          <label for="anio" class="form-label mb-0 me-1 text-nowrap text-end">Año:</label>
+          <input type="text" id="anio" v-model="vehiculo.anio" class="form-control text-center rounded-0 shadow-none border" required>
+        </div>
+         <div class="col-12 col-md-1 d-flex align-items-center">
+          <label class="form-label mb-0 me-2 text-nowrap">Estado:</label>
+          <select v-model="vehiculo.estado" class="form-select d-inline-block w-auto rounded-0 shadow-none border">
+            <option value="disponible">Disponible</option>
+            <option value="vendido">Vendido</option>
+            <option value="reservado">Reservado</option>
+          </select>
         </div>
       </div>
 
       <!-- FILA: Año, Kilómetros, Precio -->
       <div class="row g-3 align-items-center mt-2">
-        <div class="col-12 col-md-2">
-          <label for="anio" class="form-label">Año:</label>
-          <input type="number" id="anio" v-model="vehiculo.anio" class="form-control rounded-0 shadow-none border" required>
+        
+
+        <div class="col-12 col-md-2 d-flex align-items-center">
+          <label for="kilometros" class="form-label mb-0 me-2 text-nowrap">Kilómetros:</label>
+          <input type="text" id="kilometros" v-model="vehiculo.kilometros" class="form-control text-end rounded-0 shadow-none border" required>
         </div>
 
-        <div class="col-12 col-md-3">
-          <label for="kilometros" class="form-label">Kilómetros:</label>
-          <input type="number" id="kilometros" v-model="vehiculo.kilometros" class="form-control rounded-0 shadow-none border" required>
+        <div class="col-12 col-md-2 d-flex align-items-center">
+          <label for="precio" class="form-label mb-0 me-2 text-nowrap">Precio (€):</label>
+          <input type="text" id="precio" v-model="vehiculo.precio" class="form-control text-end rounded-0 shadow-none border" required>
         </div>
-
-        <div class="col-12 col-md-3">
-          <label for="precio" class="form-label">Precio (€):</label>
-          <input type="number" id="precio" v-model="vehiculo.precio" class="form-control rounded-0 shadow-none border" required>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <label for="color" class="form-label">Color:</label>
-          <input type="text" id="color" v-model="vehiculo.color" class="form-control rounded-0 shadow-none border">
-        </div>
-      </div>
-
-      <!-- FILA: Combustible, Transmisión, Puertas, Potencia -->
-      <div class="row g-3 align-items-center mt-2">
-        <div class="col-12 col-md-4">
-          <label for="combustible" class="form-label">Combustible:</label>
+ 
+        <div class="col-12 col-md-3 d-flex align-items-center">
+          <label for="combustible" class="form-label mb-0 me-2 text-nowrap">Combustible:</label>
           <select id="combustible" v-model="vehiculo.combustible" class="form-select rounded-0 shadow-none border">
             <option disabled value="">Seleccione</option>
             <option>Gasolina</option>
@@ -70,92 +75,85 @@
             <option>Eléctrico</option>
           </select>
         </div>
-
-        <div class="col-12 col-md-3">
-          <label for="transmision" class="form-label">Transmisión:</label>
-          <select id="transmision" v-model="vehiculo.transmision" class="form-select rounded-0 shadow-none border">
-            <option disabled value="">Seleccione</option>
-            <option>Manual</option>
-            <option>Automática</option>
-          </select>
+         <div class="col-12 col-md-3 d-flex align-items-center">
+          <label for="transmision" class="form-label mb-0 ms-2 me-2 text-nowrap">Transmisión:</label>
+          <div class="d-flex align-items-center">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="tipo-automatica" value="automatica" v-model="vehiculo.transmision">
+              <label class="form-check-label" for="tipo-automatica">Automatica</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="tipo-manual" value="manual" v-model="vehiculo.transmision">
+              <label class="form-check-label" for="tipo-manual">Manual</label>
+            </div>
+          </div>
         </div>
-
-        <div class="col-12 col-md-2">
-          <label for="puertas" class="form-label">Puertas:</label>
-          <input type="number" id="puertas" v-model="vehiculo.puertas" class="form-control rounded-0 shadow-none border">
-        </div>
-
-        <div class="col-12 col-md-3">
-          <label for="potencia" class="form-label">Potencia (CV):</label>
-          <input type="number" id="potencia" v-model="vehiculo.potencia_cv" class="form-control rounded-0 shadow-none border">
-        </div>
+        <div class="col-12 col-md-2 d-flex align-items-center">
+          <label for="potencia" class="form-label mb-0 me-2 text-nowrap">Potencia (CV):</label>
+          <input type="text" id="potencia" v-model="vehiculo.potencia_cv" class="form-control rounded-0 me-2 shadow-none border">
+        </div>     
       </div>
 
       <!-- FILA: Descripción -->
       <div class="row g-2 mt-3">
         <div class="col">
-          <label for="descripcion" class="form-label">Descripción:</label>
-          <textarea id="descripcion" v-model="vehiculo.descripcion" rows="3" class="form-control rounded-0 shadow-none border" placeholder="Describe el estado, revisiones, etc."></textarea>
+          <label for="descripcion" class="form-label mb-0 me-3 text-nowrap">Descripción:</label>
+          <textarea id="descripcion" v-model="vehiculo.descripcion" rows="3" class="form-control rounded-0 shadow-none border mt-2 mb-4" placeholder="Describe el estado, potencia, color, revisiones, etc."></textarea>
         </div>
       </div>
-<h6 class="text-center bg-primary-subtle py-1"><i class="bi bi-car-front me-2"></i>Cliente Ubicación</h6>
+<h5 class="text-center bg-primary-subtle py-1"><i class="bi bi-person me-2"></i>Cliente Ubicación</h5>
       <!-- FILA: Ubicación -->
       <div class="row g-3 align-items-center mt-3">
-        <div class="col-12 col-md-4">
-          <label for="provincia" class="form-label">Provincia:</label>
+        <div class="col-12 col-md-3 d-flex align-items-center">
+          <label for="provincia" class="form-label mb-0 me-2 text-nowrap">Provincia:</label>
           <select id="provincia" v-model="vehiculo.ubicacion.provincia" class="form-select rounded-0 shadow-none border" @change="filtrarCiudades">
             <option disabled value="">Seleccione provincia</option>
             <option v-for="prov in provincias" :key="prov.id" :value="prov.nm">{{ prov.nm }}</option>
           </select>
         </div>
 
-        <div class="col-12 col-md-4">
-          <label for="ciudad" class="form-label">Ciudad:</label>
+        <div class="col-12 col-md-4 ms-4 d-flex align-items-center">
+          <label for="ciudad" class="form-label mb-0 me-2 text-nowrap">Ciudad:</label>
           <select id="ciudad" v-model="vehiculo.ubicacion.ciudad" class="form-select rounded-0 shadow-none border">
             <option disabled value="">Seleccione ciudad</option>
             <option v-for="mun in municipiosFiltrados" :key="mun.id" :value="mun.nm">{{ mun.nm }}</option>
           </select>
         </div>
 
-        <div class="col-12 col-md-4">
-          <label for="fecha_publicacion" class="form-label">Fecha Publicación:</label>
-          <input type="date" id="fecha_publicacion" v-model="vehiculo.fecha_publicacion" class="form-control rounded-0 shadow-none border">
+        <div class="col-12 col-md-3 ms-4 d-flex align-items-center">
+          <label for="fecha_publicacion" class="form-label mb-0 me-2 text-nowrap">Fecha Publicación:</label>
+          <input type="date" id="fecha_publicacion" v-model="vehiculo.fecha_publicacion" class="form-control text-center rounded-0 shadow-none border">
         </div>
       </div>
 
       <!-- FILA: Contacto -->
       <div class="row g-3 align-items-center mt-3">
-        <div class="col-12 col-md-4">
-          <label for="contacto_nombre" class="form-label">Nombre Contacto:</label>
+        <div class="col-12 col-md-4 d-flex align-items-center">
+          <label for="contacto_nombre" class="form-label mb-0 me-2 text-nowrap">Nombre Contacto:</label>
           <input type="text" id="contacto_nombre" v-model="vehiculo.contacto.nombre" class="form-control rounded-0 shadow-none border">
         </div>
-        <div class="col-12 col-md-4">
-          <label for="contacto_telefono" class="form-label">Teléfono:</label>
-          <input type="tel" id="contacto_telefono" v-model="vehiculo.contacto.telefono" class="form-control rounded-0 shadow-none border">
+        <div class="col-12 col-md-2 ms-4 d-flex align-items-center">
+          <label for="contacto_telefono" class="form-label text-end mb-0 me-2 text-nowrap">Teléfono:</label>
+          <input type="tel" id="contacto_telefono" v-model="vehiculo.contacto.telefono" class="form-control text-center rounded-0 shadow-none border">
         </div>
-        <div class="col-12 col-md-4">
-          <label for="contacto_email" class="form-label">Email:</label>
+        <div class="col-12 col-md-4 d-flex ms-4 align-items-center">
+          <label for="contacto_email" class="form-label mb-0 me-2 text-nowrap">Email:</label>
           <input type="email" id="contacto_email" v-model="vehiculo.contacto.email" class="form-control rounded-0 shadow-none border">
         </div>
       </div>
 
       <!-- FILA: Estado y botón -->
-      <div class="d-flex align-items-center justify-content-between mt-3">
-        <div>
-          <label class="form-label me-2">Estado:</label>
-          <select v-model="vehiculo.estado" class="form-select d-inline-block w-auto rounded-0 shadow-none border">
-            <option value="disponible">Disponible</option>
-            <option value="vendido">Vendido</option>
-            <option value="reservado">Reservado</option>
-          </select>
-        </div>
-
-        <div>
-          <button type="submit" class="btn btn-primary rounded-0 border shadow-none px-4">
+      <div class="row g-3 align-items-center mt-3">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+          <button type="submit" class="btn btn-primary rounded-0 border shadow-none px-4 py-2 ">
             {{ editando ? 'Modificar' : 'Guardar' }}
+          </button>
+          <button type="submit" class="btn btn-primary rounded-0 border shadow-none px-4 py-2 ms-2 ">
+            Eliminar
           </button>
         </div>
       </div>
+
     </form>
   </div>
 </template>
@@ -171,10 +169,9 @@ const vehiculo = ref({
   anio: "",
   kilometros: "",
   precio: "",
-  color: "",
+  matricul: "",
   combustible: "",
   transmision: "",
-  puertas: "",
   potencia_cv: "",
   descripcion: "",
   ubicacion: {
