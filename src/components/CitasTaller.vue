@@ -1,0 +1,294 @@
+<template>
+  <div class="container-fluid my-2 p-2 border rounded-0 shadow-sm bg-light">
+    <h5 class="text-center bg-primary-subtle py-1">
+      <i class="bi bi-wrench me-2"></i>Citas Taller
+    </h5>
+
+    <!-- Formulario -->
+    <div class="container-lg mx-auto">
+    <form @submit.prevent="guardarCita" class="mb-3 mt-2">
+      <div class="row g-3 align-items-center">
+        <!-- Matrícula -->
+        <div class="col-12 col-md-3 d-flex align-items-center">
+          <label for="matricula" class="form-label mb-0 me-2 text-nowrap align-middle">Matrícula:</label>
+          <input
+            id="matricula"
+            type="text"
+            v-model="nuevaCita.matricula"
+            class="form-control text-center rounded-0 shadow-none border"
+            required
+          />
+        </div>
+
+        <!-- Móvil Cliente -->
+        <div class="col-12 col-md-3 d-flex align-items-center">
+          <label for="movilCliente" class="form-label mb-0 me-2 text-nowrap align-middle">Móvil Cliente:</label>
+          <input
+            id="movilCliente"
+            type="tel"
+            v-model="nuevaCita.movilCliente"
+            class="form-control text-center rounded-0 shadow-none border"
+            @blur="verificarCliente"
+            required
+          />
+        </div>
+
+        <!-- Fecha Cita -->
+        <div class="col-12 col-md-3 d-flex align-items-center">
+          <label for="fechaCita" class="form-label mb-0 me-2 text-nowrap align-middle">Fecha Cita:</label>
+          <input
+            id="fechaCita"
+            type="date"
+            v-model="nuevaCita.fechaCita"
+            class="form-control text-center rounded-0 shadow-none border"
+            required
+          />
+        </div>
+
+        <!-- Botón limpiar -->
+        <div class="col-12 col-md-1 d-flex justify-content-end">
+          <button
+            type="button"
+            class="btn btn-light border rounded-0 shadow-none"
+            title="Limpiar formulario"
+            @click="limpiarFormulario"
+          >
+            <i class="bi bi-arrow-clockwise"></i>
+          </button>
+        </div>
+      </div>
+    
+<!-- Servicio y Estado -->
+<div class="row g-3 align-items-center mt-2">
+  <div class="col-12 col-md-4 d-flex align-items-center">
+    <label for="servicioTaller" class="form-label mb-0 me-3 text-nowrap align-middle">Servicio:</label>
+    <select
+      id="servicioTaller"
+      v-model="nuevaCita.servicioTaller"
+      class="form-select rounded-0 shadow-none border"
+      required
+    >
+      <option disabled value="">Seleccione servicio</option>
+      <option v-for="servicio in serviciosTaller" :key="servicio" :value="servicio">
+        {{ servicio }}
+      </option>
+    </select>
+  </div>
+
+<div class="col-12 col-md-3 ms-4 d-flex align-items-center">
+  <label class="form-label mb-0 me-3 text-nowrap align-middle">Estado:</label>
+  <div class="d-flex gap-3">
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="estadoCita"
+        id="pendiente"
+        value="Pendiente"
+        v-model="nuevaCita.estadoCita"
+        required
+      />
+      <label class="form-check-label" for="pendiente">Pendiente</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="estadoCita"
+        id="finalizado"
+        value="Finalizado"
+        v-model="nuevaCita.estadoCita"
+      />
+      <label class="form-check-label" for="finalizado">Finalizado</label>
+        </div>
+    </div>
+    </div>
+
+</div>
+
+        <!-- Checkbox centrado -->
+        <div class="row g-3 justify-content-center mt-3">
+        <div class="col-auto d-flex align-items-center">
+            <input
+            type="checkbox"
+            id="acepta"
+            v-model="nuevaCita.acepta"
+            class="form-check-input me-2"
+            />
+            <label for="acepta" class="form-check-label">Acepta presupuesto</label>
+        </div>
+        </div>
+
+        <!-- Botón justo debajo -->
+        <div class="row g-3 justify-content-center mt-2">
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary px-4 rounded-0 shadow-none">
+            {{ editando ? 'Modificar' : 'Grabar' }}
+            </button>
+        </div>
+        </div>
+
+    </form>
+    </div>
+
+    <hr class="border border-1 border-secondary rounded">
+
+    <!-- Tabla Citas -->
+    <div class="table-responsive mt-1">
+      <h6 class="text-center mb-1 bg-secondary text-white">Listado de Citas</h6>
+      <table class="table table-bordered table-striped table-hover table-sm align-middle">
+        <thead class="table-primary text-center">
+          <tr>
+            <th>ID</th>
+            <th>Matrícula</th>
+            <th>Móvil</th>
+            <th>Fecha</th>
+            <th>Servicio</th>
+            <th>Estado</th>
+            <th>Acepta</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(cita, index) in citas" :key="cita.id">
+            <td class="text-center">{{ index + 1 }}</td>
+            <td class="text-center">{{ cita.matricula }}</td>
+            <td class="text-center">{{ cita.movilCliente }}</td>
+            <td class="text-center">{{ cita.fechaCita }}</td>
+            <td class="text-center">{{ cita.servicioTaller }}</td>
+            <td class="text-center">{{ cita.estadoCita }}</td>
+            <td class="text-center">{{ cita.acepta ? 'Sí' : 'No' }}</td>
+            <td class="text-center">
+              <button class="btn btn-warning btn-sm me-2" @click="editarCita(cita)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-danger btn-sm" @click="eliminarCita(cita.id)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import Swal from 'sweetalert2'
+import { getCitasTaller, addCitaTaller, updateCitaTaller, deleteCitaTaller } from '@/api/taller.js'
+import { getClientes } from '@/api/clientes.js'
+
+// Estado reactivo
+const citas = ref([])
+const editando = ref(false)
+const idEditando = ref(null)
+const clientes = ref([])
+
+const nuevaCita = ref({
+  matricula: '',
+  movilCliente: '',
+  fechaCita: '',
+  servicioTaller: '',
+  estadoCita: 'Pendiente',
+  acepta: false
+})
+
+const serviciosTaller = ref([
+  'Revisión',
+  'Pre ITV',
+  'Neumáticos',
+  'Frenos',
+  'Cambio de aceite'
+])
+
+// Cargar datos al montar
+onMounted(async () => {
+  await cargarCitas()
+  clientes.value = await getClientes()
+})
+
+// Funciones CRUD
+async function cargarCitas() {
+  citas.value = await getCitasTaller()
+}
+
+async function guardarCita() {
+  if (!nuevaCita.value.acepta) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Debe aceptar el presupuesto antes de guardar.',
+      timer: 2000,
+      showConfirmButton: false
+    })
+    return
+  }
+
+  if (editando.value) {
+    await updateCitaTaller(idEditando.value, nuevaCita.value)
+    Swal.fire({ icon: 'success', title: 'Cita modificada', timer: 1500, showConfirmButton: false })
+  } else {
+    await addCitaTaller(nuevaCita.value)
+    Swal.fire({ icon: 'success', title: 'Cita guardada', timer: 1500, showConfirmButton: false })
+  }
+
+  await cargarCitas()
+  limpiarFormulario()
+}
+
+function editarCita(cita) {
+  nuevaCita.value = { ...cita }
+  idEditando.value = cita.id
+  editando.value = true
+}
+
+async function eliminarCita(id) {
+  const confirm = await Swal.fire({
+    title: '¿Eliminar cita?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Eliminar',
+    cancelButtonText: 'Cancelar'
+  })
+  if (!confirm.isConfirmed) return
+  await deleteCitaTaller(id)
+  await cargarCitas()
+  Swal.fire({ icon: 'success', title: 'Cita eliminada', timer: 1500, showConfirmButton: false })
+}
+
+function limpiarFormulario() {
+  nuevaCita.value = {
+    matricula: '',
+    movilCliente: '',
+    fechaCita: '',
+    servicioTaller: '',
+    estadoCita: 'Pendiente',
+    acepta: false
+  }
+  editando.value = false
+  idEditando.value = null
+}
+
+function verificarCliente() {
+  const movil = nuevaCita.value.movilCliente.trim()
+  if (!movil) return
+  const existe = clientes.value.some(c => c.movil === movil)
+  if (!existe) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Cliente no encontrado en la base de datos',
+      text: 'Verifique el número o regístrelo primero.',
+      timer: 2000,
+      showConfirmButton: false
+    })
+    nuevaCita.value.movilCliente = ''
+  }
+}
+</script>
+
+<style scoped>
+.is-invalid {
+  border-color: #f28b82 !important;
+  background-color: #ffe6e6;
+}
+</style>

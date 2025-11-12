@@ -33,7 +33,10 @@
           <li class="nav-item">
             <router-link to="/modelos" class="nav-link">Modelos</router-link>
           </li>
-           <li class="nav-item">
+          <li class="nav-item">
+            <router-link to="/citastaller" class="nav-link">Citas Taller</router-link>
+          </li>
+          <li class="nav-item">
             <router-link to="#" class="nav-link">Ventas</router-link>
           </li>
           <li class="nav-item">

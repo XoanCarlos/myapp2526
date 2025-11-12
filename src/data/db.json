@@ -224,7 +224,6 @@
       "id": "ba17",
       "tipocliente": "particular",
       "tipo": "user"
-      
     },
     {
       "dni": "56712389R",
@@ -466,7 +465,7 @@
       "municipio": "Agullana",
       "fecha_alta": "2025-10-14",
       "historico": true,
-      "lopd": true, 
+      "lopd": true,
       "tipocliente": "particular",
       "tipo": "user"
     },
@@ -511,6 +510,17 @@
       "titulo": "Santana renace de sus cenizas",
       "contenido": "Se trata de dos pick up, muy preparados para el campo y muy bien equipados. Uno es diésel, el otro un híbrido enchufable con 120 kms de autonomía. Los precios aún no se conocen y llegan en 2026.",
       "fecha": "2025-10-28"
+    }
+  ],
+  "taller": [
+    {
+      "id": "1",
+      "matricula": "1234ABC",
+      "movilCliente": "600123456",
+      "fechaCita": "2025-11-12",
+      "servicioTaller": "preITV",
+      "estadoCita": "Finalizado",
+      "acepta": true
     }
   ]
 }

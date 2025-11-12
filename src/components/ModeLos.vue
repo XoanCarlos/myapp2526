@@ -1,7 +1,6 @@
 <template>
   <div class="container-fluid my-3 p-2 border rounded-0 shadow-sm bg-light">
     <h5 class="text-center bg-primary-subtle  ms-1 py-1"><i class="bi bi-car-front me-2"></i>Registro de Vehículos </h5>
-
     <form @submit.prevent="guardarVehiculo" class="mb-2 mt-1 ms-1">
       <!-- FILA: Tipo, Marca, Modelo -->
       <div class="row g-3 align-items-center mt-1">

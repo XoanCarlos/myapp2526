@@ -9,7 +9,6 @@
   </div>
 </template>
 
-
 <script setup>
 import NavBar from './components/NavBar.vue'
 import FooTer from './components/FooTer.vue'
@@ -23,5 +22,4 @@ import FooTer from './components/FooTer.vue'
   display: flex;
   flex-direction: column;
 }
-
 </style>
