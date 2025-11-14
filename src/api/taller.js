@@ -1,32 +1,26 @@
-const API_URL = 'http://localhost:3000/taller'
+import axios from "axios"
+
+const API_URL = "http://localhost:3000/taller"
 
 // Obtener todas las citas
 export async function getCitasTaller() {
-  const res = await fetch(API_URL)
-  return await res.json()
+  const res = await axios.get(API_URL)
+  return res.data
 }
 
 // Añadir cita
 export async function addCitaTaller(cita) {
-  const res = await fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(cita)
-  })
-  return await res.json()
+  const res = await axios.post(API_URL, cita)
+  return res.data
 }
 
 // Actualizar cita
 export async function updateCitaTaller(id, cita) {
-  const res = await fetch(`${API_URL}/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(cita)
-  })
-  return await res.json()
+  const res = await axios.put(`${API_URL}/${id}`, cita)
+  return res.data
 }
 
 // Eliminar cita
 export async function deleteCitaTaller(id) {
-  await fetch(`${API_URL}/${id}`, { method: 'DELETE' })
+  await axios.delete(`${API_URL}/${id}`)
 }

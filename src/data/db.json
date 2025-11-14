@@ -518,8 +518,62 @@
       "matricula": "1234ABC",
       "movilCliente": "600123456",
       "fechaCita": "2025-11-12",
-      "servicioTaller": "preITV",
+      "servicioTaller": "Neumáticos",
+      "estadoCita": "Pendiente",
+      "acepta": true
+    },
+    {
+      "id": "39cd",
+      "matricula": "PO7483J",
+      "movilCliente": "658547845",
+      "fechaCita": "2025-11-14",
+      "servicioTaller": "Pre ITV",
       "estadoCita": "Finalizado",
+      "acepta": true
+    },
+    {
+      "id": "91d6",
+      "matricula": "PO4934AM",
+      "movilCliente": "698512545",
+      "fechaCita": "2025-11-14",
+      "servicioTaller": "Neumáticos",
+      "estadoCita": "Pendiente",
+      "acepta": true
+    },
+    {
+      "id": "7758",
+      "matricula": "PO4934AM",
+      "movilCliente": "698512545",
+      "fechaCita": "2025-11-14",
+      "servicioTaller": "Neumáticos",
+      "estadoCita": "Pendiente",
+      "acepta": true
+    },
+    {
+      "id": "35c2",
+      "matricula": "PO4934AM",
+      "movilCliente": "698512545",
+      "fechaCita": "2025-11-14",
+      "servicioTaller": "Neumáticos",
+      "estadoCita": "Pendiente",
+      "acepta": true
+    },
+    {
+      "id": "373b",
+      "matricula": "PO4934AM",
+      "movilCliente": "698512545",
+      "fechaCita": "2025-11-14",
+      "servicioTaller": "Neumáticos",
+      "estadoCita": "Pendiente",
+      "acepta": true
+    },
+    {
+      "id": "4110",
+      "matricula": "PO4934AM",
+      "movilCliente": "698512545",
+      "fechaCita": "2025-11-14",
+      "servicioTaller": "Neumáticos",
+      "estadoCita": "Pendiente",
       "acepta": true
     }
   ]

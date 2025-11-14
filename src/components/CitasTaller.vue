@@ -16,6 +16,7 @@
             type="text"
             v-model="nuevaCita.matricula"
             class="form-control text-center rounded-0 shadow-none border"
+            @blur="capitalizarMatricula"
             required
           />
         </div>
@@ -150,8 +151,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(cita, index) in citas" :key="cita.id">
-            <td class="text-center">{{ index + 1 }}</td>
+          <tr v-for="(cita, index) in citasPaginadas" :key="cita.id">
+            <td class="text-center">{{ (currentPage - 1) * citasPorPage + index + 1 }}</td>
             <td class="text-center">{{ cita.matricula }}</td>
             <td class="text-center">{{ cita.movilCliente }}</td>
             <td class="text-center">{{ cita.fechaCita }}</td>
@@ -169,21 +170,29 @@
           </tr>
         </tbody>
       </table>
+      <!-- Navegación de página-->
+       <div class="d-flex justify-content-center my-3">
+        <button class="btn btn-outline-primary btn-sm me-2 rounded-0 border-1 shadow-none" 
+        @click = "beforePagina" :disabled="currentPage <= 1">
+          <i class="bi bi-chevron-left "></i>
+        </button>
+        <span class="mx-3 align-self-center text-muted">Página {{ currentPage  }}</span>
+        <button class="btn btn-outline-primary btn-sm rounded-0 border-1 shadow-none" 
+        @click="nextPagina" :disabled="currentPage >= totalPages">
+         <i class="bi bi-chevron-right "></i>
+        </button>
+       </div>
+
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+// Importaciones, Dependencias y Reactividad
+import { ref, onMounted, computed } from 'vue'
 import Swal from 'sweetalert2'
-import { getCitasTaller, addCitaTaller, updateCitaTaller, deleteCitaTaller } from '@/api/taller.js'
+import { getCitasTaller,  addCitaTaller, updateCitaTaller, deleteCitaTaller } from '@/api/taller.js'
 import { getClientes } from '@/api/clientes.js'
-
-// Estado reactivo
-const citas = ref([])
-const editando = ref(false)
-const idEditando = ref(null)
-const clientes = ref([])
 
 const nuevaCita = ref({
   matricula: '',
@@ -194,6 +203,17 @@ const nuevaCita = ref({
   acepta: false
 })
 
+// Estado reactivo
+const citas = ref([])
+const editando = ref(false)
+const idEditando = ref(null)
+const cargando = ref(false)
+const currentPage = ref(1); 
+const numcitas = ref(0)
+const citasPorPage = 5
+const clientes = ref([]) // Suponiendo que tienes una lista de clientes cargada en algún lugar
+
+
 const serviciosTaller = ref([
   'Revisión',
   'Pre ITV',
@@ -202,18 +222,63 @@ const serviciosTaller = ref([
   'Cambio de aceite'
 ])
 
+
 // Cargar datos al montar
 onMounted(async () => {
-  await cargarCitas()
-  clientes.value = await getClientes()
+  cargarCitas()
+  const data2 = await getClientes()
+  clientes.value = data2
+  currentPage.value = 1;
+  cargando.value =false;
 })
 
-// Funciones CRUD
-async function cargarCitas() {
-  citas.value = await getCitasTaller()
+const totalPages = computed(() => {
+  return Math.max(1, Math.ceil(numcitas.value / citasPorPage))
+})
+
+const citasPaginadas  = computed(() => {
+  const start = (currentPage.value - 1) * citasPorPage;
+  const end = start + citasPorPage;
+  return citas.value.slice(start, end);
+});
+
+// Métodos de paginación
+const beforePagina = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+};
+
+const nextPagina = () => {
+  const totalPages = Math.ceil(numcitas.value / citasPorPage); 
+  //redondear hacia arriba para mostrar la última página aunque no esté completa
+  if (currentPage.value < totalPages) {
+    currentPage.value++;
+  }
+};
+
+
+////////// Funciones CRUD
+
+const cargarCitas = async () => {
+  try {
+    const data = await getCitasTaller()
+    citas.value = data
+    numcitas.value = data.length
+    currentPage.value = 1;
+  } catch (error) {
+    console.error('Error al cargar las citas del taller:', error)
+    Swal.fire({
+      icon: 'error',
+      title: 'Error al cargar las citas del taller',
+      text: error.message || 'Ha ocurrido un error inesperado.',
+    })
+  } finally {
+    cargando.value = false
+  } 
 }
 
-async function guardarCita() {
+const guardarCita = async () => {
   if (!nuevaCita.value.acepta) {
     Swal.fire({
       icon: 'warning',
@@ -231,18 +296,17 @@ async function guardarCita() {
     await addCitaTaller(nuevaCita.value)
     Swal.fire({ icon: 'success', title: 'Cita guardada', timer: 1500, showConfirmButton: false })
   }
-
   await cargarCitas()
   limpiarFormulario()
 }
 
-function editarCita(cita) {
+const editarCita = (cita) => {
   nuevaCita.value = { ...cita }
   idEditando.value = cita.id
   editando.value = true
 }
 
-async function eliminarCita(id) {
+const eliminarCita = async (id) => {
   const confirm = await Swal.fire({
     title: '¿Eliminar cita?',
     icon: 'warning',
@@ -256,7 +320,9 @@ async function eliminarCita(id) {
   Swal.fire({ icon: 'success', title: 'Cita eliminada', timer: 1500, showConfirmButton: false })
 }
 
-function limpiarFormulario() {
+///////// Funciones Auxiliares
+
+const limpiarFormulario = () => {
   nuevaCita.value = {
     matricula: '',
     movilCliente: '',
@@ -269,10 +335,25 @@ function limpiarFormulario() {
   idEditando.value = null
 }
 
-function verificarCliente() {
+const verificarCliente = () => {
+  // Primero validar formato del móvil
+  if (!validarMovil()) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Número no válido',
+      text: 'Debe comenzar por 6 o 7 y tener 9 dígitos.',
+      timer: 2000,
+      showConfirmButton: false
+    })
+    return
+  }
+
+  // Después comprobar si existe en la BD
   const movil = nuevaCita.value.movilCliente.trim()
   if (!movil) return
+
   const existe = clientes.value.some(c => c.movil === movil)
+
   if (!existe) {
     Swal.fire({
       icon: 'warning',
@@ -281,9 +362,33 @@ function verificarCliente() {
       timer: 2000,
       showConfirmButton: false
     })
-    nuevaCita.value.movilCliente = ''
+  } else {
+    Swal.fire({
+      icon: 'success',
+      title: 'Cliente en Base de Datos',
+      timer: 1500,
+      showConfirmButton: false
+    })
   }
 }
+
+
+function capitalizarMatricula() {
+  nuevaCita.value.matricula = nuevaCita.value.matricula.toUpperCase()
+}
+
+// Control móvil
+
+const validarMovil = () => {
+  const movilRegex = /^[67]\d{8}$/;
+  const movil = nuevaCita.value.movilCliente.trim();
+
+  if (movil === '') return true; // vacío → válido (por si aún no escribió)
+
+  return movilRegex.test(movil);
+};
+
+
 </script>
 
 <style scoped>

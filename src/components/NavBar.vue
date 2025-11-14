@@ -27,17 +27,18 @@
           <li class="nav-item">
             <router-link to="/clientes" class="nav-link">Clientes</router-link>
           </li>
-          <li class="nav-item">
-            <router-link to="/noticias" class="nav-link">Noticias</router-link>
-          </li>
+         
           <li class="nav-item">
             <router-link to="/modelos" class="nav-link">Modelos</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/citastaller" class="nav-link">Citas Taller</router-link>
+            <router-link to="/citastaller" class="nav-link">Taller</router-link>
           </li>
           <li class="nav-item">
             <router-link to="#" class="nav-link">Ventas</router-link>
+          </li>
+           <li class="nav-item">
+            <router-link to="/noticias" class="nav-link">Noticias</router-link>
           </li>
           <li class="nav-item">
             <router-link to="#" class="nav-link">Contacto</router-link>
